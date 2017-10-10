@@ -1,0 +1,40 @@
+Bei Chunklänge 9 und Statement Normalizer:
+- /media/backup/code/tesseract/ccmain/fixspace.cpp[22184-22379]:
+    WERD_RES *word_res;
+      C_BLOB_IT blob_it;
+      C_BLOB_IT rej_cblob_it;
+      C_BLOB_LIST new_blob_list;
+      C_BLOB_IT new_blob_it;
+      C_BLOB_IT new_rej_cblob_it;
+      WERD *new_word;
+      inT16 start_of_noise_blo
+- /media/backup/code/tesseract/ccmain/tesseractclass.h[62185-62836]:
+    Pix* pix_thresholds_;
+      // Debug images. If non-empty, will be written on destruction.
+      DebugPixa pixa_debug_;
+      // Input image resolution after any scaling. The resolution is not well
+      // transmitted by operations on Pix, so we keep an independent record here.
+      int source_resolution_;
+      // The shiro-rekha splitter object which is used to split top-lines in
+      // Devanagari words to provide a better word and grapheme segmentation.
+      ShiroRekhaSplitter splitter_;
+      // Page segmentation/layout
+      Textord textord_;
+      // True if the primary language uses right_to_left reading order.
+      bool right_to_left_;
+      Pix* scaled_color_;
+      int scaled_factor
+
+Statistics Tesseract:
+    - 52MB total size
+    - 38MB .git
+    - 2178 commits
+    - 87sec file scan, 559 sec total with git
+
+Statistics linux:
+    - scanning workdir with chunksize 10 (45355 files, ~800MB)=20min
+    - without history: dbsize ~8200000 (1,2GB)
+    - scanning history (692938 commits), too slow (10 commits/s, many merge commits with 200+ files)
+    - scan with mulitthread: initial scan ~5min, 3,5min pro revision, 3,5h total, ~5,5GB
+
+Fast mysql: https://dba.stackexchange.com/a/5326
