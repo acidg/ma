@@ -85,9 +85,16 @@ Ab wann ist es Infringement? Beispiele von Verletzungen
 # 09.10.2017
 * Größenordung? 100 Projekte?
 * 
+ ## Next
+* Kleinere Chunks (momentan , mehr Matches => Höhere Wahrscheinlichkeit => Mehr Infringement
+* Erkenntnis: Infringement hat keinen festen Threshold, Kontext ist mehr entscheidend
+* Datenbankgröße: ca 1:1 zur größe des git repositories
 
 # TODO
 * Welche Lizenzen sind relevant?
 
-
+# QUELLEN:
+* https://anonscm.debian.org/cgit/
+* https://github.com/KDE
+* https://github.com/GNOME/
 

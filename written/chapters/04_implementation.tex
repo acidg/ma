@@ -1,11 +1,26 @@
 % !TeX root = ../main.tex
 
 \chapter{Implementation}\label{chapter:implementation}
-Describing technical details
+Describing technical details %TODO Bezüge zu Requirements!
+\section{System Overview}
+\begin{itemize}
+    \item Architecture Diagram Client <-> Server, databases
+    \item Description of components
+    \item Alternatives for components (database on client/server)
+    \item Extension points for future development? Web-Interface for code-add-request, Suggestions for linking libraries (gradle, ...)
+\end{itemize}
 \section{Creating the Index}
-\subsection{Choice of Database}
 \subsection{Normalization}
-\section{History Analysis}
-\subsection{Handling Changed Files}
-\subsection{Handling Repository Updates}
-\section{Scanning a Codebase for Copied Code}
+\subsubsection{Choice of Hash algorithm}
+\subsection{History Analysis}
+\subsubsection{Handling Changed Files}
+\subsubsection{Handling Repository Updates}
+\subsection{Choice of Database}
+\begin{itemize}
+    \item Redis: in memory: Fast, but uses lots of RAM, not practical for testing on my machine
+    \item Relational: too slow, but small: can remove redundancy
+    \item RocksDB: Fast, huge filesize possible, can be programmatically optimized
+    \item BloomFilter: Great way of reducing size of hashtable with low false-positive probability
+\end{itemize}
+\section{Scanning for Copied Code}
+\section{Future Work / Extensibility}
