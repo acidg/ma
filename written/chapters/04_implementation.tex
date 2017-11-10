@@ -2,6 +2,7 @@
 
 \chapter{Implementation}\label{chapter:implementation}
 Describing technical details %TODO Bezüge zu Requirements!
+
 \section{System Overview}
 \begin{itemize}
     \item Architecture Diagram Client <-> Server, databases
@@ -20,7 +21,7 @@ Describing technical details %TODO Bezüge zu Requirements!
     \item Redis: in memory: Fast, but uses lots of RAM, not practical for testing on my machine
     \item Relational: too slow, but small: can remove redundancy
     \item RocksDB: Fast, huge filesize possible, can be programmatically optimized
-    \item BloomFilter: Great way of reducing size of hashtable with low false-positive probability
+    \item BloomFilter: Great way of reducing size of hashtable with low false-positive probability % TODO calculate probability of final false positive
 \end{itemize}
 \section{Scanning for Copied Code}
 \section{Future Work / Extensibility}

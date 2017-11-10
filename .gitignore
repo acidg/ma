@@ -1,2 +1,4 @@
 written/build/*
 written/main.pdf
+*.bak
+*.sav

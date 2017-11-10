@@ -9,7 +9,7 @@
 
 # Other systems (Plagiarism)
 * Plague (G. Whale, “Plague: Plagiarism Detection Using Program Structure,")
-* MOSS (A. Aiken. Measure of Software Similarity. [Online]. Available: http://www.cs.berkeley.edu/~aiken/moss.html)
+* MOSS (A. Aiken. Measure of Software Similarity. [1])
 * JPlag (G. Malpohl. JPlag: Detecting Software Plagiarism)
 * SIM (D. Gitchell and N. Tran, “A utility for detecting similarity in computer programs)
 * YAP (YAP3: Improved detection of similarities in computer program  other texts)
