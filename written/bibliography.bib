@@ -386,4 +386,30 @@ No feature like bloom filter},
   urldate = {2017-11-10},
 }
 
+@InProceedings{2010-gabel-su-source-code-uniqueness,
+  author    = {Gabel, Mark and Su, Zhendong},
+  title     = {A Study of the Uniqueness of Source Code},
+  booktitle = {Proceedings of the Eighteenth ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+  year      = {2010},
+  series    = {FSE '10},
+  pages     = {147--156},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {1882315},
+  doi       = {10.1145/1882291.1882315},
+  file      = {:/home/bene/Uni/ma/related/[25] Gabel, Mark, and Zhendong Su. A study of the uniqueness of source code.pdf:PDF},
+  isbn      = {978-1-60558-791-2},
+  keywords  = {large scale study, software uniqueness, source code},
+  location  = {Santa Fe, New Mexico, USA},
+  numpages  = {10},
+  review    = {- "Our experiments, covering 430 million lines of source code and consuming approximately four months of CPU time, revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code."
+- Higher syntactic redundancy in Java Systems.
+- Experiment:
+  --> Single project compared to a varying number of files (1.000, 2.000, 4.000, 8.000, ..., 600.000).
+  --> With increasing number of files the syntactic redundancy at 20 tokens (~ 4 Statements) increases asymptotically towards 70 % at 600.000 files.
+  ==> Therefore we can argue that the huge amount of code fragments leads to even higher redundancy.
+  ==> Hence we have to set the minimum statement length to 8 or 9 in order to achieve a managable number of clones.},
+  url       = {http://doi.acm.org/10.1145/1882291.1882315},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
