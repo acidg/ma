@@ -24,10 +24,10 @@ Licenses which do not permit use at all or in the given environment.
 This can be a Copyright, which is default when no license is declared.
 Another example here are copy-left licenses, like the GNU Public License (GPL), which forces a user to license distribution of the derivative work only under the same license.
 
-Another license category are licenses which allow modification and use with the condition that the derivative work has to notice about the used code.
+The second license category are licenses which allow modification and use with the condition that the derivative work has to notice about the used code.
 Examples here are the Apache License or the MIT License.
 
-One rather special category are licenses like the Unlicense, which allows use without any conditions, except the creator does not provide any warranties and can not be held responsible for any damages or other liabilities.
+The last category are licenses like the Unlicense or code under public domain, which allows use without any conditions, except the creator does not provide any warranties and can not be held responsible for any damages or other liabilities.
 
 Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license like MIT may already be seen as a violation.
 
@@ -52,6 +52,7 @@ Therefore it is important for the detection tool to recognize code which has bee
 
 \section{Performance}
 Actually detecting copied code in a codebase is one part, doing it in manageable time and with finite memory is another.
+%TODO continous detection!
 
 \subsection{Managing Huge Amounts of Reference System Code}
 The tool should be able to detect most open source software which may cause license infringements.
@@ -62,7 +63,10 @@ Therefore, the codebase is huge and easily covers several billion lines of code.
 The tool should be able to handle those amounts of code even on consumer machines. %TODO other description for smaller machines?
 
 \subsection{High Lookup Speed}
-Scanning a codebase for copied code using the tool should be fast. %TODO more specific
+The tool should be used for continuous analysis.
+Therefore, a search is triggered with every change in the target system.
+Because of that, it is important that the analysis is fast.
+%TODO define times?
 
 \subsection{Update Instead of Rebuilding the Database}
 Open source code available on the Internet may change over time.
@@ -75,9 +79,7 @@ Instead it should be possible to update the database , when a codebase was chang
 All of the use cases for the tool as described in \autoref{section:introduction/use_cases} require the user of the tool to present information about the codebase under test.
 However, this may not be conform with the companies policy.
 Therefore, there have to be some measures to maintain confidentiality.
+The simplest solution is not to send the code directly to the server, but in a format, which makes it impossible to deduce about the code.
 
-\subsection{No Code Transfered to Server}
-The simplest solution is not to send the code directly to the server, but in a format, where the code can not be reverse calculated
-
-\subsection{Offline Solution With Possible Online Lookup upon Request}
+\subsection{Offline Solution With Possible Online Lookup upon Request} %TODO evtl weg? Zu krass auf implemtierung angepasst
 Another solution is a offline lookup with restrictions.
