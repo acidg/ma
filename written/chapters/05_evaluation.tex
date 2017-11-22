@@ -3,16 +3,28 @@
 \chapter{Evaluation}\label{chapter:evaluation}
 \section{Detection of Copied Code} %Detected Clone = License Infringement?
 \subsection{Detection of License Infringements} %chunksize? => realtion to size of database
+%TODO probability estimation: When multiple chunks of same file path (even different versions) => higher probability, when mulitple hits/match => higher probability, when many different files, only small amount of hits/match = low probability
+%TODO Studie, um thresholds zu ermitteln?
 \subsection{Detection of Library Code}
 \subsection{Left out Clones}
 % Is scanning tags enough?
+%TODO @Override, blocks with no braces, 
 
 \section{Performance}
 \subsection{Size of the Database}
+The space $m$ in bits required to store $n$ values with the optimal number of hash functions can be estimated by 
+\begin{equation}\label{equ:bloom_probability} %TODO quelle?
+m = -\frac{n\cdot \ln(p)}{(\ln2)^{2}}
+\end{equation}
+with $p$ being the probability for a false positive.
+For one billion hashes and a probability of 0.01\%, which roughly means one false positive for every 10000 lines of code, about 2,4 GB are needed.
+A simple hash table would need at least 16 GB for the same amount of data.
+
 \subsection{Indexing Performance}
 
 \section{Confidentiality}
 \subsection{Gathering Information about Searched Code}
-What information can be extrated nontheless?
+%TODO previous: parital hashes
+What information can be extracted nontheless?
 \subsection{Restrictions with Off-line Search}
 No info about source, just probability of being copied code

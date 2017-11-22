@@ -1,0 +1,81 @@
+% !TeX root = ../main.tex
+
+\chapter{Preliminaries}\label{chapter:preliminaries}
+This chapter presents preliminaries for this work and term definitions which are used in the following chapters.
+%TODO list content
+
+\section{General Terms}
+\begin{description}
+	\item[Reference System]
+		A codebase which is detected by the tool. 
+		Therefore, the reference system has to be analyzed by the tool and information about the code has to be extracted and stored in appropriate data structures.
+	\item[Target System]
+		A codebase which is analyzed by the tool. 
+		Code which is copied from a reference systems to the target system should be found and assessed by its similarity.
+%TODO lassen? \item[License Infringement] Licensing issues which may be legally prosecuted.
+	\item[Open Source Software] 
+		description %TODO
+\end{description}
+
+\section{License Infringements by Copying Code from Open Source Software}\label{section:preliminaries/infringement}
+The first and primary use case of the tool developed in this work is to detect copy-pasted open source code and uncover licensing issues.
+Here, several question arise:
+
+\subsection*{How much copied code can cause a license infringement?}
+Gabel and Su did some analysis regarding the uniqueness of code.
+Their study \glqq revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code\grqq \cite{2010-gabel-su-source-code-uniqueness}.
+Regarding that, the lower end of a clone which can be argued as a license infringement should be set at 8 lines of code.
+
+In the lawsuit case explained in \cite{mertzel2008copying}, 54 lines of code where found and judged as copied code.
+Consequentially, a detected clone should be seen as a serious violation when it reaches the length of 54 lines of code.
+
+\subsection*{Which licenses are relevant for detection?}
+The answer for this question decides on whether specifically licensed open source code should be detected by the tool.
+There are many different open source licenses which all try to cover a different purpose.
+A list of many common open source licenses and their properties can be found on \cite{licenses}.
+In the context of this work, licenses are separated into three different categories:
+
+\begin{description}
+	\item[Restrictive Licenses] Licenses which do not permit use without permission by the author or in the given environment.
+		This can be a Copyright, which is default when no license is declared.
+		Another example here are copy-left licenses, like the GNU Public License (GPL), which forces a user to license distribution of the derivative work only under the same license and can therefore cause licensing issues, when used closed-source codebases.
+	\item[Permissive Licenses]
+		Licenses which allow modification and use with conditions.
+		Conditions may be that the derivative work has to notice about the used code or patent right regulations.
+		Examples here are the Apache, MIT or some forms of the BSD License.
+	\item[Public Domain] 
+		Code under public domain or under licenses like the Unlicense, which allows use without any conditions, except the creator does not provide any warranties and can not be held responsible for any damages or other liabilities
+\end{description}
+
+Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license can already be an infringement.
+It can also be argued, if code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting.% TODO weglassen oder quelle?
+\\ \\
+\noindent
+One problem in the context of this work are codebases with files which have a different license, than the codebase itself.
+This is relevant, if e.g. code of a permissive license is copied into the codebase under a restrictive license.
+For the development of the tool, the difficulty here is to classify the file correctly into the right license category defined above.
+In the later of this work, this exceptional case is ignored, since manual inspection of matches between a target's and reference system's file is mandatory. %TODO Why?
+%TODO GPL Linking Exception?
+
+\section{Code Cloning}
+For this work, code has to be compared and its similarity assessed.
+A lot of work has been done in this area, starting more than 30 years ago\cite{lancaster2004comparison}.
+During that time, terms specifying the similarity of code have been established.
+
+In general, sections of similar code which may have been caused by copying the code are called \textit{clones}.
+The similarity of clones can be categorized into different types, according to %TODO
+
+However, those clone types are just a reference.
+Clone detection tools often do not concentrate on one specific clone type, but rather on the purpose of the tool and similarity of clones have to be defined in more detail.
+This also is true for this work.
+
+\subsection*{Which clones are relevant for license infringements?}
+The goal of this work is to find code, which has been copied from source code available on the Internet and my cause licensing issues.
+Code is copied for different reasons: to save time, effort and because people are lazy%TODO why?
+Instead of implementing the functionality from scratch, code which already is available to the developer is used.
+Because the code may also difficult to understand, it is copied rather untouched.
+This would results in a similarity equal to a type-1 clone.
+However, small modifications may have been done e.g. added lines for logging purposes.
+This would make it a type-3 clone, but without the renaming of variables.
+
+For this work, code which has multiple small sections which are similar in the type-1 category is the target clone type.

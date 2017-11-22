@@ -44,7 +44,12 @@ Both, using a suffix-tree or a index for finding copied code, may be suiting the
 However, a suffix-tree is quite difficult to persist on disk, which is a requirement for offline use.
 With a huge codebase of billion lines of code, this may become a problem.
 
-%TODO SourcererCC & Cloneworks
+
+
+Sajnanj et al. \cite{sajnani2016sourcerercc} and Svajlenko and Roy \cite{svajlenko2017fast} developed a workbench for large scale clone detection.
+In their work, they split blocks of code into tokens and sort them by frequency of use.
+Caclulating the overlap coefficient for blocks is used to assess their similarity.
+They could find clones in 250 MLOCs within 4 days, which is significantly faster than other clone detection tools at the time.
 
 \section{Code Search}\label{section:related_work/code_search}
 With the growth of the Internet, recent research areas start to aim for search engines for code.

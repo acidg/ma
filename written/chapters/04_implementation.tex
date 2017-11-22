@@ -142,7 +142,7 @@ Hashing with MD5 reduces the entropy of a chunk to about 128 bit of a ideal hash
 Since lossless compression is expected not to reduce the size of the hashtable by much, lossy compression could be used.
 One great way of reducing size of hash table with low false-positive probability is a BloomFilter.
 
-To store a value, a BloomFilter uses multiple hash functions to hash a value. %TODO quelle?
+To store a value, a BloomFilter uses multiple hash functions to hash a value\cite{bloom1970filter}.
 It uses the resulting hash values as indexes to set bits of a bit array to 1.
 To find out whether a value is stored in the BloomFilter, the value is hashed with the same hash functions as for storing a value.
 Again, hash values are used as indexes.
@@ -150,20 +150,26 @@ If all values inside the bit array defined by the indexes are set to 1, the valu
 If one or more of the bits are not set, the value is guaranteed not in the filter.
 For the tool developed in this work, the values inserted into the BloomFilter are the hashes of the chunks.
 
-The space $m$ in bits required to store $n$ values with the optimal number of hash functions can be estimated by $m = -\frac{n\cdot \ln(p)}{(\ln2)^{2}}$ with $p$ being the probability for a false positive.
-For one billion hashes and a probability of 0.01\%, which roughly means one false positive for every 10000 lines of code, about 19170116755 bits or 2,4 GB are needed.
-A simple hash table would need at least 128 billion bits or 16 GB for the same amount of data.
+%TODO: "By making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability) and decrease the false positive probability by roughly a factor of 2. @Mitzenmacher, Michael; Upfal, Eli (2005), Probability and computing: Randomized algorithms and probabilistic analysis S.10
 
 The advantage here is the small size of the filter.
 However, the compression is lossy, because there is a certain probability for false positives.
-The probability is depending on the size of the bit array, the number of inserted values and the number of used hash functions, but when kept at an optimum, grows almost linearly with the number of insertions.
+The probability is depending on the size of the bit array, the number of inserted values and the number of used hash functions, but when kept at an optimum, grows almost (due to discrete number of hashing functions) linearly with the number of insertions.
 Since it is not possible to remove values from the filter, it has to be recalculated every time the index changes.
 
 It is also possible to only use the filter to find potential copied code.
 This however, does not allow the client to find the origin for a potential match.
 	
 \section{Searching Copied Code}\label{section:implementation/searching_copied_code}
+The client has a codebase which should be searched for copied code.
+To do so, it normalizes the code in question, groups statements and hashes them as described in \autoref{section:implementation/creating_index}.
+%TODO Activity diagram: client <-> server
 % TODO calculate probability of final false positive
 
 \section{Future Work / Extensibility}\label{section:implementation/extensibility}
 %TODO Extension points for future development? Web-Interface for code-add-request, Suggestions for linking libraries (gradle, ...)
+\begin{itemize}
+	\item Use Cuckoo-Filter \cite{fan2014cuckoo} instead of Bloom-Filter. Better performance in low false-positive probability with many items
+	\item Optimize normalization: Method based?, block-based => switch methods/structs/enums positions
+	\item Assess matches: Load file(s) from server, do more comparison (With a difftool token based on methods/blocks, to prevent reordering of methods not detected)
+\end{itemize}

@@ -382,6 +382,7 @@ No feature like bloom filter},
   author  = {Black Duck Software, Inc.},
   title   = {Center for Open Source Research \& Innovation},
   year    = {2017},
+  review  = {blackduck},
   url     = {https://www.blackducksoftware.com/de/open-source-research},
   urldate = {2017-11-10},
 }
@@ -410,6 +411,83 @@ No feature like bloom filter},
   ==> Therefore we can argue that the huge amount of code fragments leads to even higher redundancy.
   ==> Hence we have to set the minimum statement length to 8 or 9 in order to achieve a managable number of clones.},
   url       = {http://doi.acm.org/10.1145/1882291.1882315},
+}
+
+@Article{bloom1970filter,
+  author     = {Bloom, Burton H.},
+  title      = {Space/Time Trade-offs in Hash Coding with Allowable Errors},
+  journal    = {Commun. ACM},
+  year       = {1970},
+  volume     = {13},
+  number     = {7},
+  pages      = {422--426},
+  month      = jul,
+  issn       = {0001-0782},
+  acmid      = {362692},
+  address    = {New York, NY, USA},
+  doi        = {10.1145/362686.362692},
+  file       = {:/home/bene/Uni/ma/related/[26] Bloom, Burton H. Space-time trade-offs in hash coding with allowable errors.pdf:PDF},
+  issue_date = {July 1970},
+  keywords   = {hash addressing, hash coding, retrieval efficiency, retrieval trade-offs, scatter storage, searching, storage efficiency, storage layout},
+  numpages   = {5},
+  publisher  = {ACM},
+  url        = {http://doi.acm.org/10.1145/362686.362692},
+}
+
+@InProceedings{fan2014cuckoo,
+  author       = {Fan, Bin and Andersen, Dave G and Kaminsky, Michael and Mitzenmacher, Michael D},
+  title        = {Cuckoo filter: Practically better than bloom},
+  booktitle    = {Proceedings of the 10th ACM International on Conference on emerging Networking Experiments and Technologies},
+  year         = {2014},
+  pages        = {75--88},
+  organization = {ACM},
+  file         = {:/home/bene/Uni/ma/related/[27] Fan, Bin, et al. Cuckoo filter\: Practically better than bloom.pdf:PDF},
+}
+
+@InProceedings{svajlenko2014towards,
+  author       = {Svajlenko, Jeffrey and Islam, Judith F and Keivanloo, Iman and Roy, Chanchal K and Mia, Mohammad Mamun},
+  title        = {Towards a big data curated benchmark of inter-project code clones},
+  booktitle    = {Software Maintenance and Evolution (ICSME), 2014 IEEE International Conference on},
+  year         = {2014},
+  pages        = {476--480},
+  organization = {IEEE},
+  file         = {:/home/bene/Uni/ma/related/[28] J. Svajlenko, J. F. Islam, I. Keivanloo, C. K. Roy, and M. M. Mia. Towards a big data curated benchmark of inter-project code clones.pdf:PDF},
+}
+
+@InProceedings{kawaguchi2009shinobi,
+  author       = {Kawaguchi, Shinji and Yamashina, Takanobu and Uwano, Hidetake and Fushida, Kyohei and Kamei, Yasutaka and Nagura, Masataka and Iida, Hajimu},
+  title        = {SHINOBI: A tool for automatic code clone detection in the IDE},
+  booktitle    = {Reverse Engineering, 2009. WCRE'09. 16th Working Conference on},
+  year         = {2009},
+  pages        = {313--314},
+  organization = {IEEE},
+  file         = {:/home/bene/Uni/ma/related/[29] Kawaguchi, Shinji, et al. SHINOBI\: A tool for automatic code clone detection in the IDE.pdf:PDF},
+  review       = {Yamashina et al. [31] propose a tool called SHINOBI that
+provides real-time cloning information to developers inside the
+IDE. Instead of performing clone detection on demand (and
+incurring waiting times for developers), SHINOBI maintains a
+suffix-array on a server from which cloning information for a
+file opened by a developer can be retrieved efficiently. Unfor-
+tunately, the authors do not approach suffix-array maintenance
+in their work. Real-time cloning information hence appears to
+be limited to an immutable snapshot of the software. We thus
+have no indication that their approach works incrementally.},
+}
+
+@Article{heinemann2012effective,
+  author    = {Heinemann, Lars and Robillard, Martin},
+  title     = {Effective and efficient reuse with software libraries},
+  year      = {2012},
+  file      = {:/home/bene/Uni/ma/related/[30] Heinemann, Lars, and Martin Robillard. Effective and efficient reuse with software libraries.pdf:PDF},
+  publisher = {Citeseer},
+}
+
+@Online{licenses,
+  author  = {Free Software Foundation's Licensing and Compliance Lab},
+  title   = {Various Licenses and Comments about Them},
+  year    = {2017},
+  url     = {https://www.gnu.org/licenses/license-list.en.html},
+  urldate = {2017-11-22},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
