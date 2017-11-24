@@ -10,14 +10,49 @@ blabla motivation
 To fight these problems, in this work a architecture for tool should be developed, which allows to search a codebase for copied code from open source software available on the Internet.
 
 Huge amounts of code -> Index maintenance high effort -> Can not be done on every machine, where tool is used -> Client-Server
-Client-Server: Many requests, high load, high traffic, has to be quick (continuous) -> Index on Client
+Client-Server: Many requests, high load, high traffic, has to be quick (continuous analysis!) -> Index on Client
 Index on Client -> bad for updates, huge index -> Partial Index (Bloomfilter, Subhash Table)
+
+Based on this line of thoughts, this work proposes a Client-Server architecture with additional index on the client.
+The server is indexing huge amounts of publicly available open source code and provides a compact version of the index, which can be used to make a decision, whether a code segment is part of an open source system.
+
+%TODO Confidentiality
+The simplest solution is not to send the code directly to the server, but in a format, which makes it impossible to deduce about the code.
+
+
+%TODO Historyanalysis
+Copying of code form a source codebase into a target codebase may have happened a long time ago.
+The code in the source codebase may have changed in that time and therefore may not be seen as a copy anymore.
+However, a possible license infringement still persists in correlation to the previous version.
+Therefore it is important for the detection tool to recognize code which has been copied from a previous version of the source codebase.
+
+Open source code available on the Internet may also change over time.
+When code of a codebase is changed, the Database of the tool which stores the data to find matches of copied code has to be updated.
+The easiest solution would be to rebuild the database from scratch.
+Since billion lines of code have to be crawled again, this could take quite long.
+Instead it should be possible to update the database , when a codebase was changed.
 
 \begin{itemize}
 	\item Prevent license infringement
 	\item Link lib instead of copy is the better approach. This also ensures that the library can be exchanged and updated if vulnerabilities are discovered in its code.
 	\item This brings the next point: Vulerabilities in the copied code
 \end{itemize}
+
+Needed:
+
+\subsection{Guaranteed Detection of Directly Copied Code}\label{section:requirements/guaranteed_detection}
+The tool should be able to detect code in a target codebase which is directly copied and meets the required length for a license infringement as defined in \autoref{section:requirements/detecting_infringement}.
+The target codebase is the codebase of the system the code is copied into.
+The detection tool has to contain the directly copied code's origin in it's database.
+Directly copied in this context means copied without modification except whitespace formatting and additional or removed newlines.
+Detection should be guaranteed for such a case.
+
+\subsection{High Probability for Detecting Modified Code}\label{section:requirements/high_probability}
+The probability of the tool to detect code, which has been copied but also slightly modified, should be high.
+Modification of code can be done in various extend which compel to define this further.
+Here, a slight modification means adding, removing or changing one statement in a copied block of code.
+The probability for the tool to detect a block of code with a length as defined in \autoref{section:requirements/detecting_infringement} with such a slight modification should be higher than 50\% in the worst case. %TODO better definition?
+
 
 \section{Contribution}
 \subsection*{Research Questions}\label{section:introduction/research_questions}
@@ -26,7 +61,7 @@ Only few of them do this in a large scale manner or in regard to license infring
 This work tries to fill the gap and concentrates on the development of a tool for continuous detection of license infringements and tries to answer the research questions, which are described in the following.
 
 \subsection*{How much resources are needed to create and maintain an index for huge amounts of source code including its history?}
-%TODO mehr auf viele clients und viel nachfrage konzentrieren
+%TODO mehr auf viele clients und viel nachfrage konzentrieren, Continuous detection!!!
 Huge amounts of source code have been analyzed before many times, see \ref{section:related_work/clone_detection}.
 Most of the works are looking on 
  in the magnitude of billion lines of code 
