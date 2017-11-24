@@ -48,13 +48,13 @@ In the context of this work, licenses are separated into three different categor
 \end{description}
 
 Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license can already be an infringement.
-It can also be argued, if code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting.% TODO weglassen oder quelle?
+It can also be argued, if code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting \cite{heinemann2012effective}.
 \\ \\
 \noindent
 One problem in the context of this work are codebases with files which have a different license, than the codebase itself.
 This is relevant, if e.g. code of a permissive license is copied into the codebase under a restrictive license.
 For the development of the tool, the difficulty here is to classify the file correctly into the right license category defined above.
-In the later of this work, this exceptional case is ignored, since manual inspection of matches between a target's and reference system's file is mandatory. %TODO Why?
+In the later of this work, this exceptional case is ignored, since manual inspection of matches between a target's and reference system's file is mandatory for decision making.
 %TODO GPL Linking Exception?
 
 \section{Code Cloning}
@@ -63,7 +63,15 @@ A lot of work has been done in this area, starting more than 30 years ago\cite{l
 During that time, terms specifying the similarity of code have been established.
 
 In general, sections of similar code which may have been caused by copying the code are called \textit{clones}.
-The similarity of clones can be categorized into different types, according to %TODO
+Similar is not very precise, since it can be a 1:1 copy or can have small differences like variable renaming up to clones which only have a somewhat similar structure or produce the same output for a given input.
+The similarity of clones can be categorized into different types, according to \cite{roy2007survey}:
+
+\begin{description}
+	\item[type-1] Identical code fragments except for variations in whitespace (may be also variations in layout) and comments.
+	\item[type-2] Structurally/syntactically identical fragments except for variations in identifiers, literals, types, layout and comments.
+	\item[type-3] Copied fragments with further modifications. Statements can be changed, added or removed in addition to variations in identifiers, literals, types, layout and comments.
+	\item[type-4] Two or more code fragments that perform the same computation but implemented through different syntactic variants.
+\end{description}
 
 However, those clone types are just a reference.
 Clone detection tools often do not concentrate on one specific clone type, but rather on the purpose of the tool and similarity of clones have to be defined in more detail.
@@ -71,11 +79,13 @@ This also is true for this work.
 
 \subsection*{Which clones are relevant for license infringements?}
 The goal of this work is to find code, which has been copied from source code available on the Internet and my cause licensing issues.
-Code is copied for different reasons: to save time, effort and because people are lazy%TODO why?
-Instead of implementing the functionality from scratch, code which already is available to the developer is used.
+Code is copied for many reasons, e.g. to save time and effort, because of lack of knowledge, difficulty of understanding and many others \cite{roy2007survey}.
+Instead of implementing the functionality from scratch, code which already is available to the developer is used, which may include code available as open source software on the Internet.
 Because the code may also difficult to understand, it is copied rather untouched.
 This would results in a similarity equal to a type-1 clone.
 However, small modifications may have been done e.g. added lines for logging purposes.
 This would make it a type-3 clone, but without the renaming of variables.
 
 For this work, code which has multiple small sections which are similar in the type-1 category is the target clone type.
+
+%TODO “accidental cloning”, which is not the result of direct copy and paste activities but by using the same set of APIs to implement similar protocols

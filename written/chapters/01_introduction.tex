@@ -3,23 +3,24 @@
 \chapter{Introduction}\label{chapter:introduction}
 blabla motivation
 
-To fight these problems, in this work a architecture for tool should be developed, which allows to search a codebase for copied code from open source software available on the Internet.
-The approach of this work is a server system which holds a search engine for code.
-
-Client server, because of updates and huge database. Index can not be downloaded for every update
-
+\section{Problem Statement}\label{section:introduction/problem}
 %TODO See Title of work!!!
+% digital content -> easily copied
 
-\section{Use cases}\label{section:introduction/use_cases}
-As mentioned above, detection of license infringement is one use case for the tool.
-Beside that, the tool can also be used to...
+To fight these problems, in this work a architecture for tool should be developed, which allows to search a codebase for copied code from open source software available on the Internet.
+
+Huge amounts of code -> Index maintenance high effort -> Can not be done on every machine, where tool is used -> Client-Server
+Client-Server: Many requests, high load, high traffic, has to be quick (continuous) -> Index on Client
+Index on Client -> bad for updates, huge index -> Partial Index (Bloomfilter, Subhash Table)
+
 \begin{itemize}
 	\item Prevent license infringement
 	\item Link lib instead of copy is the better approach. This also ensures that the library can be exchanged and updated if vulnerabilities are discovered in its code.
 	\item This brings the next point: Vulerabilities in the copied code
 \end{itemize}
 
-\section{Research Questions}\label{section:introduction/research_questions}
+\section{Contribution}
+\subsection*{Research Questions}\label{section:introduction/research_questions}
 Many of the works described in \autoref{chapter:related_work} concentrate on finding clones between codebases of software projects.
 Only few of them do this in a large scale manner or in regard to license infringements.
 This work tries to fill the gap and concentrates on the development of a tool for continuous detection of license infringements and tries to answer the research questions, which are described in the following.
@@ -36,8 +37,8 @@ Most of the works are looking on
 
 %TODO ref Ausschreibung
 
-% digital content -> easily copied
 
+\section{Outline}
 % TODO outline of thesis: see sourcererCC paper S.2
 The paper is organized as follows.
 \autoref{chapter:requirements}
