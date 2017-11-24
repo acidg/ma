@@ -1,24 +1,39 @@
 % !TeX root = ../main.tex
 
 \chapter{Introduction}\label{chapter:introduction}
-blabla motivation
+TODO: Blabla: Current state, what is happening
+\\ \\
+Copying code into a codebase and violating licenses can happen with every change.
+To prevent such violations, the code has to be analyzed continuously, whenever a change happens.
+% digital content -> easily copied
+%TODO See Title of work!!! A tool architecture for the continuous detection of open source license infringements using clone detection
 
 \section{Problem Statement}\label{section:introduction/problem}
-%TODO See Title of work!!!
-% digital content -> easily copied
+This work proposes an architecture for a tool, which allows to search a codebase for copied code from open source software available on the Internet.
+To decide whether a given fragment of code is part of an open source system, the tool has to analyze huge amounts of open source systems available on the Internet and maintain a data structure which makes it possible to quickly search for that fraction of code.
+This could be an index.
 
-To fight these problems, in this work a architecture for tool should be developed, which allows to search a codebase for copied code from open source software available on the Internet.
+Creating and maintaining an index for such amounts of code is a high effort.
+Instead of creating the data structure every time from scratch is inefficient and redundant.
+Instead, a server analyzing the code and redistributing it to clients in a Server-Client architecture seems more reasonable.
 
-Huge amounts of code -> Index maintenance high effort -> Can not be done on every machine, where tool is used -> Client-Server
-Client-Server: Many requests, high load, high traffic, has to be quick (continuous analysis!) -> Index on Client
-Index on Client -> bad for updates, huge index -> Partial Index (Bloomfilter, Subhash Table)
+As said before, to prevent the introduction of license violations into a codebase, it has to be analyzed for code violating licenses continuously, with every change on the codebase.
+This can imply many requests and thus a high load and traffic on the server.
+Also, a client may not be allowed to send code to a server due to company policies.
+The simplest solution to that problem is not to send the code directly to the server, but in a format, which makes it impossible to deduce about the code.
+However, the amount of request still cause a high load on the server.
+Keeping a copy of the index created by the server on the client could solve both, the high load and confidentiality on the code.
 
-Based on this line of thoughts, this work proposes a Client-Server architecture with additional index on the client.
+The open source software systems which are analyzed by the server regularly have to be checked for changes.
+When the server is updating its index, clients have to download it from the server in order to find the latest copied code fragments.
+Since huge amounts of source code are indexed on the server, the index may also be quite big.
+Every update the server makes on the index forces a client to download the index again.
+Reducing the size of the index to very compact form and only request details about a detected match from the server would be a solution.
+
+\section{Approach}
+Based on this line of thoughts, this work proposes a client-server architecture with additional index on the client.
 The server is indexing huge amounts of publicly available open source code and provides a compact version of the index, which can be used to make a decision, whether a code segment is part of an open source system.
-
-%TODO Confidentiality
-The simplest solution is not to send the code directly to the server, but in a format, which makes it impossible to deduce about the code.
-
+If a match is found on the client side, details about the match can be requested from the server which may reduce the requests to and therefore the load on the server drastically.
 
 %TODO Historyanalysis
 Copying of code form a source codebase into a target codebase may have happened a long time ago.
