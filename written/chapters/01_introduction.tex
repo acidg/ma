@@ -1,25 +1,30 @@
 % !TeX root = ../main.tex
 
 \chapter{Introduction}\label{chapter:introduction}
-TODO: Blabla: Current state, what is happening
-\\ \\
+In software development, reuse of code can reduce time and effort and can even enhance quality \cite{krueger1992software}.
+Repositories published on the Internet are a popular source for code which offers the desired functionality.
+However, when code is copied from open source software systems, licenses may be violated, if conditions are not met.
+So called Copy-Left licenses like GPL, which demand copied-to software systems to adopt the same license, are critical when used in closed-source systems.
+Software may have to be published as open source afterwards like in the case of Microsoft's \glqq Windows USB/DVD Download Tool\grqq\footnote{\href{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}}.
+
+To prevent such cases, 
+
+Beside the prevention of license violations, library code which should be linked instead of copied, could be found as well.
+
 Copying code into a codebase and violating licenses can happen with every change.
 To prevent such violations, the code has to be analyzed continuously, whenever a change happens.
-% digital content -> easily copied
 %TODO See Title of work!!! A tool architecture for the continuous detection of open source license infringements using clone detection
 
-\section{Problem Statement}\label{section:introduction/problem}
+\section{Approach}\label{section:introduction/problem}
 This work proposes an architecture for a tool, which allows to search a codebase for copied code from open source software available on the Internet.
-To decide whether a given fragment of code is part of an open source system, the tool has to analyze huge amounts of open source systems available on the Internet and maintain a data structure which makes it possible to quickly search for that fraction of code.
-This could be an index.
+To decide whether a given fragment of code is part of an open source system, the detection tool analyzes huge amounts of open source systems available on the Internet and maintains an index which makes it possible to quickly search for similar fractions of code in the analyzed open source systems.
 
 Creating and maintaining an index for such amounts of code is a high effort.
-Instead of creating the data structure every time from scratch is inefficient and redundant.
-Instead, a server analyzing the code and redistributing it to clients in a Server-Client architecture seems more reasonable.
+Instead of creating the data structure for every installation of the tool from scratch, a server analyzing the code and redistributing it to clients in a Server-Client architecture is used.
 
 As said before, to prevent the introduction of license violations into a codebase, it has to be analyzed for code violating licenses continuously, with every change on the codebase.
-This can imply many requests and thus a high load and traffic on the server.
-Also, a client may not be allowed to send code to a server due to company policies.
+This can imply many requests and thus a high load and traffic on the detection tool's server.
+Also, a client may not want to send its code to a server on the Internet due to company policies.
 The simplest solution to that problem is not to send the code directly to the server, but in a format, which makes it impossible to deduce about the code.
 However, the amount of request still cause a high load on the server.
 Keeping a copy of the index created by the server on the client could solve both, the high load and confidentiality on the code.
@@ -30,10 +35,10 @@ Since huge amounts of source code are indexed on the server, the index may also 
 Every update the server makes on the index forces a client to download the index again.
 Reducing the size of the index to very compact form and only request details about a detected match from the server would be a solution.
 
-\section{Approach}
+%TODO was approach
 Based on this line of thoughts, this work proposes a client-server architecture with additional index on the client.
 The server is indexing huge amounts of publicly available open source code and provides a compact version of the index, which can be used to make a decision, whether a code segment is part of an open source system.
-If a match is found on the client side, details about the match can be requested from the server which may reduce the requests to and therefore the load on the server drastically.
+If a match is found on the client side, details about the match can be requested from the server which may reduce the requests to and therefore the load on the server drastically. \autoref{section:introduction/problem}
 
 %TODO Historyanalysis
 Copying of code form a source codebase into a target codebase may have happened a long time ago.
@@ -55,14 +60,14 @@ Instead it should be possible to update the database , when a codebase was chang
 
 Needed:
 
-\subsection{Guaranteed Detection of Directly Copied Code}\label{section:requirements/guaranteed_detection}
+%\subsection{Guaranteed Detection of Directly Copied Code}\label{section:requirements/guaranteed_detection}
 The tool should be able to detect code in a target codebase which is directly copied and meets the required length for a license infringement as defined in \autoref{section:requirements/detecting_infringement}.
 The target codebase is the codebase of the system the code is copied into.
 The detection tool has to contain the directly copied code's origin in it's database.
 Directly copied in this context means copied without modification except whitespace formatting and additional or removed newlines.
 Detection should be guaranteed for such a case.
 
-\subsection{High Probability for Detecting Modified Code}\label{section:requirements/high_probability}
+%\subsection{High Probability for Detecting Modified Code}\label{section:requirements/high_probability}
 The probability of the tool to detect code, which has been copied but also slightly modified, should be high.
 Modification of code can be done in various extend which compel to define this further.
 Here, a slight modification means adding, removing or changing one statement in a copied block of code.
@@ -76,6 +81,7 @@ Only few of them do this in a large scale manner or in regard to license infring
 This work tries to fill the gap and concentrates on the development of a tool for continuous detection of license infringements and tries to answer the research questions, which are described in the following.
 
 \subsection*{How much resources are needed to create and maintain an index for huge amounts of source code including its history?}
+% Is the approach developed in this work suitable for 
 %TODO mehr auf viele clients und viel nachfrage konzentrieren, Continuous detection!!!
 Huge amounts of source code have been analyzed before many times, see \ref{section:related_work/clone_detection}.
 Most of the works are looking on 
