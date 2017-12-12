@@ -1,100 +1,47 @@
 % !TeX root = ../main.tex
 
 \chapter{Introduction}\label{chapter:introduction}
+%TODO attribution to open source community
 In software development, reuse of code can reduce time and effort and can even enhance quality \cite{krueger1992software}.
 Repositories published on the Internet are a popular source for code which offers the desired functionality.
-However, when code is copied from open source software systems, licenses may be violated, if conditions are not met.
-So called Copy-Left licenses like GPL, which demand copied-to software systems to adopt the same license, are critical when used in closed-source systems.
+However, when code is copied from open source software systems, licenses may be violated if its conditions are not met.
+So called Copy-Left licenses like GPL, which demand copied-to software systems to adopt the same license, are critical, especially in closed-source systems.
 Software may have to be published as open source afterwards like in the case of Microsoft's \glqq Windows USB/DVD Download Tool\grqq\footnote{\href{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}}.
 
-To prevent such cases, 
+There are many tools available for finding copied code in a codebase.
+Most of the tools are used for clone detection in order to find similar code which can be refactored for reuse to reduce redundancy and enhance software quality.
+Some of them try to find copied code across projects or even provide interfaces for querying code.
+Often, they are designed for single runs and need a pool of projects which they can use for comparison.
+The possibility to use them for detection of license infringements on a continuous basis is very limited because of several issues.
+% huge dataset
+The data structure for comparison has to be built from a huge dataset of open source projects to find copied code which is a huge effort.
+% no history analysis
+Second, the history of the projects often is not considered which may prevent detection of copied code form older versions of a system.
+When code was copied from an older version of an open source project, it may not be found.
+% confidentiality
+Uploading the code to a server offering copied code detection often is not an option for confidentiality reasons.
 
-Beside the prevention of license violations, library code which should be linked instead of copied, could be found as well.
-
-Copying code into a codebase and violating licenses can happen with every change.
-To prevent such violations, the code has to be analyzed continuously, whenever a change happens.
-%TODO See Title of work!!! A tool architecture for the continuous detection of open source license infringements using clone detection
-
-\section{Approach}\label{section:introduction/problem}
 This work proposes an architecture for a tool, which allows to search a codebase for copied code from open source software available on the Internet.
-To decide whether a given fragment of code is part of an open source system, the detection tool analyzes huge amounts of open source systems available on the Internet and maintains an index which makes it possible to quickly search for similar fractions of code in the analyzed open source systems.
+To decide whether a given fragment of code is part of an open source system, the detection tool analyzes huge amounts of open source systems available on the Internet and maintains a data structure, which makes it possible to quickly search for similar fractions of code in the analyzed open source systems.
+The approach proposed in this work is based on a client server architecture, where the server keeps track of several thousand open source projects.
+The server provides an interface for clients, which allows them to query for code sequences and find similar matches in open source systems.
+This can be done in a continuous manner, i.e. for every commit to track whether incongruously licensed code has been copied to the codebase.
+One key aspect here is the filtering technique used, which significantly reduces the server's load and speeds up the search process.
+The filter is a small part of the database which can be downloaded from the server.
+It allows clients to decide whether a section of source code is part of an open source system tracked by the server.
 
-Creating and maintaining an index for such amounts of code is a high effort.
-Instead of creating the data structure for every installation of the tool from scratch, a server analyzing the code and redistributing it to clients in a Server-Client architecture is used.
+%TODO requirements
 
-As said before, to prevent the introduction of license violations into a codebase, it has to be analyzed for code violating licenses continuously, with every change on the codebase.
-This can imply many requests and thus a high load and traffic on the detection tool's server.
-Also, a client may not want to send its code to a server on the Internet due to company policies.
-The simplest solution to that problem is not to send the code directly to the server, but in a format, which makes it impossible to deduce about the code.
-However, the amount of request still cause a high load on the server.
-Keeping a copy of the index created by the server on the client could solve both, the high load and confidentiality on the code.
+The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
+The analysis of existing open source code bases is fast and scalable and can be periodically updated.
+To prove that, more than 500 million lines of code from approximately 2000 open source projects where indexed in about 20 hours on a consumer laptop.
+The filter's size is about 200MB for this amount of code which allows updates on a regular basis.
 
-The open source software systems which are analyzed by the server regularly have to be checked for changes.
-When the server is updating its index, clients have to download it from the server in order to find the latest copied code fragments.
-Since huge amounts of source code are indexed on the server, the index may also be quite big.
-Every update the server makes on the index forces a client to download the index again.
-Reducing the size of the index to very compact form and only request details about a detected match from the server would be a solution.
+%TODO library code which should be linked instead of copied, vulnerabilities in copied code
+% TODO veränderungen am code
 
-%TODO was approach
-Based on this line of thoughts, this work proposes a client-server architecture with additional index on the client.
-The server is indexing huge amounts of publicly available open source code and provides a compact version of the index, which can be used to make a decision, whether a code segment is part of an open source system.
-If a match is found on the client side, details about the match can be requested from the server which may reduce the requests to and therefore the load on the server drastically. \autoref{section:introduction/problem}
-
-%TODO Historyanalysis
-Copying of code form a source codebase into a target codebase may have happened a long time ago.
-The code in the source codebase may have changed in that time and therefore may not be seen as a copy anymore.
-However, a possible license infringement still persists in correlation to the previous version.
-Therefore it is important for the detection tool to recognize code which has been copied from a previous version of the source codebase.
-
-Open source code available on the Internet may also change over time.
-When code of a codebase is changed, the Database of the tool which stores the data to find matches of copied code has to be updated.
-The easiest solution would be to rebuild the database from scratch.
-Since billion lines of code have to be crawled again, this could take quite long.
-Instead it should be possible to update the database , when a codebase was changed.
-
-\begin{itemize}
-	\item Prevent license infringement
-	\item Link lib instead of copy is the better approach. This also ensures that the library can be exchanged and updated if vulnerabilities are discovered in its code.
-	\item This brings the next point: Vulerabilities in the copied code
-\end{itemize}
-
-Needed:
-
-%\subsection{Guaranteed Detection of Directly Copied Code}\label{section:requirements/guaranteed_detection}
-The tool should be able to detect code in a target codebase which is directly copied and meets the required length for a license infringement as defined in \autoref{section:requirements/detecting_infringement}.
-The target codebase is the codebase of the system the code is copied into.
-The detection tool has to contain the directly copied code's origin in it's database.
-Directly copied in this context means copied without modification except whitespace formatting and additional or removed newlines.
-Detection should be guaranteed for such a case.
-
-%\subsection{High Probability for Detecting Modified Code}\label{section:requirements/high_probability}
-The probability of the tool to detect code, which has been copied but also slightly modified, should be high.
-Modification of code can be done in various extend which compel to define this further.
-Here, a slight modification means adding, removing or changing one statement in a copied block of code.
-The probability for the tool to detect a block of code with a length as defined in \autoref{section:requirements/detecting_infringement} with such a slight modification should be higher than 50\% in the worst case. %TODO better definition?
-
-
-\section{Contribution}
-\subsection*{Research Questions}\label{section:introduction/research_questions}
-Many of the works described in \autoref{chapter:related_work} concentrate on finding clones between codebases of software projects.
-Only few of them do this in a large scale manner or in regard to license infringements.
-This work tries to fill the gap and concentrates on the development of a tool for continuous detection of license infringements and tries to answer the research questions, which are described in the following.
-
-\subsection*{How much resources are needed to create and maintain an index for huge amounts of source code including its history?}
-% Is the approach developed in this work suitable for 
-%TODO mehr auf viele clients und viel nachfrage konzentrieren, Continuous detection!!!
-Huge amounts of source code have been analyzed before many times, see \ref{section:related_work/clone_detection}.
-Most of the works are looking on 
- in the magnitude of billion lines of code 
- with finite time and resources
-
-\subsection*{What assertions can be made from matches between a code base and the index?}
-\subsection*{How robust does the index have to be in regard to changes in code?}
-
-%TODO ref Ausschreibung
-
-
-\section{Outline}
-% TODO outline of thesis: see sourcererCC paper S.2
-The paper is organized as follows.
-\autoref{chapter:requirements}
+The work is organized as follows.
+First, definitions used throughout the work as well as requirements are listed in \autoref{chapter:preliminaries}.
+Subsequently, related work is depicted in \autoref{chapter:related_work} and based on that, an overview of the approach used in this work is presented in \autoref{chapter:approach}.
+Details of the implementation, decisions and its complications are shown in \autoref{chapter:implementation}.
+In \autoref{chapter:evaluation} findings and their validity are listed and categorized which leads to a discussion about the usefulness of the approach and proposals for future work in \autoref{chapter:conclusion}.
