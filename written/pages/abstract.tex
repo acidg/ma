@@ -2,9 +2,14 @@
 
 So called open source code shared on platforms like GitHub or BitBucket, is often licensed for modification and reuse even in commercial systems.
 Permissive licenses often only demand to inform about the source of the code, whereas more strict ones like the GNU Public License (GPL) or other copy-left licenses require to distribute the code as open source under the same terms.
-When such code is copied into a proprietary code base, the license scheme is violated and the company may face huge fines, when this is revealed.
-In this thesis a system for detecting such copied code will be be developed.
-For that, mechanisms known from clone-detection are used to create a index which contains huge amounts of freely available open source code.
-This not only enables the user of the system to detect possible license infringements, but also may uncover incorrect use of code-libraries.
+When copy-left code is copied into a close-sourced code base, the license scheme is violated and the company owning the codebase may face huge fines, when the violation is revealed.
+
+In this thesis a tool architecture for detecting such copied code is developed.
+The developed client-server architecture uses mechanisms known from clone-detection to create an index, which contains huge amounts of freely available open source code on the server-side.
+A bloomfilter can be downloaded to the client to reduce the amount of requests and speed up the search process.
+To increase the accuracy, the history of the indexed projects is also taken into account.
+
+The approach is prototypically implemented and evaluated by indexing 2.000 open source projects and analyzing 20 projects for copied code resulting in a database size of 37 GB and a filter of less than 200 MB.
 
 %TODO History analysis!
+%TODO probability = 0,01% false positive

@@ -4,7 +4,7 @@
 Lots of research has been done in the area of detecting copy-pasted code.
 This mainly results from the huge field of application, where such techniques can be used.
 Most of the research can be differentiated in the types of copied code which they detect.
-In the case of this work, code which differs in formatting and small added/removed or rearranged statements are of advantage. % TODO why?
+In the case of this work, code which differs in formatting and small added/removed or rearranged statements are of advantage since developers may change the copied code slightly or add print statements.
 
 \section{Detecting Similarities in Source Code}\label{section:related_work/detecting_similarities}
 On of the earlies areas is detection of copy-pasted code in student submissions of programming lessons, which is researched since more than 30 years\cite{lancaster2004comparison}.
@@ -40,16 +40,15 @@ Koschke et al. \cite{koschke2014large,koschke2012large} tried to find license in
 Using a suffix-tree, they showed that this approach is faster than an index based one.
 However, \glqq evaluation shows that [their] approach is faster than index-based techniques when the analysis is run only once. If the analysis is to be conducted multiple times, creating an index pays off\grqq \cite{koschke2014large}.
 
-Both, using a suffix-tree or a index for finding copied code, may be suiting the requirements of this thesis.
-However, a suffix-tree is quite difficult to persist on disk, which is a requirement for offline use.
-With a huge codebase of billion lines of code, this may become a problem.
-
-
-
 Sajnanj et al. \cite{sajnani2016sourcerercc} and Svajlenko and Roy \cite{svajlenko2017fast} developed a workbench for large scale clone detection.
 In their work, they split blocks of code into tokens and sort them by frequency of use.
 Caclulating the overlap coefficient for blocks is used to assess their similarity.
-They could find clones in 250 MLOCs within 4 days, which is significantly faster than other clone detection tools at the time.
+They could find clones in 250 million lines of code within 4 days, which is significantly faster than other clone detection tools at the time.
+
+Both, using a suffix-tree or a index for finding copied code, may be suiting the requirements of the tool developed in this thesis.
+However, a suffix-tree is quite difficult to persist and share between machines.
+The advantage of a index in the context of this work is the possibility to extract certain information which can be used to decide whether an element is part of the index.
+%TODO is scheiße, überarbeiten!
 
 \section{Code Search}\label{section:related_work/code_search}
 With the growth of the Internet, recent research areas start to aim for search engines for code.
@@ -61,11 +60,12 @@ This information is then used to query the database and find code which matches 
 
 Keivanloo et al. tried to develop a linked-data repository called SeCold \cite{keivanloo2012leveraging,keivanloo2011internet,keivanloo2011seclone,keivanloo2010semantic}.
 The system has different parts which enable a user to search for code clones, similar bytecode or program structure.
-The most interesting part of the system is the clone search called SeClone, which is described in \cite{keivanloo2011internet,keivanloo2011seclone}.
-For preprocessing they first tokenize the code using ASTs (Abstract Syntax Tree) and a normalization approach similar to CCFinder as described in \cite{kamiya2002ccfinder}.
+The most interesting part of the system in the context of this thesis is the clone search called SeClone, which is described in \cite{keivanloo2011internet,keivanloo2011seclone}.
+For preprocessing, they first tokenize the code using ASTs (Abstract Syntax Tree) and a normalization approach similar to CCFinder as described in \cite{kamiya2002ccfinder}.
 For indexing, the tokens are feed into two different databases, one for code patterns and one to store type usage which is for reducing the amount of false positives.
-To enable detecting clones with added, changed or removed statements, they use a multilevel indexing approach, where lines are hashed, the emerging hashes sorted and after that, hashes for multiple lines are hashed again.
-This multilevel approach allows rearranging of statements still resulting in the same hash for the code section.
+To enable detecting clones with added, changed or removed statements, they use a multilevel indexing approach, where lines of code are hashed, the emerging hashes sorted and after that, hashes for multiple lines are hashed again.
+This multilevel approach allows rearranging of statements still resulting in the same hash for the code section and can detect type 3 clones.
+Also, it improves the speed when searching for clones to the microseconds range.
 
 Although those approaches fit the requirement of collecting huge amounts of code in a database and making it searchable, they aim for finding all code by its structure.
 In this work, the goal is to find code which is copy-pasted and only modified slightly, if at all.

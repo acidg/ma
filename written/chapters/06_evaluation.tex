@@ -1,14 +1,104 @@
 % !TeX root = ../main.tex
 
 \chapter{Evaluation}\label{chapter:evaluation}
+To verify the capability of the approach proposed in this work, the prototypical implementation was tested.
+The idea was to find out, whether the approach was capable of detecting copied code in a codebase and, by that, unveil license infringements.
+For that purpose, several thousand GPL licensed projects where indexed using the prototypical implementation of the tool.
+After that, other open source projects, which are licensed not compatible with GPL and therefore should not contain any GPL licensed code indexed before, where analyzed and emerging matches categorized.
+
+This chapter describes the test setup evaluates timings, database sizes and findings.
+Eventually, suggestions to improve the approach are listed.
+
+\section{Test Setup}
+As a source for the projects to index, GitHub was chosen.
+GitHub's REST API was used to generate a list of 1.000 GPL licensed Java and 1.000 GPL licensed C or C++ projects.
+All of the projects were checked out locally resulting in sizes as shown in \autoref{table:locs}.
+
+Indexing those 2.000 projects including their history took 16h on a consumer laptop with 16 GB of RAM and an Intel i7 2.6 GHz CPU with 4 cores and hyper-threading.
+The indexing was done independently for Java and C/C++ generating two databases.
+The resulting database sizes are 4 GB for Java and 33 GB for C/C++, the bloom filter's sizes are 55 MB and 147 MB for Java and C/C++.
+
+Inspection of several indexed projects showed, the huge difference fo the sizes can be justified in the amount of actual code in the repositories.
+It seems like Java projects contain more images, binary files or other resources, compared to the C/C++ projects.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{l|rrrrr}
+		& \textbf{Scanned Files} & \textbf{Lines of Code} & \textbf{Total size} & \textbf{Hashes} & \textbf{Chunks} \\ 
+		\hline 
+		Java & 836.555 & 57.834.764 & 94 GB & 23.773.065 & 35.069.633 \\
+		C/C++ & 1.023.092 & 380.338.327 & 102 GB & 61.349.163 & 221.315.454 \\ 
+	\end{tabular}
+	\caption{Sizes of the 2.000 indexed projects}\label{table:locs}
+\end{table}
+
+After two weeks, the index was updated as described in \ref{section:implementation/history_analysis/update}.
+
+
+\section{Findings}
+Since the bloom filter can return false positives, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
+Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%.
+
+\subsection{Unfiltered Findings}
+The results of the test are as shown in \autoref{table:unfiltered_findings}.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{l|rrr}
+		& \textbf{True Positives} & \textbf{False Positives} & \textbf{} \\ 
+		\hline 
+		Java & 836.555 & 158 (0,01\%) & 94GB \\ 
+		Java & 836.555 & 158 (0,01\%) & 94GB \\ 
+		Java & 836.555 & 158 (0,01\%) & 94GB \\ 
+		Java & 836.555 & 158 (0,01\%) & 94GB \\ 
+		Java & 836.555 & 158 (0,01\%) & 94GB \\ 
+		\hline
+		C/C++ & 1.023.092 & 158 (0,01\%) & 102GB \\ 
+		C/C++ & 1.023.092 & 158 (0,01\%) & 102GB \\ 
+		C/C++ & 1.023.092 & 158 (0,01\%) & 102GB \\ 
+		C/C++ & 1.023.092 & 158 (0,01\%) & 102GB \\ 
+		C/C++ & 1.023.092 & 158 (0,01\%) & 102GB \\ 
+	\end{tabular}
+	\caption{Unfiltered Findings}\label{table:unfiltered_findings}
+\end{table} 
+
+Consequential, the results have to be filtered, in order to remove false-positives.
+
+\subsection{Filtered Findings}
+To get a better view on the results, they are grouped into four categories:
+\begin{description}
+	\item [Accidential Clones (AC)]
+		Matches which are similar by \glqq accident\grqq, e.g. generated code, interface implementations, declarations of structs/enums, switch-case blocks, table data especially present in C/C++.
+	\item[Otherwise Licensed Code (OLC)]
+		Code which is actually copied, sometimes from a common source and therefore is no direct license infringement.
+		This can be relevant nonetheless, since attribution has to be done correctly, see later this section. %TODO + reverse copy
+	\item[License Infringement (LI)]
+		Code which has been copied and is violating the license of the reference system.
+\end{description}
+
+\begin{itemize}
+	\item TODO grouping and aggregation
+	\item TODO filter low matchcounts per path
+	\item TODO table with match categories
+	\item TODO list special cases: reverse copied code
+\end{itemize}
+
+
 \section{Detection of Copied Code} %Detected Clone = License Infringement?
 \subsection{Detection of License Infringements} %chunksize? => realtion to size of database
-%TODO probability estimation: When multiple chunks of same file path (even different versions) => higher probability, when mulitple hits/match => higher probability, when many different files, only small amount of hits/match = low probability
-%TODO Studie, um thresholds zu ermitteln?
-\subsection{Detection of Library Code}
+\begin{itemize}
+	\item TODO probability estimation: When multiple chunks of same file path (even different versions) => higher probability, when mulitple hits/match => higher probability, when many different files, only small amount of hits/match = low probability
+	\item TODO Studie, um thresholds zu ermitteln?
+	\item TODO Aussagen wenn match gefunden wurde?
+	\item TODO Apache code in GPL: Interface implementierung quite similar: Java list implementation, equals code 
+	\item TODO: generated code has to be excluded
+\end{itemize}
+
 \subsection{Left out Clones}
-% Is scanning tags enough?
-%TODO @Override, blocks with no braces, 
+\begin{itemize}
+	\item TODO Is scanning tags enough?
+	\item TODO @Override, blocks with no braces, other limitations by normalization...
+\end{itemize}
 
 \section{Performance}
 \subsection{Size of the Database}
@@ -20,11 +110,8 @@ with $p$ being the probability for a false positive.
 For one billion hashes and a probability of 0.01\%, which roughly means one false positive for every 10000 lines of code, about 2,4 GB are needed.
 A simple hash table would need at least 16 GB for the same amount of data.
 
-\subsection{Indexing Performance}
-
-\section{Confidentiality}
-\subsection{Gathering Information about Searched Code}
-%TODO previous: parital hashes
-What information can be extracted nontheless?
-\subsection{Restrictions with Off-line Search}
-No info about source, just probability of being copied code
+\section{Confidentiality - Gathering Information about Searched Code}
+\begin{itemize}
+	\item TODO What information can be extracted nontheless?
+	\item TODO previous/further improve confidentiality: parital hashes
+\end{itemize}

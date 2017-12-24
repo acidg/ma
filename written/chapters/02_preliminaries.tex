@@ -2,22 +2,25 @@
 
 \chapter{Preliminaries}\label{chapter:preliminaries}
 This chapter presents preliminaries for this work and term definitions which are used in the following chapters.
-%TODO list content
+First terms used throughout this work are listed and explained.
+Second, license infringement in the context of the developed detection tool is defined and the impact on decisions during the development are presented.
+Lastly, the term code cloning and its relation to this work are explained.
 
 \section{General Terms}
 \begin{description}
-	\item[Reference System]
+	\item[Reference System/Project]
 		A codebase which is detected by the tool. 
-		Therefore, the reference system has to be analyzed by the tool and information about the code has to be extracted and stored in appropriate data structures.
-	\item[Target System]
+		Therefore, the reference system has to be analyzed by the tool and information about the code has to be extracted and stored.
+	\item[Target System/Project]
 		A codebase which is analyzed by the tool. 
 		Code which is copied from a reference systems to the target system should be found and assessed by its similarity.
 	\item[Index] 
 		A database which allows quick querying for similar code.
-%TODO lassen? \item[License Infringement] Licensing issues which may be legally prosecuted.
-%TODO 	\item[Open Source Software] 
-%TODO Bloomfilter
-%		description
+		In this work, a key-value store is used, which stores a value under a key, usually a hash of the value.
+	\item [Bloomfilter]
+		A space efficient data structure which can tell whether an element is part of a set with a high probability. 
+		False positives are possible, false negatives are not.
+		The probability for a false positive can be calculated.
 \end{description}
 
 \section{License Infringements by Copying Code from Open Source Software}\label{section:preliminaries/infringement}
@@ -92,3 +95,5 @@ This would make it a type-3 clone, but without the renaming of variables.
 For this work, code which has multiple small sections which are similar in the type-1 category is the target clone type.
 
 %TODO “accidental cloning”, which is not the result of direct copy and paste activities but by using the same set of APIs to implement similar protocols
+
+%TODO definition of continuous detection

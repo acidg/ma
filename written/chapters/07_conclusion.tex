@@ -1,10 +1,32 @@
 % !TeX root = ../main.tex
 
 \chapter{Conclusion}\label{chapter:conclusion}
-\subsection{Future Work}
 \begin{itemize}
-    \item More generic approach? Better language support?
-    \item Better normalization?
+	\item Future Work
+	\begin{itemize}
+	    \item TODO More generic approach? Better language support?
+	    \item TODO Better normalization?
+	    \item TODO move from chapter 4
+	\end{itemize}
+	\item Summarize findings and conclusion about feasibility
+	\item Research questions?
 \end{itemize}
+
+\section{Future Work}
+This sections lists some ideas for further improving the approach.
+
+\subsection{Distribution for High Loads}
+Since this work proposes a client-server architecture, it is important to provide a reliable service to a huge amount of clients.
+Therefor, distributing the index on several machines is desirable for load balancing.
+This could easily be done by distributing the database onto the machines whenever the index is updated.
+
+It may also be advisable to group reference projects by license or other parameters like origin of the code (GitHub, Bitbucket, Debian source repositories, \dots).
+Pairs of servers and filters responsible for a group of reference projects could be created.
+This would result in multiple small hash filters and enables clients to only choose filters of their interest, further reducing the size of the filter a client has to download and keep up to date.
+The requests resulting from matches in the filter on the client side then have to be routed to the server responsible for the corresponding group of reference projects.
+
+\subsubsection{Higher Accuracy History Analysis}
+As explained in section \ref{section:implementation/history_analysis/sorting_tags} ...
+
 
 % TODO: answer research questions!

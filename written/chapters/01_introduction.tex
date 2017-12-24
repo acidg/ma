@@ -34,14 +34,15 @@ It allows clients to decide whether a section of source code is part of an open 
 
 The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
 The analysis of existing open source code bases is fast and scalable and can be periodically updated.
-To prove that, more than 500 million lines of code from approximately 2000 open source projects where indexed in about 20 hours on a consumer laptop.
-The filter's size is about 200MB for this amount of code which allows updates on a regular basis.
+To prove that, a prototype of the tool has been implemented and more than 500 million lines of code from approximately 2.000 open source projects where indexed in about 20 hours on a consumer laptop.
+The database is about 37 GB, the filter's size about 200 MB for this amount of code.
 
 %TODO library code which should be linked instead of copied, vulnerabilities in copied code
 % TODO veränderungen am code
 
 The work is organized as follows.
 First, definitions used throughout the work as well as requirements are listed in \autoref{chapter:preliminaries}.
-Subsequently, related work is depicted in \autoref{chapter:related_work} and based on that, an overview of the approach used in this work is presented in \autoref{chapter:approach}.
+Subsequently, related work is depicted in \autoref{chapter:related_work} and based on that, an overview of the approach used for the tool is presented in \autoref{chapter:approach}.
 Details of the implementation, decisions and its complications are shown in \autoref{chapter:implementation}.
-In \autoref{chapter:evaluation} findings and their validity are listed and categorized which leads to a discussion about the usefulness of the approach and proposals for future work in \autoref{chapter:conclusion}.
+In \autoref{chapter:evaluation} the prototype is used to analyze several thousand projects, categorize findings and evaluate their validity.
+This leads to a discussion about the usefulness of the approach and proposals for future work in \autoref{chapter:conclusion}.
