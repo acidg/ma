@@ -145,11 +145,14 @@ This may not only increase accuracy, but also indexing speed, since less files c
 \section{Hashfilter}\label{section:implementation/hashfilter}
 With hash filter, this work refers to an algorithm, which can decide whether a element is part of a set with the help of a data structure which represents parts of the index.
 The first approach was to simply extract the set of all hashes from the index and shorten them to reduce size, e.g. instead of 128bit per hash, only the first n bits are used.
-This however results in a lossy compression, since hashes which are equal in the first n bits but different in the remaining bits have the same shortened hash.
+Hashes which are equal in the first n bits but different in the remaining bits have the same shortened hash.
 One hash may actually be part of the set of hashes, whereas the other may not.
 With this approach a decision can not be made with absolute precision.
 
-The 
+The probability of such a false positive can be calculated as follows:
+\begin{equation}
+	\frac{j}{Nenner}
+\end{equation}
 
 \begin{itemize}
 	\item TODO Bloom filter explaination

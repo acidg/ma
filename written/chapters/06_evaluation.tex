@@ -33,7 +33,9 @@ It seems like Java projects contain more images, binary files or other resources
 \end{table}
 
 After two weeks, the index was updated as described in \ref{section:implementation/history_analysis/update}.
-
+About one third of the reference project contained one or more new tags which were indexed.
+The update took one hour with generation of the bloom filter.
+This shows that incremental updates of the index are worth the effort of implementation compared to re-indexing the reference projects from scratch.
 
 \section{Findings}
 Since the bloom filter can return false positives, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
