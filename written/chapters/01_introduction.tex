@@ -1,12 +1,12 @@
 % !TeX root = ../main.tex
 
 \chapter{Introduction}\label{chapter:introduction}
-%TODO attribution to open source community
 In software development, reuse of code can reduce time and effort and can even enhance quality \cite{krueger1992software}.
 Repositories published on the Internet are a popular source for code which offers the desired functionality.
 However, when code is copied from open source software systems, licenses may be violated if its conditions are not met.
 So called Copy-Left licenses like GPL, which demand copied-to software systems to adopt the same license, are critical, especially in closed-source systems.
 Software may have to be published as open source afterwards like in the case of Microsoft's \glqq Windows USB/DVD Download Tool\grqq\footnote{\href{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}}.
+\todo{attribution to open source community?}
 
 There are many tools available for finding copied code in a codebase.
 Most of the tools are used for clone detection in order to find similar code which can be refactored for reuse to reduce redundancy and enhance software quality.
@@ -30,15 +30,15 @@ One key aspect here is the filtering technique used, which significantly reduces
 The filter is a small part of the database which can be downloaded from the server.
 It allows clients to decide whether a section of source code is part of an open source system tracked by the server.
 
-%TODO requirements
+\todo{requirements}
 
 The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
 The analysis of existing open source code bases is fast and scalable and can be periodically updated.
 To prove that, a prototype of the tool has been implemented and more than 500 million lines of code from approximately 2.000 open source projects where indexed in about 20 hours on a consumer laptop.
 The database is about 37 GB, the filter's size about 200 MB for this amount of code.
 
-%TODO library code which should be linked instead of copied, vulnerabilities in copied code
-% TODO veränderungen am code
+\todo{library code which should be linked instead of copied, vulnerabilities in copied code}
+\todo{tracking changes/history}
 
 The work is organized as follows.
 First, definitions used throughout the work as well as requirements are listed in \autoref{chapter:preliminaries}.

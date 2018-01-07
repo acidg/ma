@@ -2,6 +2,9 @@
 
 \chapter{Approach}\label{chapter:approach}
 The purpose of the tool is the continuous detection of copied code in a changing codebase.
+Simply comparing file hashes or reading headers is in most cases not enough, since files may be altered or headers removed.
+For this approach, techniques known from the area of clone detection are used.
+
 The work of Koschke et al. makes clear that a index based approach seems appropriate for continuous detection:
 \glqq If the [copy-paste detection] analysis is to be conducted multiple times, creating an index pays off\grqq \cite{koschke2014large}.
 Because of that, the tool is using an index to look up similar sections of code.
@@ -42,7 +45,7 @@ To add a source code file to the index, it first is parsed and split into tokens
 A token represents a small part of the code such as a symbol, keyword, identifier, literal or comment.
 The tokens then are normalized as described in section \ref{section:approach/creating_index/normalization}.
 Now the tokens are aggregated into statements.
-The tool then passes over the resulting list of statements using a sliding window to group together a chunk of code, which consists of several consecutive statements. %TODO image with indexing process
+The tool then passes over the resulting list of statements using a sliding window to group together a chunk of code, which consists of several consecutive statements. \todo{image with indexing process}
 
 To reduce the space needed to store the information, which is required to identify similar code, chunks are hashed.
 The hashes are then used as the key for the entry in the index.
@@ -52,7 +55,7 @@ By looking up for the same hash in the index, locations of similar code can be f
 
 The amount of statements in a chunk influences the precision of a match, since longer chunks also require longer matches.
 However, long chunks also reduces the probability to find chunks with modified, added or removed statements.
-Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications, but long enough, to exclude generic code, which would produce huge amounts of false positives. %TODO image?
+Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications, but long enough, to exclude generic code, which would produce huge amounts of false positives.\todo{image?}
 
 \autoref{fig:normalization} shows the complete processing of an input file.
 
@@ -89,7 +92,7 @@ On the server-side this also reduces the load.
 Hashing with MD5 reduces the entropy of a chunk to about 128 bit of a ideal hash function, which still keeps the probability of collisions at a minimum.
 Lossless compression is expected to reduce the size of the hashtable not by much, since randomness of hashes is very high.
 However, lossy compression could be used.
-One great way of reducing size of hash table with low false-positive probability is a BloomFilter.
+One great way of reducing size of hash table with low false positive probability is a BloomFilter.
 
 To store a value, a BloomFilter uses multiple hash functions to hash a value \cite{bloom1970filter}.
 It uses the resulting hash values as indexes to set bits of a bit array to 1.
@@ -114,9 +117,8 @@ To do so, it normalizes the code in question, groups statements and hashes them 
 After that, the emerging hashes are filtered with the Bloom Filter.
 Remaining hashes are then sent to the server, which responds with a map of hash to location for each hash.
 As explained before, a hash may not be part of the index, but still pass the filter.
-This false-positive can be recognized by the server and excluded from the response.
+This false positive can be recognized by the server and excluded from the response.
 
 The response is then interpreted by the client.
 By aggregating matches by reference system and file path, the relevance of the match can be assessed.
-
-%TODO Activity diagram: client <-> server
+\todo{Activity diagram: client <-> server}

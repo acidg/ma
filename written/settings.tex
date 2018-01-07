@@ -1,3 +1,5 @@
+% !TeX root = main.tex
+
 \PassOptionsToPackage{table,svgnames,dvipsnames}{xcolor}
 
 \usepackage[utf8]{inputenc}
@@ -26,7 +28,9 @@
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref} % hidelinks removes colored boxes around references and links
 \usepackage{multicol}
+\usepackage{multirow}
 \usepackage{lipsum}% dummy text
+\usepackage[]{todonotes} % TODO remove
 
 \bibliography{bibliography}
 
@@ -91,4 +95,5 @@
 	\draw (#2#3-comment.west) edge (#2#3);
 }%
 
+% Definitions
 \newtheorem{defi}{Definition}[chapter]
