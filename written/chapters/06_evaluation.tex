@@ -92,18 +92,17 @@ The last column shows the amount of actual matches, which could be found in the 
 		 & \textbf{Target System} & \textbf{Files} & \textbf{Chunks} & \textbf{False Positives} & \textbf{True Positives} \\ 
 		\hline 
 		\parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
-		& IntelliJ IDEA Community & 0 & 0 & 0 & 0 \\
-		& Eclipse JDT Core & 0 & 0 & 0 & 0  \\
+		& IntelliJ IDEA Community & 57162 & 1577388 & 184 (0,012\%) & 8471 (0,537\%) \\
+		& Eclipse JDT Core & 7302 & 267130 & 29 (0,011\%) & 510 (0,191\%) \\
 		& Elasticsearch & 0 & 0 & 0 & 0  \\
-		& Eclipse JDT UI & 0 & 0 & 0 & 0  \\
-		& Facebook Buck & 0 & 0 & 0 & 0  \\
-		& Teamscale & 0 & 0 & 0 & 0  \\
-		& Spring Boot & 0 & 0 & 0 & 0 \\
-		& Openfire & 0 & 0 & 0 & 0  \\
-		& Killbill & 0 & 0 & 0 & 0  \\
-		& JabRef & 0 & 0 & 0 & 0 \\
-		& Selenium & 0 & 0 & 0 & 0 \\
-		& JUnit5 & 0 & 0 & 0 & 0 \\
+		& Eclipse JDT UI & 11070 & 274040 & 29 (0,011\%) & 482 (0,176\%) \\
+		& Facebook Buck & 5348 & 262299 & 21 (0,008\%) & 582 (0,222\%) \\
+		& Teamscale & 10860 & 185725 & 21 (0,011\%) & 458 (0,247\%) \\
+		& Spring Boot & 3824 & 94980 & 11 (0,012\%) & 1010 (1,063\%) \\
+		& Openfire & 1572 & 121775 & 15 (0,012\%) & 2106 (1,729\%) \\
+		& Killbill & 1477 & 79118 & 13 (0,016\%) & 550 (0,695\%) \\
+		& JabRef & 1389 & 72052 & 5 (0,007\%) & 204 (0,283\%) \\
+		& Selenium & 1265 & 43525 & 2 (0,005\%) & 147 (0,338\%) \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
 		& Chromium & 0 & 0 & 0 & 0 \\
@@ -130,14 +129,17 @@ Instead, sending hashes in batches may be a better solution.
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
 
-To get a better view on the results, they are grouped into three categories:
+To get a better view on the results, they are grouped into the following categories:
 \begin{description}
 	\item [Accidential Clones (AC)]
 		Matches which are similar by \glqq accident\grqq, e.g. generated code, interface implementations, declarations of structs/enums, switch-case blocks, table data especially present in C/C++.
 	\item[Otherwise Licensed Code (OLC)]
-		Code which is actually copied, sometimes from a common source and therefore is no direct license infringement.
-		This can be relevant nonetheless, since attribution has to be done correctly, see later this section.
+		Code which is actually copied from the reference project or originates from a common source.
+		Attribution is done correcty and therefore, this is not a license infringement.
 		Code can also be copied into the reverse direction in the context of this evaluation, since analyzed target projects are licensed in a way, where they can be copied to GPL licensed code with appropriate attribution.
+	\item[Copied without Attribution (COA)] 
+		Same as otherwise licensed code, but not attributed correctly by the target project.
+		This may also be seen as a violation of the license's terms, depending on the license of the source, the length of the copied segment and its similarity.
 	\item[License Infringement (LI)]
 		Code which has been copied and is violating the license of the reference system.
 \end{description}
@@ -162,47 +164,54 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 \begin{table}[ht]
 	\centering
 	\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
-	\begin{tabular}{l | l R{1cm} R{1cm} R{1cm}}
-		& \textbf{Name} & \textbf{AC} & \textbf{OLC} & \textbf{LI} \\
+	\begin{tabular}{l | l rrrr}
+		& \textbf{Name} & \textbf{AC} & \textbf{OLC} & \textbf{COA} & \textbf{LI} \\
 		\hline 
-		\parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
-		& IntelliJ IDEA Community & 0 & 0 & 0 \\
-		& Eclipse JDT Core & 0 & 0 & 0 \\\
-		& Elasticsearch & 0 & 0 & 0 \\
-		& Eclipse JDT UI & 0 & 0 & 0 \\
-		& Facebook Buck & 0 & 0 & 0 \\
-		& Teamscale & 0 & 0 & 0 \\
-		& Spring Boot & 0 & 0 & 0 \\
-		& Openfire & 0 & 0 & 0 \\
-		& Killbill & 0 & 0 & 0 \\
-		& JabRef & 3 & 0 & 0 \\
-		& Selenium & 0 & 0 & 0 \\
-		& JUnit5 & 0 & 0 & 0 \\
+		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
+		& IntelliJ IDEA Community & 86 & 21 & 11 & 9 \\
+		& Eclipse JDT Core & 17 & 8 & 0 & 0 \\
+		& Elasticsearch & 13 & 3 & 4 & 3 \\
+		& Eclipse JDT UI & 3 & 19 & 0 & 0 \\
+		& Facebook Buck & 11 & 7 & 0 & 0  \\
+		& Teamscale & 12 & 3 & 1 & 2 \\
+		& Spring Boot & 19 & 6 & 0 & 0 \\
+		& Openfire & 20 & 9 & 5 & 0 \\
+		& Killbill & 20 & 2 & 0 & 0 \\
+		& JabRef & 3 & 2 & 0 & 1 \\
+		& Selenium & 8 & 2 & 0 & 0 \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
-		& Chromium & 0 & 0 & 0 \\
-		& ArangoDB & 0 & 0 & 0 \\
-		& Tensorflow & 0 & 0 & 0 \\
-		& Apple Swift & 0 & 0 & 0 \\
-		& Mesos & 0 & 0 & 0 \\
-		& Apache httpd & 0 & 0 & 0 \\
-		& RethinkDB & 0 & 0 & 0 \\
-		& Tesseract & 0 & 0 & 0 \\
-		& Bitcoin & 0 & 0 & 0 \\
-		& Electron & 0 & 0 & 0 \\
+		& Chromium & 0 & 0 & 0 & 0 \\
+		& ArangoDB & 0 & 0 & 0 & 0 \\
+		& Tensorflow & 0 & 0 & 0 & 0 \\
+		& Apple Swift & 0 & 0 & 0 & 0 \\
+		& Mesos & 0 & 0 & 0 & 0 \\
+		& Apache httpd & 0 & 0 & 0 & 0 \\
+		& RethinkDB & 0 & 0 & 0 & 0 \\
+		& Tesseract & 0 & 0 & 0 & 0 \\
+		& Bitcoin & 0 & 0 & 0 & 0 \\
+		& Electron & 0 & 0 & 0 & 0 \\
 	\end{tabular}
 	\caption{Target projects and categorized matches}\label{table:scan_results}
 \end{table}
 
-The results show, that finding infringements is possible using this approach.
-However, the amount of actual infringements in the detected copied code segments is rather small.
+The results in table \ref{table:scan_results} show that finding infringements is possible using this approach.
+However, the amount of actual infringements in the detected copied code segments is rather small compared to the overall detected matches.
 This is due to many accidental clones, which are caused by e.g. interface implementations or tables.
 
 Otherwise licensed code which is copied sometimes is still a valid concern, since most licenses require to correctly attribute the source of the code.
 In many cases, this is not done correctly, as manual inspection showed.
 The violation of the license is still given in such a case, although it may not be as critical as e.g. with GPL licensed code.
 
+\todo[inline]{Determination of source not easy -> code origin analysis}
+
+\todo[inline]{remove getter/setters}
+
+\todo[inline]{Often reference project also have violations (COA), override original header with own gpl}
+
 \todo[inline]{attributed vs non-attributed (= violation) statistics}
+
+\todo[inline]{Match often not origin, but gives hints that something has not been attributed correctly}
 
 \section{Special cases}
 Some of the findings are rather special and can not be categorized precisely.
@@ -212,6 +221,8 @@ This section lists some of those cases and suggestions on how to handle those, i
 	\item Overture -> Eclipse
 	\item reverse copied code, e.g. Apache code in GPL
 	\item Interface implementation quite similar: Java list implementation, equals code, tables in c
+	\item Structs/Enums for API (e.g. Facebook Buck/ConstantTags.java)
+	\item Decision if accidential or copied without attribution often not easy (facebook Buck/MemoryHandler), COmment can give hints: Both sides same comments, probably copied from somewhere else
 \end{itemize}
 
 %\section{Database and Filter Sizes}

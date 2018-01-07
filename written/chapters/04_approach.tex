@@ -16,7 +16,7 @@ This chapter describes the followed approach and architecture of the tool in det
 \section{System Overview}
 \begin{figure}[h]
 	\centering
-	\includegraphics{figures/architecture_overview.pdf}
+	\includegraphics[width=\linewidth]{figures/architecture_overview.pdf}
 	\caption{Tool Architecture Overview}\label{fig:tool_architecture}
 \end{figure}
 \autoref{fig:tool_architecture} shows an overview of the tool's client-server architecture.
@@ -55,9 +55,14 @@ By looking up for the same hash in the index, locations of similar code can be f
 
 The amount of statements in a chunk influences the precision of a match, since longer chunks also require longer matches.
 However, long chunks also reduces the probability to find chunks with modified, added or removed statements.
-Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications, but long enough, to exclude generic code, which would produce huge amounts of false positives.\todo{image?}
-
+Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications as shown in figure \ref{fig:modification}, but long enough, to exclude generic code, which would produce huge amounts of false positives.
 \autoref{fig:normalization} shows the complete processing of an input file.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{figures/modification.pdf}
+	\caption{Detection of copied code with modification}\label{fig:modification}
+\end{figure}
 
 \subsection{Normalization}\label{section:approach/creating_index/normalization}
 The normalization step removes irrelevant information and by that, concentrates on the essential features and properties of the code.
@@ -73,7 +78,7 @@ To keep the index up to date and still keep information needed to find similarit
 For that, the server normalizes the new version of the file the same way as described before, groups it into chunks and hashes those chunks.
 The resulting hashes are then inserted into the key value store.
 If an entry for a hash already exists in the index, linking to a file with the same location, the old link is replaced with the new one to save space.
-This ensures, that the entry for a chunk corresponding to a hash always points to the latest version of a file.
+This ensures, that the entry for a chunk corresponding to a hash always points to the latest version of a file and all chunks of all versions of a file still can be found in the index.
 When files are deleted, nothing is changed in the key value store to keep the latest existing version of the file's chunk in the key-value store.
 
 Instead of rescanning the whole file, only the chunks which have changed could be scanned.

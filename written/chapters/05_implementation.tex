@@ -239,8 +239,17 @@ The Hash Filter is used to decide whether a chunk is part of the index and there
 If a file has less than two matching chunks, it can be ignored, since the minimum amount is two as explained above.
 Otherwise, details about the matches are requested from the server by sending the list of hashes for chunks, which are marked as part of index by the filter.
 The server responds with a list of locations for each hash, or an empty list, if the hash is a false positive of the Hash Filter.
-\todo[inline]{describe approach for gapped clones (+4 length)}
 
-\todo[inline]{grouping and aggregation of matches}
-\todo[inline]{probability estimation: When multiple chunks of same file path (even different versions) => higher probability, when mulitple hits/match => higher probability, when many different files, only small amount of hits/match = low probability}
-\todo[inline]{Describe possibilities for continuous detection}
+The client groups locations by reference project and path of the file.
+Note here that the revision of the file a chunk is pointing at, is ignored in this step.
+This makes sense, since locations always point to the latest revision of a chunk as described in section \ref{section:approach/creating_index/history_analysis}.
+
+The client then merges consecutive matches, by iterating over the locations of a group and finding overlaps.
+The amount of locations in a merged match is stored.
+When merging, a small gap is allowed between two locations of the same group, to include modifications of copied code as described in section \ref{section:approach/creating_index}.
+In the case of such a gap, the count of locations for the match is incremented by 4, since a possible modification has been detected and the actual length of the copied segment is equal to about 10 statements as it can be seen in figure \ref{fig:required_chunks_modified}.
+
+Now the client can filter all matches which have a location count of less than 4 and remaining matches fulfill the required minimum length for a violation as described above.
+\\
+Continuous detection with e.g. every commit on a target system's codebase is possible.
+The same steps as described above can be done for each changed file instead of the whole codebase.
