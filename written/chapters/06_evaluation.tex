@@ -105,16 +105,16 @@ The last column shows the amount of actual matches, which could be found in the 
 		& Selenium & 1265 & 43525 & 2 (0,005\%) & 147 (0,338\%) \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
-		& Chromium & 0 & 0 & 0 & 0 \\
-		& ArangoDB & 0 & 0 & 0 & 0 \\
-		& Tensorflow & 0 & 0 & 0 & 0 \\
-		& Apple Swift & 0 & 0 & 0 & 0 \\
-		& Mesos & 0 & 0 & 0 & 0 \\
-		& Apache httpd & 0 & 0 & 0 & 0 \\
-		& RethinkDB & 0 & 0 & 0 & 0 \\
-		& Tesseract & 0 & 0 & 0 & 0 \\
-		& Bitcoin & 0 & 0 & 0 & 0 \\
-		& Electron & 0 & 0 & 0 & 0 \\
+		& Chromium & 14.241 & 364.126 & 53 (0,015\%) & 16.951 (4,655\%) \\
+		& ArangoDB & 1.096 & 135.291 & 8 (0,006\%) & 571 (0,422\%) \\
+		& Tensorflow & 1207 & 50382 & 3 (0,006\%) & 59 (0,117\%) \\
+		& Apple Swift & 848 & 56386 & 11 (0,020\%) & 14 (0,025\%) \\
+		& Mesos & 341 & 64.090 & 6 (0,009\%) & 18 (0,028\%) \\
+		& Apache httpd & 529 & 126.936 & 18 (0,014\%) & 949 (0,748\%) \\
+		& RethinkDB & 91 & 8.664 & 0 (0,000\%) & 2.906 (33,541\%) \\
+		& Tesseract & 559 & 82946 & 10 (0,012\%) & 27 (0,033\%) \\
+		& Bitcoin & 491 & 57847 & 5 (0,009\%) & 97 (0,168\%) \\
+		& Electron & 342 & 6846 & 1 (0,015\%) & 0 (0,000\%) \\
 	\end{tabular}
 	\caption{Amount of files and chunks as well as true and false positives caused by the Hash Filter}\label{table:unfiltered_findings}
 \end{table}
@@ -181,15 +181,15 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 		& Selenium & 8 & 2 & 0 & 0 \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
-		& Chromium & 0 & 0 & 0 & 0 \\
-		& ArangoDB & 0 & 0 & 0 & 0 \\
-		& Tensorflow & 0 & 0 & 0 & 0 \\
-		& Apple Swift & 0 & 0 & 0 & 0 \\
-		& Mesos & 0 & 0 & 0 & 0 \\
-		& Apache httpd & 0 & 0 & 0 & 0 \\
-		& RethinkDB & 0 & 0 & 0 & 0 \\
-		& Tesseract & 0 & 0 & 0 & 0 \\
-		& Bitcoin & 0 & 0 & 0 & 0 \\
+		& Chromium & 16 & 429 & 0 & 0 \\
+		& ArangoDB & 1 & 5 & 0 & 0 \\
+		& Tensorflow & 2 & 0 & 0 & 0 \\
+		& Apple Swift & 2 & 0 & 0 & 0 \\
+		& Mesos & 1 & 0 & 0 & 0 \\
+		& Apache httpd & 5 & 13 & 0 & 0 \\
+		& RethinkDB & 0 & 29 & 0 & 0 \\
+		& Tesseract & 2 & 1 & 0 & 0 \\
+		& Bitcoin & 0 & 6 & 0 & 0 \\
 		& Electron & 0 & 0 & 0 & 0 \\
 	\end{tabular}
 	\caption{Target projects and categorized matches}\label{table:scan_results}
@@ -212,6 +212,8 @@ The violation of the license is still given in such a case, although it may not 
 \todo[inline]{attributed vs non-attributed (= violation) statistics}
 
 \todo[inline]{Match often not origin, but gives hints that something has not been attributed correctly}
+
+\todo[inline]{Chromium: mostly hits from GPL fork}
 
 \section{Special cases}
 Some of the findings are rather special and can not be categorized precisely.
