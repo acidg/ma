@@ -236,8 +236,8 @@ Here, 4 consecutive chunks are copied resulting in 8 copied statements without g
 
 To compete with these limitations, for each file, chunks are extracted as described above.
 The Hash Filter is used to decide whether a chunk is part of the index and therefore a match exists within the file.
-If a file has less than two matching chunks, it can be ignored, since the minimum amount is two as explained above.
-Otherwise, details about the matches are requested from the server by sending the list of hashes for chunks, which are marked as part of index by the filter.
+If a file has less than 2 matching chunks, it can be ignored, since the minimum amount is two as explained above.
+Otherwise, details about the matches are requested from the server by sending the list of hashes for chunks, which the filter marked as part of the index.
 The server responds with a list of locations for each hash, or an empty list, if the hash is a false positive of the Hash Filter.
 
 The client groups locations by reference project and path of the file.

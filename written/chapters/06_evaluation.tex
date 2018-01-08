@@ -13,12 +13,13 @@ As a source for the projects to index, GitHub was chosen.
 GitHub's REST API was used to generate a list of 1.000 GPL licensed Java and 1.000 GPL licensed C or C++ projects.
 All of the projects were checked out locally resulting in sizes as shown in \autoref{table:locs}.
 
-Indexing those 2.000 projects including their history took 16h on a consumer laptop with 16 GB of RAM and an Intel i7 2.6 GHz CPU with 4 cores and hyper-threading.
+Indexing those 2.000 projects including their history took 15h on a consumer laptop with 16 GB of RAM and an Intel i7 2.6 GHz CPU with 4 cores and hyper-threading.
 The indexing was done independently for Java and C/C++ generating two databases.
 The resulting database sizes are 4 GB for Java and 33 GB for C/C++, the bloom filter's sizes are 55 MB and 147 MB for Java and C/C++.
 
-Inspection of several indexed projects showed, the huge difference fo the sizes can be justified in the amount of actual code in the repositories.
+Inspection of several indexed projects showed, the huge difference for the sizes can be justified in the amount of actual code in the repositories.
 It seems like Java projects contain more images, binary files or other resources, compared to the C/C++ projects.
+Also, the resulting count of chunks and corresponding amount of hashes indicates a lot of duplicated chunks and leads to the assumption that the increase of hashes is asymptotic relative to the growth of chunks.
 
 \begin{table}[ht]
 	\centering
@@ -46,8 +47,8 @@ After indexing those projects, several other projects, licensed not compatible w
 	\begin{tabular}{l|llr}
 		& \textbf{Name} & \textbf{License} & \textbf{Lines of Code} \\
 		\hline 
-		\parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
-		& IntelliJ IDEA Community & Apache 2.0 & 3.500.000 \\
+		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
+		& IntelliJ IDEA & Apache 2.0 & 3.500.000 \\
 		& Eclipse JDT Core & Eclipse Public License & 1.459.000 \\
 		& Elasticsearch & Apache 2.0 & 711.000 \\
 		& Eclipse JDT UI & Eclipse Public License & 685.000 \\
@@ -57,8 +58,6 @@ After indexing those projects, several other projects, licensed not compatible w
 		& Openfire & Apache 2.0 & 200.000 \\
 		& Killbill & Apache 2.0 & 150.000 \\
 		& JabRef & MIT & 125.000 \\
-		& Selenium & Apache 2.0 & 84.000 \\
-		& JUnit5 & Apache 2.0/Eclipse Public License & 45.000 \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
 		& Chromium & BSD License 2.0 & 4.651.000 \\
@@ -81,6 +80,15 @@ The bloom filter can return false positives, thus, matches are expected even if 
 Those matches - called false positive filter matches (FPFM) \todo{FPFM needed?} in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
 
 Table \autoref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
+Columns are defined as follows:
+\begin{description}
+	\item[Target System] The name of the target system
+	\item[Files] Number of files of the target project, which match the corresponding language (Java or C/C++) and are therefore analyzed.
+	\item[Chunks] Resulting amount of chunks extracted from the target system.
+	\item[FPFM] False Positive Filter Matches as described above.
+	\item[True Positives] Amount of actual matches, which could be found in the index and their relative amount in comparison to all chunks extracted from the target system.
+	\item[Requests] Amount of requested match details. Note here that files with less than two matches are ignored as described in section \ref{section:implementation/finding_matches}.
+\end{description}
 The first two colums called \textit{Files} and \textit{Chunks} show the amount of scanned files and the resulting number of chunks extracted from the target system.
 The FPFMs and the percentage in relation to all matches are shown in the third column.
 The last column shows the amount of actual matches, which could be found in the index and their relative amount in comparison to all chunks extracted from the target system.
@@ -88,39 +96,39 @@ The last column shows the amount of actual matches, which could be found in the 
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{l|lrrrr}
-		 & \textbf{Target System} & \textbf{Files} & \textbf{Chunks} & \textbf{False Positives} & \textbf{True Positives} \\ 
+	\begin{tabular}{l|lrrrrr}
+		 & \textbf{Target System} & \textbf{Files} & \textbf{Chunks} & \textbf{FPFM} & \textbf{True Positives} & \textbf{Requests} \\ 
 		\hline 
-		\parbox[t]{2mm}{\multirow{12}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
-		& IntelliJ IDEA Community & 57162 & 1577388 & 184 (0,012\%) & 8471 (0,537\%) \\
-		& Eclipse JDT Core & 7302 & 267130 & 29 (0,011\%) & 510 (0,191\%) \\
-		& Elasticsearch & 0 & 0 & 0 & 0  \\
-		& Eclipse JDT UI & 11070 & 274040 & 29 (0,011\%) & 482 (0,176\%) \\
-		& Facebook Buck & 5348 & 262299 & 21 (0,008\%) & 582 (0,222\%) \\
-		& Teamscale & 10860 & 185725 & 21 (0,011\%) & 458 (0,247\%) \\
-		& Spring Boot & 3824 & 94980 & 11 (0,012\%) & 1010 (1,063\%) \\
-		& Openfire & 1572 & 121775 & 15 (0,012\%) & 2106 (1,729\%) \\
-		& Killbill & 1477 & 79118 & 13 (0,016\%) & 550 (0,695\%) \\
-		& JabRef & 1389 & 72052 & 5 (0,007\%) & 204 (0,283\%) \\
-		& Selenium & 1265 & 43525 & 2 (0,005\%) & 147 (0,338\%) \\
+		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
+		& IntelliJ IDEA & 35.398 & 1.570.170 & 183 & 8.134 (0,5\%) & 8.035 \\
+		& Eclipse JDT Core & 1.829 & 267.130 & 29 & 510 (0,2\%) & 509 \\
+		& Elasticsearch & 5.560 & 414.448 & 45 & 1.105 (0,3\%) & 1.004 \\
+		& Eclipse JDT UI & 2.736 & 274.040 & 29 & 482 (0,2\%) & 444 \\
+		& Buck & 5.150 & 261.605 & 21 & 575 (0,2\%) & 548 \\
+		& Teamscale & 4.344 & 145.029 & 20 & 378 (0,3\%) & 365 \\
+		& Spring Boot & 3.756 & 94.935 & 11 & 1.010 (1,1\%) & 967 \\
+		& Openfire & 1.572 & 121.775 & 15 & 2.106 (1,7\%) & 2.084 \\
+		& Killbill & 1.477 & 79.118 & 13 & 550 (0,7\%) & 539 \\
+		& JabRef & 1.389 & 72.052 & 5 & 204 (0,3\%) & 183 \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
-		& Chromium & 14.241 & 364.126 & 53 (0,015\%) & 16.951 (4,655\%) \\
-		& ArangoDB & 1.096 & 135.291 & 8 (0,006\%) & 571 (0,422\%) \\
-		& Tensorflow & 1207 & 50382 & 3 (0,006\%) & 59 (0,117\%) \\
-		& Apple Swift & 848 & 56386 & 11 (0,020\%) & 14 (0,025\%) \\
-		& Mesos & 341 & 64.090 & 6 (0,009\%) & 18 (0,028\%) \\
-		& Apache httpd & 529 & 126.936 & 18 (0,014\%) & 949 (0,748\%) \\
-		& RethinkDB & 91 & 8.664 & 0 (0,000\%) & 2.906 (33,541\%) \\
-		& Tesseract & 559 & 82946 & 10 (0,012\%) & 27 (0,033\%) \\
-		& Bitcoin & 491 & 57847 & 5 (0,009\%) & 97 (0,168\%) \\
-		& Electron & 342 & 6846 & 1 (0,015\%) & 0 (0,000\%) \\
+		& Chromium & 14.241 & 364.126 & 53 & 16.951 (4,7\%) & 16.912 \\
+		& ArangoDB & 1.096 & 135.291 & 8 & 571 (0,4\%) & 569 \\
+		& Tensorflow & 1.207 & 50.382 & 3 & 59 (0,2\%) & 56 \\
+		& Apple Swift & 848 & 56.386 & 11 & 14 (0,0\%) & 13 \\
+		& Mesos & 341 & 64.090 & 6 & 18 (0,0\%) & 15 \\
+		& Apache httpd & 529 & 126.936 & 18 & 949 (0,7\%) & 949 \\
+		& RethinkDB & 91 & 8.664 & 0 & 2.906 (33,5\%) & 2.905 \\
+		& Tesseract & 559 & 82.946 & 10 & 27 (0,0\%) & 29 \\
+		& Bitcoin & 491 & 57.847 & 5 & 97 (0,2\%) & 97 \\
+		& Electron & 342 & 6.846 & 1 & 0 (0,0\%) & 0 \\
 	\end{tabular}
-	\caption{Amount of files and chunks as well as true and false positives caused by the Hash Filter}\label{table:unfiltered_findings}
+	\caption{Amount of files and chunks as well as true and false positives caused by the Hash Filter and the resulting requested chunk details}\label{table:unfiltered_findings}
 \end{table}
 
-This result shows, that the Hash Filter is reducing the required lookups by TODO in the worst case.
-Load on the server can be greatly reduced and analysis of a target system's code is a lot quicker.
+This result shows, that the Hash Filter is reducing the required lookups to a fraction.
+Load on the server can be greatly reduced and analysis of a target system's code therefore is a lot quicker.
+
 Still, requesting the locations for each hash passing the Hash Filter individually, causes a lot of requests with high overhead caused by creating single network packets.
 Additional authentication on the server may be required to control access further slowing down the analysis.
 Instead, sending hashes in batches may be a better solution.
@@ -129,7 +137,7 @@ Instead, sending hashes in batches may be a better solution.
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
 
-To get a better view on the results, they are grouped into the following categories:
+To get a better view on the results, each match is manually inspected and grouped into one of the following categories:
 \begin{description}
 	\item [Accidential Clones (AC)]
 		Matches which are similar by \glqq accident\grqq, e.g. generated code, interface implementations, declarations of structs/enums, switch-case blocks, table data especially present in C/C++.
@@ -144,6 +152,14 @@ To get a better view on the results, they are grouped into the following categor
 		Code which has been copied and is violating the license of the reference system.
 \end{description}
 
+AC can be seen as a false positive of the approach, whereas OLC detects code, which has been copied, but the license of the code is not violated.
+Even though OLC does not violate a license, detection of such code still may be of interest, since using a library instead of copying the code into the codebase can be the better alternative \cite{heinemann2012effective}.
+In general, those two cases are not marking violations.
+
+COA on the other hand, marks a violation of the license, because the code has not been attributed correctly, but the significance of such a violation may not be very high.
+Copied code categorized as LI may even be attributed correctly, but still is a violation of the copied code's license.
+
+\subsection{Counting Matches}
 A scanned target system file can have multiple matches for a chunk, since clones also exist between and within reference systems.
 Therefore, in the following evaluation, matches are counted on the target file and only the most relevant concatenated matches of the reference files are regarded.
 \autoref{table:scan_results} shows the results of manually categorizing each match.
@@ -155,11 +171,18 @@ This is counted as one match.
 There is also one coherent block of code copied from \texttt{Reference File 2} to the \texttt{Target File}, which is also counted as a match.
 The resulting total count of matches for the \texttt{Target File} in this example is two.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/match_counting.pdf}
+	\includegraphics[width=0.7\linewidth]{figures/match_counting.pdf}
 	\caption{Illustration of match counting}\label{fig:match_counting}
 \end{figure}
+
+\subsection{Results}
+The results in table \ref{table:scan_results} are twofold.
+On the one hand, it shows that finding license infringements is possible.
+On the other hand, the amount of overall detected matches prevails the amount of relevant matches by far.
+This is due to many accidental clones, which are caused by e.g. interface implementations or tables, as well as the fact that most licenses of target projects allow copying of code into a codebase licensed under GPL.
+Therefore, most of the hits for OLC are caused by code of the target project being copied into the reference project.
 
 \begin{table}[ht]
 	\centering
@@ -168,7 +191,7 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 		& \textbf{Name} & \textbf{AC} & \textbf{OLC} & \textbf{COA} & \textbf{LI} \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
-		& IntelliJ IDEA Community & 86 & 21 & 11 & 9 \\
+		& IntelliJ IDEA & 86 & 21 & 11 & 9 \\
 		& Eclipse JDT Core & 17 & 8 & 0 & 0 \\
 		& Elasticsearch & 13 & 3 & 4 & 3 \\
 		& Eclipse JDT UI & 3 & 19 & 0 & 0 \\
@@ -178,7 +201,6 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 		& Openfire & 20 & 9 & 5 & 0 \\
 		& Killbill & 20 & 2 & 0 & 0 \\
 		& JabRef & 3 & 2 & 0 & 1 \\
-		& Selenium & 8 & 2 & 0 & 0 \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{C/C++}}} 
 		& Chromium & 16 & 429 & 0 & 0 \\
@@ -195,17 +217,13 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 	\caption{Target projects and categorized matches}\label{table:scan_results}
 \end{table}
 
-The results in table \ref{table:scan_results} show that finding infringements is possible using this approach.
-However, the amount of actual infringements in the detected copied code segments is rather small compared to the overall detected matches.
-This is due to many accidental clones, which are caused by e.g. interface implementations or tables.
+In general, the findings for Java has more relevant hits, since no LI nor COA were found in C/C++.
+\todo{Why is that?}
 
-Otherwise licensed code which is copied sometimes is still a valid concern, since most licenses require to correctly attribute the source of the code.
 In many cases, this is not done correctly, as manual inspection showed.
 The violation of the license is still given in such a case, although it may not be as critical as e.g. with GPL licensed code.
 
 \todo[inline]{Determination of source not easy -> code origin analysis}
-
-\todo[inline]{remove getter/setters}
 
 \todo[inline]{Often reference project also have violations (COA), override original header with own gpl}
 
@@ -214,6 +232,7 @@ The violation of the license is still given in such a case, although it may not 
 \todo[inline]{Match often not origin, but gives hints that something has not been attributed correctly}
 
 \todo[inline]{Chromium: mostly hits from GPL fork}
+\todo[inline]{Rethink: mostly hits from rapidjson library}
 
 \section{Special cases}
 Some of the findings are rather special and can not be categorized precisely.
