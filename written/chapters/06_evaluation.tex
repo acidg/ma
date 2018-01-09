@@ -4,7 +4,7 @@
 To verify the capability of the approach proposed in this work, the prototypical implementation was tested.
 The idea is to find out, whether the approach is capable of detecting copied code in a codebase and, by that, unveil license infringements.
 For that purpose, 2000 GPL licensed projects were indexed using the prototypical implementation of the tool.
-After that, other open source projects, which are licensed not compatible with GPL and therefore should not contain any GPL licensed code indexed before, where analyzed and emerging matches categorized.
+After that, other open source projects, which are licensed not compatible with GPL and therefore should not contain any of the GPL licensed code indexed before, where analyzed and emerging matches categorized.
 
 This chapter describes the test setup evaluates timings, database sizes and findings.
 
@@ -39,8 +39,7 @@ This shows that incremental updates of the index are worth the effort of impleme
 
 After indexing those projects, several other projects, licensed not compatible with GPL, where analyzed for matches using the approach described in section \ref{section:implementation/finding_matches}.
 \autoref{table:target_projects} shows the chosen target projects, their license and the lines of code of files written in the corresponding language.
-
-\todo{Exclude third party and generated code}
+To reduce the amount of irrelevant matches, generated code and third party code in libraries were excluded from the target projects during analysis.
 
 \begin{table}[ht]
 	\centering
@@ -74,10 +73,9 @@ After indexing those projects, several other projects, licensed not compatible w
 	\caption{Target projects used for testing, their license and LOCs in the corresponding language}\label{table:target_projects}
 \end{table}
 
-
 \section{Hash Filter Performance}\label{section:evaluation/findings/hash_filter_performance}
 The bloom filter can return false positives, thus, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
-Those matches - called false positive filter matches (FPFM) \todo{FPFM needed?} in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
+Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
 
 Table \autoref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
 Columns are defined as follows:
@@ -92,7 +90,6 @@ Columns are defined as follows:
 The first two colums called \textit{Files} and \textit{Chunks} show the amount of scanned files and the resulting number of chunks extracted from the target system.
 The FPFMs and the percentage in relation to all matches are shown in the third column.
 The last column shows the amount of actual matches, which could be found in the index and their relative amount in comparison to all chunks extracted from the target system.
-\todo{more details on match distribution and assertions about significance}
 
 \begin{table}[ht]
 	\centering
@@ -145,7 +142,7 @@ To get a better view on the results, each match is manually inspected and groupe
 		Code which is actually copied from the reference project or originates from a common source.
 		Attribution is done correcty and therefore, this is not a license infringement.
 		Code can also be copied into the reverse direction in the context of this evaluation, since analyzed target projects are licensed in a way, where they can be copied to GPL licensed code with appropriate attribution.
-	\item[Copied without Attribution (COA)] 
+	\item[Copied, but not Attributed (CNA)] 
 		Same as otherwise licensed code, but not attributed correctly by the target project.
 		This may also be seen as a violation of the license's terms, depending on the license of the source, the length of the copied segment and its similarity.
 	\item[License Infringement (LI)]
@@ -156,7 +153,7 @@ AC can be seen as a false positive of the approach, whereas OLC detects code, wh
 Even though OLC does not violate a license, detection of such code still may be of interest, since using a library instead of copying the code into the codebase can be the better alternative \cite{heinemann2012effective}.
 In general, those two cases are not marking violations.
 
-COA on the other hand, marks a violation of the license, because the code has not been attributed correctly, but the significance of such a violation may not be very high.
+CNA on the other hand, marks a violation of the license, because the code has not been attributed correctly, but the significance of such a violation may not be very high.
 Copied code categorized as LI may even be attributed correctly, but still is a violation of the copied code's license.
 
 \subsection{Counting Matches}
@@ -177,18 +174,18 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 	\caption{Illustration of match counting}\label{fig:match_counting}
 \end{figure}
 
-\subsection{Results}
+\subsection{Results and Findings}
 The results in table \ref{table:scan_results} are twofold.
 On the one hand, it shows that finding license infringements is possible.
 On the other hand, the amount of overall detected matches prevails the amount of relevant matches by far.
 This is due to many accidental clones, which are caused by e.g. interface implementations or tables, as well as the fact that most licenses of target projects allow copying of code into a codebase licensed under GPL.
-Therefore, most of the hits for OLC are caused by code of the target project being copied into the reference project.
+Therefore, many of the hits for OLC are caused by code of the target project being copied into the reference project.
 
 \begin{table}[ht]
 	\centering
 	\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 	\begin{tabular}{l | l rrrr}
-		& \textbf{Name} & \textbf{AC} & \textbf{OLC} & \textbf{COA} & \textbf{LI} \\
+		& \textbf{Name} & \textbf{AC} & \textbf{OLC} & \textbf{CNA} & \textbf{LI} \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
 		& IntelliJ IDEA & 86 & 21 & 11 & 9 \\
@@ -217,44 +214,34 @@ Therefore, most of the hits for OLC are caused by code of the target project bei
 	\caption{Target projects and categorized matches}\label{table:scan_results}
 \end{table}
 
-In general, the findings for Java has more relevant hits, since no LI nor COA were found in C/C++.
-\todo{Why is that?}
+For Java, the approach found several infringements, for C/C++ no LI nor CNA were found.
+This may be explained, by many of the C/C++ target projects being of organizations, which have their own library codebase.
+Manual investigation in the findings leave the impression that C/C++ developers are more careful in copying code correctly and attributing copied code correctly.
 
-In many cases, this is not done correctly, as manual inspection showed.
-The violation of the license is still given in such a case, although it may not be as critical as e.g. with GPL licensed code.
+In many cases, attributing the origin of copied code is not done correctly, as manual inspection showed.
+The match supplied by the tool sometimes was not the actual origin of the code.
+However in many times, the suggested matches could give hints on the origin of the code and combined with further searching the Internet, the originating source could be determined.
+This process is very hard to automate and manual inspection is required nonetheless, since the severity of the infringement has to be assessed.
+For some rare cases, even searching for implementations of the specific problem on the Internet did not help to find the originating source.
+For such cases, the code was seen as CNA, since no attribution was made and the code may be a potential infringement.
 
-\todo[inline]{Determination of source not easy -> code origin analysis}
+This also shows that indexing one reference project often also includes several other projects, since sometimes, dependencies are copied into the codebase of a reference project.\\
+\\
+Infringements not only could be found in the target system.
+Sometimes, the original file header was replaced by the GPL header of the reference system, which can also seen as a violation of the permissive license's terms.
+Those cases are not regarded in this test, but still show that the problem targeted in this work exists.\\
+\\
+Some of the selected reference projects are forks of on of the target projects.
+Examples are Eclipse JDT Core and the Overture tool\footnote{\href{https://github.com/overturetool/overture}{https://github.com/overturetool/overture} (09.01.2018)} or Chromium and the OBS Studio project\footnote{\href{https://github.com/jp9000/obs-studio}{https://github.com/jp9000/obs-studio} (09.01.2018)}.
+Almost all matches of RethinkDB were caused by copied code from RapidJSON\footnote{\href{https://github.com/Tencent/rapidjson}{https://github.com/Tencent/rapidjson} (09.01.2018)}.\\
+\\
+Mostly, AC findings are caused by interface implementations, structs and enumerations used for communication with APIs or table definitions.
+A possible solution to this project would be blacklisting the chunks in the index.
+Also removing getters and setters and other single statement methods from the analysis could decrease the amount of AC.
 
-\todo[inline]{Often reference project also have violations (COA), override original header with own gpl}
-
-\todo[inline]{attributed vs non-attributed (= violation) statistics}
-
-\todo[inline]{Match often not origin, but gives hints that something has not been attributed correctly}
-
-\todo[inline]{Chromium: mostly hits from GPL fork}
-\todo[inline]{Rethink: mostly hits from rapidjson library}
-
-\section{Special cases}
-Some of the findings are rather special and can not be categorized precisely.
-This section lists some of those cases and suggestions on how to handle those, if possible.
-
-\begin{itemize}
-	\item Overture -> Eclipse
-	\item reverse copied code, e.g. Apache code in GPL
-	\item Interface implementation quite similar: Java list implementation, equals code, tables in c
-	\item Structs/Enums for API (e.g. Facebook Buck/ConstantTags.java)
-	\item Decision if accidential or copied without attribution often not easy (facebook Buck/MemoryHandler), COmment can give hints: Both sides same comments, probably copied from somewhere else
-\end{itemize}
-
-%\section{Database and Filter Sizes}
-%The space $m$ in bits required to store $n$ values with the optimal number of hash functions can be estimated by \todo{quelle?}
-%\begin{equation}\label{equ:bloom_probability} 
-%m = -\frac{n\cdot \ln(p)}{(\ln2)^{2}}
-%\end{equation}
-%with $p$ being the probability for a false positive.
-%For one billion hashes and a probability of 0.01\%, which roughly means one false positive for every 10000 lines of code, about 2,4 GB are needed.
-%A simple hash table would need at least 16 GB for the same amount of data.
-%TODO chunksize? => realtion to size of database
+Sometimes, the decision whether a match is actually copied code (OLC or CNA depending on the license) or just accidential clones (AC) is visible in the comments.
+When both sides have a high similarity in the comments, the probability for the code being copied increases significantly.
+Still, removing comments when normalizing code for comparison is advisable, since comments often are removed or added.
 
 \section{Confidentiality}
 The purpose of the tool proposed in this work is to uncover licensing issues and therefore may be used for closed source target systems.
@@ -266,5 +253,3 @@ In theory, this should restrict flow of information about the source code to a m
 However, when the code for a hash is known on the server side, i.e. a match for a hash is found, the server knows the code for the hash on the client.
 If enough matches are found, the server may be able to reconstruct parts of the source code.
 Still, information about the source code leaking from the client to the server is very limited.
-\todo{Is this relevant? remove?}
-\todo[inline]{further improve confidentiality: parital hashes}
