@@ -1,6 +1,7 @@
 % !TeX root = ../main.tex
 
 \chapter{Related Work}\label{chapter:related_work}
+\todo[inline]{Rewrite most of chapter, concentrate on continuous detection}
 Lots of research has been done in the area of detecting copy-pasted code.
 This mainly results from the huge field of application, where such techniques can be used.
 Most of the research can be differentiated in the types of copied code which they detect.
@@ -38,7 +39,7 @@ When the hash value is calculated the same way for another section of code, it c
 
 Koschke et al. \cite{koschke2014large,koschke2012large} tried to find license infringements in code.
 Using a suffix-tree, they showed that this approach is faster than an index based one.
-However, \glqq evaluation shows that [their] approach is faster than index-based techniques when the analysis is run only once. If the analysis is to be conducted multiple times, creating an index pays off\grqq \cite{koschke2014large}.
+However, \glqq evaluation shows that [their] approach is faster than index-based techniques when the analysis is run only once. If the analysis is to be conducted multiple times, creating an index pays off\grqq \cite{koschke2014large}.\todo{Continuous detection}
 
 Sajnanj et al. \cite{sajnani2016sourcerercc} and Svajlenko and Roy \cite{svajlenko2017fast} developed a workbench for large scale clone detection.
 In their work, they split blocks of code into tokens and sort them by frequency of use.

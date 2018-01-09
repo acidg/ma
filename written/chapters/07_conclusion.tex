@@ -11,6 +11,7 @@
 \section{Future Work / Extensibility}\label{section:approach/extensibility}
 \begin{itemize}
 	\item TODO Optimize normalization: Method based? (removes getter/setters, since to small) block-based => switch methods/structs/enums ordering in file, if/while/for with/without braces
+	\item TODO Chunk size: Size of database only influenced slightly, maybe even smaller chunks and more filtering?
 	\item TODO Assess matches: \textbf{Load file(s) from server}, do more comparison (With a difftool token based on methods/blocks, to prevent reordering of methods not detected)
 	\item TODO Extension points for future development? Web-Interface for code-add-request, Suggestions for linking libraries (gradle, ...)
 	\item TODO Authorization? Spam protection? DoS? Restrict requests/min and size of request -> (Monetize? => Blackduck...)

@@ -1,7 +1,5 @@
 % !TeX root = ../main.tex
 
-%TODO Andere Wege, Probleme beim IMplementieren, warum wurde etwas wie gelöst (Kleines Kind: und warum?)
-
 \chapter{Implementation}\label{chapter:implementation}
 This chapter describes details about the prototype implementation of the tool, which is written in Java.
 
@@ -16,7 +14,7 @@ Normalization is done by iterating over all tokens and removing rather irrelevan
 The stream of tokens is split into statements by language dependent tokens marking the end of a statement like semicolons or curly braces in Java or C/C++.
 Include or import statements are removed.
 In early tests, additionally normalizing identifiers like variable names showed many false positives for variable initializations e.g. in the beginning of methods or classes.
-An example for the normalization of some sample code can be found in figure \ref{fig:normalization}\todo{Finalize figure}.
+An example for the normalization of some sample code can be found in figure \ref{fig:normalization}\todo{Finalize figure, Java code instead?}.
 
 \begin{figure}[h]
 	\centering
@@ -58,8 +56,6 @@ Since the end of a statement is recognized by curly braces or semicolons as desc
 This may prevent copied code from being detected by the tool, when the braces are added or removed in the target system.
 Since normalizing this case is rather complicated, it is ignored in this work.
 
-\todo{Describe detailed storing of chunks}
-
 A relational database can reduce the size of the store, because redundancy can be removed.
 However, tests showed that even with bulk inserts, the creation of the database is more than 50 times slower than using a key-value store.
 In this work RocksDB was used as a key-value store implementation.
@@ -71,6 +67,7 @@ For the prototypical implementation, the list for a value is serialized in JSON
 Figure \ref{fig:json_serialization} shows a simplified example.
 
 \begin{figure}[h]
+	\centering
 	\begin{lstlisting}
 		{
 			[
@@ -179,24 +176,105 @@ This may not only increase accuracy, but also indexing speed, since less files c
 
 \section{Hash Filter}\label{section:implementation/hash_filter}
 With hash filter, this work refers to an algorithm, which can decide whether a element is part of a set with the help of a data structure which represents parts of the index.
-The first approach was to simply extract the set of all hashes from the index and shorten them to reduce size, e.g. instead of 128bit per hash, only the first n bits are used.
-Hashes which are equal in the first n bits but different in the remaining bits have the same shortened hash.
-One hash may actually be part of the set of hashes, whereas the other may not.
+A simple approach would be to extract the set of all hashes from the index and shorten each one of them to reduce size, e.g. instead of 128bit per hash, only the first $i$ bits are used.
+Hashes which are equal in the first $i$ bits but different in the remaining bits have the same shortened hash.
+One hash may actually be part of the set of hashes and therefor part of the index, whereas the other may not.
 With this approach a decision can not be made with absolute precision.
 
-The probability of such a false positive can be calculated as follows:
+The probability $p$ of a false positive, which is the probability for the list of shortened hashes containing an entry for the first $i$ bits of a hash, but the hash not being part of the index can be calculated as follows:\\
+First the possibility for a hit $p_h$ is determined:
 \begin{equation}
-	\frac{j}{Nenner} TODO
+	p_h=\frac{n}{2^i}
+\end{equation}
+with the number of hashes $n$ and the length of a shortened hash $i$, given that hashes are uniformly distributed.
+The probability $p_c$ for the hash being part of the index can be calculated as follows:
+\begin{equation}
+	p_c=\frac{n}{2^{128}}
+\end{equation}
+The resulting probability $p$ for a false positive can be calculated as follows:
+\begin{equation}
+	\begin{split}
+		p&=p_h\cdot (1-p_c) \\[10pt]
+		&= \frac{n}{2^i}\cdot \left(1-\frac{n}{2^{128}}\right)
+	\end{split}
 \end{equation}
 
+The main disadvantage of this approach is that with increasing number of hashes $n$ in the list, the amount of bits per hash has to rise in order to keep the probability low.
+For a probability of 0,01\% for a billion hashes the required length $i$ of a shortened hash would be 44 bit:
+\begin{equation}
+	\begin{split}
+		p&=\frac{n}{2^i}\cdot \left(1- \frac{n}{2^{128}}\right) \\[10pt]
+		2^i&=\frac{10^9}{10^{-4}}\cdot \left(1- \frac{10^9}{2^{128}}\right) \\[10pt]
+		i&=\log_2\left(10^{13}\cdot \left(1- \frac{10^9}{2^{128}}\right)\right) \\[10pt]
+		i&\approx 43,19 \rightarrow 44 \text{ bit per hash}
+	\end{split}
+\end{equation}
+This would result in 
+\begin{equation}
+	44\text{ bit} \cdot 10^9 = 44\cdot10^9 \text{ bits} = 5,5 \text{ GB}
+\end{equation}
+\\
 As mentioned before, in this work a Bloom Filter is used to decide, whether a hash is contained in the index.
-\todo{Bloom filter probability calculation explanation}
-\todo{Compare size and probabilities: bloom filter vs shortened hashes}
-\todo{Guava implementation, problems with number of hash functions}
+A Bloom Filter is a probabilistic data structure which can decide, whether an element is part of a set with a small probability for a false positive.
+It uses a bit array of size $m$ to store information about the values in the set.
+The probability for a false positive can be calculated as follows \cite{fan2000summary}:
+\begin{equation}\label{equ:false_positive_bloom}
+	p=\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)^k \approx \left(1-e^{-\frac{kn}{m}}\right)^k
+\end{equation}
+where $n$ is the number of hashes in the set, $m$ the number of bits in the Bloom Filter's bit array and $k$ the number of hash functions used, to store a value in the bit array.
+The optimum number of hash functions to use, is defined as the $k$ which minimizes the probability of the false positive $p$.
+To calculate the optimal $k$, which has to be positive, the approximation from equation \ref{equ:false_positive_bloom} can be used.\todo{How?}
+\begin{equation}
+	\begin{split}
+		k&=\frac{m}{n}\ln(2)
+	\end{split}
+\end{equation}
+When using a billion hashes for $n$ and a probability of 0,01\% as before, the size $m$ of the bit array needed for the optimum $k$ calculates as follows:
+\begin{equation}
+	\begin{split}
+		m&=-\frac{n\ln p}{(\ln2)^2} \text{ bit} \\[10pt]
+		&=-\frac{10^9\ln10^{-4}}{(\ln2^2)} \text{ bit} \\[10pt]
+		&\approx 1,9\cdot10^{10} \text{ bit}=2,4\text{ GB}
+	\end{split}
+\end{equation}
+
+Using a Bloom Filter instead of a list of shortened hashes to decide whether a hash is part of the index reduces the size of the filter, which has to be downloaded to less than a half for a billion hashes.
+%TODO plot?
+%\begin{figure}[h]
+%	\centering
+%	\begin{tikzpicture}
+%		\begin{axis}[
+%				samples=1000,
+%				xmin=0,
+%				xmax=1000,
+%				ymin=0,
+%%				ymax=1000000000,
+%				xlabel={Number of Hashes in Millions},
+%				ylabel={Filter Size in MB},
+%			\addplot[domain=0:1200]{-(x*10^6*ln(0.0001)/((ln(2))^2))/8000000};
+%		\end{axis}
+%	\end{tikzpicture}
+%	\begin{tikzpicture}
+%		\begin{axis}[
+%			samples=1000,
+%			xmin=0,
+%			xmax=1000,
+%			ymin=0,
+%			xlabel={Number of Hashes in Millions},
+%			ylabel={Number of Hash Functions},
+%		]
+%		\addplot[domain=0:1200]{ln(2)*(-(x*ln(0.0001)/((ln(2))^2)))/x};
+%		\end{axis}
+%%	\end{tikzpicture}
+%	\caption{Optimal Bloom Filter size in relation to stored hashes}
+%\end{figure}
+
+For the prototypical implementation, the Google Guava library's Bloom Filter implementation is used.
+It features easy setup and an efficient way to store into and load the filter from a file.
 
 \section{Scalability}\label{section:implementation/scalability}
 The indexing process can be parallelized, which highly improves the indexing speed.
-Therefore, a thread pool with 16 threads was used.
+In this prototypical implementation, a thread pool with 16 threads is used.
 For each version of a reference project, which should be scanned, a new indexing task is created for each file of that version.
 The resulting tasks are then processed by threads of the thread pool.
 This is done for each version of a project and for each project, resulting on 16 threads processing one version.
