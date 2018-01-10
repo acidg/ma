@@ -50,7 +50,6 @@ An example for the normalization of some sample code can be found in figure \ref
 	\caption{Normalization Process}\label{fig:normalization}
 \end{figure}
 
-\todo{Problem with single statements in if/while/for without braces}
 One emerging problem here are \texttt{if}, \texttt{while}, \texttt{for} or other blocks, which can be written with or without curly braces in the case of a single statement in the body.
 Since the end of a statement is recognized by curly braces or semicolons as described above, a block with curly braces and a single statement is seen as multiple statements, one without the braces is seen as a single statement.
 This may prevent copied code from being detected by the tool, when the braces are added or removed in the target system.
@@ -223,7 +222,7 @@ The probability for a false positive can be calculated as follows \cite{fan2000s
 \end{equation}
 where $n$ is the number of hashes in the set, $m$ the number of bits in the Bloom Filter's bit array and $k$ the number of hash functions used, to store a value in the bit array.
 The optimum number of hash functions to use, is defined as the $k$ which minimizes the probability of the false positive $p$.
-To calculate the optimal $k$, which has to be positive, the approximation from equation \ref{equ:false_positive_bloom} can be used.\todo{How?}
+To calculate the optimal $k$, which has to be positive, the approximation from equation \ref{equ:false_positive_bloom} can be used \cite{wiki2018bloom}. %TODO Zusätzliche Quelle finden
 \begin{equation}
 	\begin{split}
 		k&=\frac{m}{n}\ln(2)
@@ -239,38 +238,9 @@ When using a billion hashes for $n$ and a probability of 0,01\% as before, the s
 \end{equation}
 
 Using a Bloom Filter instead of a list of shortened hashes to decide whether a hash is part of the index reduces the size of the filter, which has to be downloaded to less than a half for a billion hashes.
-%TODO plot?
-%\begin{figure}[h]
-%	\centering
-%	\begin{tikzpicture}
-%		\begin{axis}[
-%				samples=1000,
-%				xmin=0,
-%				xmax=1000,
-%				ymin=0,
-%%				ymax=1000000000,
-%				xlabel={Number of Hashes in Millions},
-%				ylabel={Filter Size in MB},
-%			\addplot[domain=0:1200]{-(x*10^6*ln(0.0001)/((ln(2))^2))/8000000};
-%		\end{axis}
-%	\end{tikzpicture}
-%	\begin{tikzpicture}
-%		\begin{axis}[
-%			samples=1000,
-%			xmin=0,
-%			xmax=1000,
-%			ymin=0,
-%			xlabel={Number of Hashes in Millions},
-%			ylabel={Number of Hash Functions},
-%		]
-%		\addplot[domain=0:1200]{ln(2)*(-(x*ln(0.0001)/((ln(2))^2)))/x};
-%		\end{axis}
-%%	\end{tikzpicture}
-%	\caption{Optimal Bloom Filter size in relation to stored hashes}
-%\end{figure}
 
 For the prototypical implementation, the Google Guava library's Bloom Filter implementation is used.
-It features easy setup and an efficient way to store into and load the filter from a file.
+It features easy setup and an efficient way to save the filter on disk and allows loading it from a file.
 
 \section{Scalability}\label{section:implementation/scalability}
 The indexing process can be parallelized, which highly improves the indexing speed.
@@ -287,7 +257,7 @@ To keep it simple, projects only were index one version at a time.
 
 Tests showed, that indexing was about 8 times faster using this approach compared to a single threaded run.
 The process could be parallelized even more, by concurrently indexing multiple projects at the same time.
-Also it may be possible to scan multiple versions of one project at the same time, when the index keeps  references to all versions of a chunk instead only an entry pointing to the latest version of that chunk (compare section \ref{section:implementation/history_analysis/update}).
+Also it is possible to scan multiple versions of one project at the same time, when the versions of two colliding chunks is compared and the chunk referencing an older version of the file is dropped.
 However, during test, the machine already was at its limits using this approach, leaving those options open for distributed environments.
 
 \section{Finding Matches}\label{section:implementation/finding_matches}

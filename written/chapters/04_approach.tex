@@ -5,7 +5,7 @@ The purpose of the tool is the continuous detection of copied code in a changing
 Simply comparing file hashes or reading headers is in most cases not enough, since files may be altered or headers removed.
 For this approach, techniques known from the area of clone detection are used.
 
-The work of Koschke et al. makes clear that a index based approach seems appropriate for continuous detection:
+The work of Koschke makes clear that a index based approach seems appropriate for continuous detection:
 \glqq If the [copy-paste detection] analysis is to be conducted multiple times, creating an index pays off\grqq \cite{koschke2014large}.
 Because of that, the tool is using an index to look up similar sections of code.
 An index is a data structure which can be used to quickly look up values for a specific key.
@@ -95,9 +95,9 @@ This could significantly speed up the analysis, since only hashes which actually
 On the server-side this also reduces the load.
 
 Hashing with MD5 reduces the entropy of a chunk to about 128 bit of a ideal hash function, which still keeps the probability of collisions at a minimum.
-Lossless compression is expected to reduce the size of the hashtable not by much, since randomness of hashes is very high.
+Lossless compression is expected to reduce the size of the list of hashes not by much, since randomness of hashes is very high.
 However, lossy compression could be used.
-One great way of reducing size of hash table with low false positive probability is a BloomFilter.
+One great way to reduce size of a list of hashes with a low false positive probability is a BloomFilter.
 
 To store a value, a BloomFilter uses multiple hash functions to hash a value \cite{bloom1970filter}.
 It uses the resulting hash values as indexes to set bits of a bit array to 1.

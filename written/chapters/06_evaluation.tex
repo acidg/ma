@@ -8,7 +8,7 @@ After that, other open source projects, which are licensed not compatible with G
 
 This chapter describes the test setup evaluates timings, database sizes and findings.
 
-\section{Test Setup}
+\section{Test Setup}\label{section:evaluation/test_setup}
 As a source for the projects to index, GitHub was chosen.
 GitHub's REST API was used to generate a list of 1.000 GPL licensed Java and 1.000 GPL licensed C or C++ projects.
 All of the projects were checked out locally resulting in sizes as shown in \autoref{table:locs}.
@@ -73,7 +73,7 @@ To reduce the amount of irrelevant matches, generated code and third party code 
 	\caption{Target projects used for testing, their license and LOCs in the corresponding language}\label{table:target_projects}
 \end{table}
 
-\section{Hash Filter Performance}\label{section:evaluation/findings/hash_filter_performance}
+\section{Hash Filter Performance}\label{section:evaluation/hash_filter_performance}
 The bloom filter can return false positives, thus, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
 Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
 
@@ -130,7 +130,7 @@ Still, requesting the locations for each hash passing the Hash Filter individual
 Additional authentication on the server may be required to control access further slowing down the analysis.
 Instead, sending hashes in batches may be a better solution.
 
-\section{Detection of License Infringements}
+\section{Detection of License Infringements}\label{section:evaluation/detecting_infringements}
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
 
@@ -218,6 +218,7 @@ For Java, the approach found several infringements, for C/C++ no LI nor CNA were
 This may be explained, by many of the C/C++ target projects being of organizations, which have their own library codebase.
 Manual investigation in the findings leave the impression that C/C++ developers are more careful in copying code correctly and attributing copied code correctly.
 
+\todo[inline]{Examples for categories}
 In many cases, attributing the origin of copied code is not done correctly, as manual inspection showed.
 The match supplied by the tool sometimes was not the actual origin of the code.
 However in many times, the suggested matches could give hints on the origin of the code and combined with further searching the Internet, the originating source could be determined.
@@ -242,6 +243,13 @@ Also removing getters and setters and other single statement methods from the an
 Sometimes, the decision whether a match is actually copied code (OLC or CNA depending on the license) or just accidential clones (AC) is visible in the comments.
 When both sides have a high similarity in the comments, the probability for the code being copied increases significantly.
 Still, removing comments when normalizing code for comparison is advisable, since comments often are removed or added.
+
+
+\subsection{Testing Recall}
+Assertions of the recall of clone detection tools is difficult.
+Benchmarks like the work of Svajlenko et al. \cite{svajlenko2014towards} can give insight on the recall performance.
+Analyzing this work with such a benchmark go beyond the scope of this work and may even be not suitable, since the benchmark is testing for similar code constructs, which can be refactored for reuse to reduce redundancy and enhance software quality.
+In contrast, the tool presented in this work tries to find code which has a high similarity and can be argued for being copied.
 
 \section{Confidentiality}
 The purpose of the tool proposed in this work is to uncover licensing issues and therefore may be used for closed source target systems.

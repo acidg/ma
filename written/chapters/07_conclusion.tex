@@ -1,23 +1,13 @@
 % !TeX root = ../main.tex
 
 \chapter{Conclusion}\label{chapter:conclusion}
+The tests showed that finding infringements is possible and may help to prevent licensing issues.
+Using a Bloom Filter to reduce the amount of required requests can speed up the analysis and reduce the load on the server.
 
-\section{Continuous Detection of License Infringements}
-\begin{itemize}
-	\item Summarize findings and conclusion about feasibility
-	\item Research questions?
-\end{itemize}
-
-\section{Future Work / Extensibility}\label{section:approach/extensibility}
-\begin{itemize}
-	\item TODO Optimize normalization: Method based? (removes getter/setters, since to small) block-based => switch methods/structs/enums ordering in file, if/while/for with/without braces
-	\item TODO Chunk size: Size of database only influenced slightly, maybe even smaller chunks and more filtering?
-	\item TODO Assess matches: \textbf{Load file(s) from server}, do more comparison (With a difftool token based on methods/blocks, to prevent reordering of methods not detected)
-	\item TODO Extension points for future development? Web-Interface for code-add-request, Suggestions for linking libraries (gradle, ...)
-	\item TODO Authorization? Spam protection? DoS? Restrict requests/min and size of request -> (Monetize? => Blackduck...)
-\end{itemize}
-
-\subsection{Distribution for High Loads}
+The approach is scalable and can be heavily distributed, which may even make it possible to index and track the history of most of the open source code available on the Internet.
+However, there is a lot of room for improvement:\\
+\\
+\textbf{Distributed Server Architecture}\\
 Since this work proposes a client-server architecture, it is important to provide a reliable service to a huge amount of clients.
 Therefor, distributing the index on several machines is desirable for load balancing.
 This could easily be done by distributing the database onto the machines whenever the index is updated.
@@ -27,11 +17,51 @@ Pairs of servers and filters responsible for a group of reference projects could
 This would result in multiple small hash filters and enables clients to only choose filters of their interest, further reducing the size of the filter a client has to download and keep up to date.
 The requests resulting from matches in the filter on the client side then have to be routed to the server responsible for the corresponding group of reference projects.
 
-\subsection{Higher Accuracy History Analysis}
-As explained in section \ref{section:implementation/history_analysis/sorting_tags} ... => Branch based
+Distributing the workload can also speed up the indexing process, when updates are triggered (see section \ref{section:implementation/scalability}).\\
+\\
+\textbf{Branch Based History Analysis}\\
+The accuracy of the history analysis could be improved significantly.
+As explained in section \ref{section:implementation/history_analysis/sorting_tags}, the problem is sorting the tags of a reference project's repository in the correct order without producing huge amounts of changed files between two revisions and slowing down the indexing process.
 
-\subsection{Optimizations for the Filter}
-\begin{itemize}
-\item TODO: "By making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability) and decrease the false positive probability by roughly a factor of 2. @Mitzenmacher, Michael; Upfal, Eli (2005), Probability and computing: Randomized algorithms and probabilistic analysis S.10
-\item TODO Use Cuckoo-Filter \cite{fan2014cuckoo} instead of Bloom-Filter. Better performance in low false-positive probability with many items
-\end{itemize}
+A better approach would be to start with important branches and find tags on the way back to the root of the commit tree.
+Especially for big codebases with many branches, it may be important to filter branches, which are only used to implement features and are later on merged with a release branch.
+Since this heavily depends on the policy of the individual reference projects, manual inspection would be required or an approach to automate the filtering has to be developed.\\
+\\
+\textbf{Reducing Amount of Accidental Clones (AC)}\\
+With the current state of the approach, findings have to be inspected manually for violations, which sometimes can be a very time consuming process, since the actual origin of the code may not be part of the reference systems.
+Also, many of the found matches are not relevant, since either they are accidental clones and are not actually copied or the code in question does not cause any licensing issues.
+Results and insights emerging from the development of the tool presented in this work show that solving those problems is difficult.
+This mostly is caused by the peculiarity and individuality of reference projects and their licensing models.
+
+As mentioned in section \ref{section:evaluation/detecting_infringements} one of the reasons for accidental clones are getters and setters.
+Removing those during the normalization process would probably reduce the amount of accidental clones.
+
+Another source of accidental clones are declarations done for API compliance outside of methods.
+Testings done in chapter \ref{chapter:evaluation} showed, that most copied code is located inside the body of methods on both sides, the reference and target system.
+Concentrating the comparison of code on code blocks such as methods, structs, enumerations or other language specific constructs, could reduce the amount of such false positives.
+
+Clients could also blacklist matches, which are irrelevant.
+Matches which are blacklisted by many clients could then be sorted out on the server side and excluded from results and the filter.\\
+\\
+\textbf{Hash Filter Improvements}\\
+The original idea for a Bloom Filter is already more than 40 years old \cite{bloom1970filter}.
+There has been a lot of research to improve the filters performance and reduce its size.
+Tulsiani et al. found out that \glqq making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability and decrease the false positive probability by roughly a factor of 2\grqq \ \cite{tulsiani2013probability}.
+Compared to the example calculation done in section \ref{section:implementation/hash_filter}, a filter containing one billion hashes would be about 2 GB, reducing the size by 17\%.
+The work of Fan et al. proposes a filter structure called Cuckoo-Filter, which has a better performance when the filter contains many items. and needs a low false positive probability.
+This would fit the requirements for a filter in this work.\\
+\\
+The approach proposed in this work has the potential to offer a service for the detection of copied open source code in a codebase as shown in the tests.
+Testing done to verify the capability of the approach showed that licensing issues can be found and may prevent companies to pay huge fines caused by infringement.
+When the issues listed above are resolved, the tool may not only be used to find licensing issues, but also enable developers to monitor used libraries and third party code.
+This information can be used to link libraries instead of copying the code.
+In the long run, this could improve software quality, since maintaining of third party code could be simplified and vulnerabilities fixed.
+
+%\section{Future Work / Extensibility}\label{section:approach/extensibility}
+%This section lists several ideas for improvement of the detection tool in various parts.
+%\begin{itemize}
+%	\item TODO Chunk size: Size of database only influenced slightly, maybe even smaller chunks and more filtering?
+%	\item TODO Assess matches: \textbf{Load file(s) from server}, do more comparison (With a difftool token based on methods/blocks, to prevent reordering of methods not detected)
+%	\item TODO Extension points for future development? Web-Interface for code-add-request, Suggestions for linking libraries (gradle, ...)
+%	\item TODO Authorization? Spam protection? DoS? Restrict requests/min and size of request -> (Monetize? => Blackduck...)
+%\end{itemize}
