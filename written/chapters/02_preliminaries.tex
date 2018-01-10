@@ -7,16 +7,19 @@ Second, license infringement in the context of the developed detection tool is d
 Lastly, the term code cloning and its relation to this work are explained.
 
 \section{General Terms}\label{section:preliminaries/terms}
+The following list contains terms which are used throughout this work.
+
 \begin{description}
 	\item[Reference System/Project]
-		A codebase which is detected by the tool. 
-		Therefore, the reference system has to be analyzed by the tool and information about the code has to be extracted and stored.
+		A codebase which can be detected by the tool. 
+		Therefor, files of the reference system have to be analyzed by the tool and information about the code has to be extracted and stored.
 	\item[Target System/Project]
-		A codebase which is analyzed by the tool. 
-		Code which is copied from a reference systems to the target system should be found and assessed by its similarity.
+		A codebase which is analyzed for license infringements by the tool.
+		Code which is copied from a reference system to the target system should be found and its similarity assessed.
 	\item[Index] 
 		A database which allows quick querying for similar code.
 		In this work, a key-value store is used, which stores a value under a key, usually a hash of the value.
+		The process of analyzing a source code file and storing cloning information into the index is called indexing.
 	\item [Bloomfilter]
 		A space efficient data structure which can tell whether an element is part of a set with a high probability. 
 		False positives are possible, false negatives are not.
@@ -37,7 +40,7 @@ Gabel and Su did some analysis regarding the uniqueness of code.
 Their study \glqq revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code\grqq \cite{2010-gabel-su-source-code-uniqueness}.
 Regarding that, the lower end of a clone which can be argued as a license infringement should be set at 8 lines of code.
 
-In the lawsuit case explained in \cite{mertzel2008copying}, 54 lines of code where found and judged as copied code.
+In the lawsuit case explained in \cite{mertzel2008copying}, 54 lines of code (0,03\% of the codebase) where found and judged as copied code.
 Consequentially, a detected clone should be seen as a serious violation when it reaches the length of 54 lines of code.
 
 \subsection*{Which licenses are relevant for detection?}\label{section:preliminaries/infringement/relevant_licenses}
@@ -56,7 +59,6 @@ In the context of this work, licenses are separated into three different categor
 		Examples here are the Apache, MIT or some forms of the BSD License.
 	\item[Public Domain] 
 		Code under public domain or under licenses like the Unlicense, which allows use without any conditions, except the creator does not provide any warranties and can not be held responsible for any damages or other liabilities.
-	\todo{definition of continuous detection?}
 \end{description}
 
 Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license can already be an infringement.
@@ -67,7 +69,6 @@ One problem in the context of this work are codebases with files which have a di
 This is relevant, if e.g. code of a permissive license is copied into the codebase under a restrictive license.
 For the development of the tool, the difficulty here is to classify the file correctly into the right license category defined above.
 In the later of this work, this exceptional case is ignored, since manual inspection of matches between a target's and reference system's file is mandatory for decision making.
-\todo{GPL Linking Exception?}
 
 \section{Code Cloning}\label{section:preliminaries/code_cloning}
 For this work, code has to be compared and its similarity assessed.
