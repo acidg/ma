@@ -77,7 +77,7 @@ To reduce the amount of irrelevant matches, generated code and third party code 
 The bloom filter can return false positives, thus, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
 Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
 
-Table \autoref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
+Table \ref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
 Columns are defined as follows:
 \begin{description}
 	\item[Target System] The name of the target system
@@ -87,9 +87,6 @@ Columns are defined as follows:
 	\item[True Positives] Amount of actual matches, which could be found in the index and their relative amount in comparison to all chunks extracted from the target system.
 	\item[Requests] Amount of requested match details. Note here that files with less than two matches are ignored as described in section \ref{section:implementation/finding_matches}.
 \end{description}
-The first two colums called \textit{Files} and \textit{Chunks} show the amount of scanned files and the resulting number of chunks extracted from the target system.
-The FPFMs and the percentage in relation to all matches are shown in the third column.
-The last column shows the amount of actual matches, which could be found in the index and their relative amount in comparison to all chunks extracted from the target system.
 
 \begin{table}[ht]
 	\centering
@@ -102,7 +99,7 @@ The last column shows the amount of actual matches, which could be found in the 
 		& Elasticsearch & 5.560 & 414.448 & 45 & 1.105 (0,3\%) & 1.004 \\
 		& Eclipse JDT UI & 2.736 & 274.040 & 29 & 482 (0,2\%) & 444 \\
 		& Buck & 5.150 & 261.605 & 21 & 575 (0,2\%) & 548 \\
-		& Teamscale & 4.344 & 145.029 & 20 & 378 (0,3\%) & 365 \\
+		& Teamscale & 5.463 & 185.648 & 21 (0,011\%) & 458 (0,247\%) & 434 \\
 		& Spring Boot & 3.756 & 94.935 & 11 & 1.010 (1,1\%) & 967 \\
 		& Openfire & 1.572 & 121.775 & 15 & 2.106 (1,7\%) & 2.084 \\
 		& Killbill & 1.477 & 79.118 & 13 & 550 (0,7\%) & 539 \\
@@ -123,13 +120,17 @@ The last column shows the amount of actual matches, which could be found in the 
 	\caption{Amount of files and chunks as well as true and false positives caused by the Hash Filter and the resulting requested chunk details}\label{table:unfiltered_findings}
 \end{table}
 
-This result shows, that the Hash Filter is reducing the required lookups to a fraction.
+This result shows that the Hash Filter is reducing the required lookups to a fraction.
 Load on the server can be greatly reduced and analysis of a target system's code therefore is a lot quicker.
 
-Still, requesting the locations for each hash passing the Hash Filter individually, causes a lot of requests with high overhead caused by creating single network packets.
+The analysis took less than 20 seconds even for the biggest projects not including networking.
+In a real world scenario, this will be slower, since communication with the server will add additional delays.
+
+Requesting the locations for each hash passing the Hash Filter individually, causes a lot of requests with high overhead caused by creating single network packets.
 Additional authentication on the server may be required to control access further slowing down the analysis.
 Instead, sending hashes in batches may be a better solution.
 
+\newpage
 \section{Detection of License Infringements}\label{section:evaluation/detecting_infringements}
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
@@ -174,12 +175,13 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 	\caption{Illustration of match counting}\label{fig:match_counting}
 \end{figure}
 
+\newpage
 \subsection{Results and Findings}
 The results in table \ref{table:scan_results} are twofold.
 On the one hand, it shows that finding license infringements is possible.
 On the other hand, the amount of overall detected matches prevails the amount of relevant matches by far.
-This is due to many accidental clones, which are caused by e.g. interface implementations or tables, as well as the fact that most licenses of target projects allow copying of code into a codebase licensed under GPL.
-Therefore, many of the hits for OLC are caused by code of the target project being copied into the reference project.
+This is due to many accidental clones (AC), which are caused by e.g. interface implementations or tables, as well as otherwise licensed code (OLC) due to the fact that most licenses of target projects allow copying of code into a codebase licensed under GPL.
+Therefore, many of the hits for OLC are caused by code of the target project being found in the reference project.
 
 \begin{table}[ht]
 	\centering
@@ -188,7 +190,7 @@ Therefore, many of the hits for OLC are caused by code of the target project bei
 		& \textbf{Name} & \textbf{AC} & \textbf{OLC} & \textbf{CNA} & \textbf{LI} \\
 		\hline 
 		\parbox[t]{2mm}{\multirow{10}{*}{\rotatebox[origin=c]{90}{JAVA}}} 
-		& IntelliJ IDEA & 86 & 21 & 11 & 9 \\
+		& IntelliJ IDEA & 86 & 21 & 11 & 7 \\
 		& Eclipse JDT Core & 17 & 8 & 0 & 0 \\
 		& Elasticsearch & 13 & 3 & 4 & 3 \\
 		& Eclipse JDT UI & 3 & 19 & 0 & 0 \\
@@ -214,49 +216,108 @@ Therefore, many of the hits for OLC are caused by code of the target project bei
 	\caption{Target projects and categorized matches}\label{table:scan_results}
 \end{table}
 
+\subsubsection*{General Findings}
 For Java, the approach found several infringements, for C/C++ no LI nor CNA were found.
 This may be explained, by many of the C/C++ target projects being of organizations, which have their own library codebase.
 Manual investigation in the findings leave the impression that C/C++ developers are more careful in copying code correctly and attributing copied code correctly.
-
-\todo[inline]{Examples for categories}
-In many cases, attributing the origin of copied code is not done correctly, as manual inspection showed.
-The match supplied by the tool sometimes was not the actual origin of the code.
-However in many times, the suggested matches could give hints on the origin of the code and combined with further searching the Internet, the originating source could be determined.
-This process is very hard to automate and manual inspection is required nonetheless, since the severity of the infringement has to be assessed.
-For some rare cases, even searching for implementations of the specific problem on the Internet did not help to find the originating source.
-For such cases, the code was seen as CNA, since no attribution was made and the code may be a potential infringement.
-
-This also shows that indexing one reference project often also includes several other projects, since sometimes, dependencies are copied into the codebase of a reference project.\\
-\\
-Infringements not only could be found in the target system.
-Sometimes, the original file header was replaced by the GPL header of the reference system, which can also seen as a violation of the permissive license's terms.
-Those cases are not regarded in this test, but still show that the problem targeted in this work exists.\\
-\\
-Some of the selected reference projects are forks of on of the target projects.
-Examples are Eclipse JDT Core and the Overture tool\footnote{\href{https://github.com/overturetool/overture}{https://github.com/overturetool/overture} (09.01.2018)} or Chromium and the OBS Studio project\footnote{\href{https://github.com/jp9000/obs-studio}{https://github.com/jp9000/obs-studio} (09.01.2018)}.
-Almost all matches of RethinkDB were caused by copied code from RapidJSON\footnote{\href{https://github.com/Tencent/rapidjson}{https://github.com/Tencent/rapidjson} (09.01.2018)}.\\
-\\
-Mostly, AC findings are caused by interface implementations, structs and enumerations used for communication with APIs or table definitions.
-A possible solution to this project would be blacklisting the chunks in the index.
-Also removing getters and setters and other single statement methods from the analysis could decrease the amount of AC.
 
 Sometimes, the decision whether a match is actually copied code (OLC or CNA depending on the license) or just accidential clones (AC) is visible in the comments.
 When both sides have a high similarity in the comments, the probability for the code being copied increases significantly.
 Still, removing comments when normalizing code for comparison is advisable, since comments often are removed or added.
 
+The match supplied by the tool sometimes was not the actual origin of the code.
+However in many times, the suggested matches could give hints on the origin of the code and combined with further searching the Internet, the originating source could be determined.
+This process is very hard to automate and manual inspection is required nonetheless, since the severity of the infringement has to be assessed.
+For some rare cases, even searching for implementations of the specific problem on the Internet did not help to find the originating source.
+For such cases, the code was seen as CNA, since no attribution was made and the code may be a potential infringement.
+This also shows that indexing one reference project often includes several other projects (with different licenses), since sometimes, dependencies are copied into the codebase of a reference project.
+
+Infringements not only could be found in the target system.
+Sometimes, the original file header was replaced by the GPL header of the reference system, which for many licenses is a violation.
+Those cases are not regarded in this test, but still show that the problem targeted in this work exists.
+
+Some of the selected reference projects are forks of one of the target projects.
+Examples are Eclipse JDT Core and the Overture tool\footnote{\href{https://github.com/overturetool/overture}{https://github.com/overturetool/overture} (09.01.2018)} or Chromium and the OBS Studio project\footnote{\href{https://github.com/jp9000/obs-studio}{https://github.com/jp9000/obs-studio} (09.01.2018)}.
+Almost all matches of RethinkDB were caused by copied code from RapidJSON\footnote{\href{https://github.com/Tencent/rapidjson}{https://github.com/Tencent/rapidjson} (09.01.2018)}.
+
+\subsubsection*{Accidential Clones (AC)}
+Mostly, AC findings are caused by interface implementations, structs and enumerations used for communication with APIs or table definitions.
+One example of a common AC is shown in figure \ref{fig:ac}.
+Here, the Java specific \texttt{hashCode} and \texttt{equals} methods cause a match.
+Method generators supplied by the used IDE may have caused the high similarity.
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\linewidth]{figures/ac.png}
+	\caption{Example for AC. Left target, right reference code}\label{fig:ac}
+\end{figure}
+
+\newpage
+\subsubsection*{Copied but not Attributed Code (OLC)}
+OLC had many matches both for Java and C/C++.
+Either code was attributed correctly like the example in figure \ref{fig:olc_attributed} or the code can be copied without attribution like in the case of code under public domain like the example in \ref{fig:olc_public_domain} shows.
+Findings like those are not license infringements.
+However, they may be of interest, since third party code can be monitored and code could be linked instead of copied.
+
+Some of the selected reference projects are forks of one of the target projects.
+Examples are Eclipse JDT Core and the Overture tool\footnote{\href{https://github.com/overturetool/overture}{https://github.com/overturetool/overture} (09.01.2018)} or Chromium and the OBS Studio project\footnote{\href{https://github.com/jp9000/obs-studio}{https://github.com/jp9000/obs-studio} (09.01.2018)}.
+Almost all matches of RethinkDB were caused by copied code from RapidJSON\footnote{\href{https://github.com/Tencent/rapidjson}{https://github.com/Tencent/rapidjson} (09.01.2018)}.
+
+A reference system being licensed under a specific license does not cause all code files of that system are actually licensed as such.
+Resolving the actual license of a file can be very hard, since headers often do not contain any information on the file's license.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{figures/olc_attributed.png}
+	\caption{Example for correctly attributed OLC. Left target, right reference code}\label{fig:olc_attributed}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{figures/olc_public_domain.png}
+	\caption{Example for public domain code being categorized as OLC. Left target, right reference code}\label{fig:olc_public_domain}
+\end{figure}
+
+\newpage
+\subsubsection*{Copied but not Attributed Code (CNA)}
+In many cases, attributing the origin of copied code is not done correctly, as manual inspection showed.
+Figure \ref{fig:cna} shows an example for CNA, where hundreds of lines were copied, but no attribution was made.
+The original file header containing the license information including the terms and conditions was replaced by the target project's file header.
+This causes a violation of the licenses terms, since attribution has to be made according to the reference file's license.
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\linewidth, trim={1mm 3,8cm 0 0}, clip]{figures/cna.png}
+	\caption{Example for CNA. Left target, right reference code}\label{fig:cna}
+\end{figure}
+
+\newpage
+\subsubsection*{License Infringment (LI)}
+Cases categorized as LI are violations of the GPL, where code is copied from a GPL licensed file to the target system.
+Almost all cases found are caused by adoption of classes from the Java Development Kit (JDK).
+The license of both, OpenJDK's and Oracle JDK's source code files is not compatible with permissive licenses like Apache or MIT, nor with closed source.
+It seems like many developers are not aware of this.
+On example of such an infringement can be found in figure \ref{fig:li}, where a method of a class in the JDK was modified.
+The code is then licensed under Apache 2.0 which is not compatible with GPL.
+Instead, the code should be licensed under GPL.
+This example shows that even small amounts of copied code which cause violations can be detected using the tool, although modifications were made.
+
+Many of those cases are rather small and may not be prosecuted when uncovered.
+Nonetheless, those findings show that the problem targeted in this work exists and can be detected using the approach presented in this work.
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\linewidth]{figures/li.png}
+	\caption{Example for LI. Left target, right reference code}\label{fig:li}
+\end{figure}
 
 \subsection{Testing Recall}
-Assertions of the recall of clone detection tools is difficult.
+Asserting the recall of clone detection tools is difficult.
 Benchmarks like the work of Svajlenko et al. \cite{svajlenko2014towards} can give insight on the recall performance.
 Analyzing this work with such a benchmark go beyond the scope of this work and may even be not suitable, since the benchmark is testing for similar code constructs, which can be refactored for reuse to reduce redundancy and enhance software quality.
 In contrast, the tool presented in this work tries to find code which has a high similarity and can be argued for being copied.
 
 \section{Confidentiality}
-The purpose of the tool proposed in this work is to uncover licensing issues and therefore may be used for closed source target systems.
+The tool may be used for closed source target systems.
 One key issue for companies is confidentiality regarding own source code.
 Uploading code to a server maintained externally to the company may not be conform with the company's data privacy policies.
 
-The approach presented in this work is only sending hashes which encapsulate information relevant for identifying chunks.
+The approach presented in this work is only sending hashes which represent information relevant for identifying chunks.
 In theory, this should restrict flow of information about the source code to a minimum and conclusions about the code can not be made.
 However, when the code for a hash is known on the server side, i.e. a match for a hash is found, the server knows the code for the hash on the client.
 If enough matches are found, the server may be able to reconstruct parts of the source code.
