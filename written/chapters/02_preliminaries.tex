@@ -16,14 +16,15 @@ The following list contains terms which are used throughout this work.
 	\item[Target System/Project]
 		A codebase which is analyzed for license infringements by the tool.
 		Code which is copied from a reference system to the target system should be found and its similarity assessed.
-	\item[Index] 
+	\item[Clone Index] 
 		A database which allows quick querying for similar code.
 		In this work, a key-value store is used, which stores a value under a key, usually a hash of the value.
 		The process of analyzing a source code file and storing cloning information into the index is called indexing.
 	\item [Bloomfilter]
 		A space efficient data structure which can tell whether an element is part of a set with a high probability. 
 		False positives are possible, false negatives are not.
-		The probability for a false positive can be calculated. See section \ref{section:approach/creating_index/hash_filter} for more details.
+		The probability for a false positive can be calculated. 
+		See section \ref{section:approach/creating_index/hash_filter} for more details.
 	\item [Chunk]
 		A sequence of statements with specific length extracted from a source code file.
 		This segmentation is used to find matches between files of a target and a reference system.
@@ -37,7 +38,7 @@ Here, several question arise:
 
 \subsection*{How much copied code can cause a license infringement?}\label{section:preliminaries/infringement/how_much_code}
 Gabel and Su did some analysis regarding the uniqueness of code.
-Their study \glqq revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code\grqq \cite{2010-gabel-su-source-code-uniqueness}.
+Their study ``revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code'' \cite{2010-gabel-su-source-code-uniqueness}.
 Regarding that, the lower end of a clone which can be argued as a license infringement should be set at 8 lines of code.
 
 In the lawsuit case explained in \cite{mertzel2008copying}, 54 lines of code (0,03\% of the codebase) where found and judged as copied code.
@@ -51,32 +52,33 @@ In the context of this work, licenses are separated into three different categor
 
 \begin{description}
 	\item[Restrictive Licenses] Licenses which do not permit use without permission by the author or in the given environment.
-		This can be a Copyright, which is default when no license is declared.
-		Another example here are copy-left licenses, like the GNU Public License (GPL), which forces a user to license distribution of the derivative work only under the same license and can therefore cause licensing issues, when used closed-source codebases.
+		This can be a copyright, which is default when no license is declared.
+		Another example here are copy-left licenses, like the GNU Public License (GPL), which forces a user to license distribution of the derivative work only under the same license and can therefore cause licensing issues, when reused in closed-source codebases.
 	\item[Permissive Licenses]
 		Licenses which allow modification and use with conditions.
-		Conditions may be that the derivative work has to notice about the used code or patent right regulations.
+		Conditions may be that the derivative work has to attribute the used code or patent right regulations.
 		Examples here are the Apache, MIT or some forms of the BSD License.
 	\item[Public Domain] 
 		Code under public domain or under licenses like the Unlicense, which allows use without any conditions, except the creator does not provide any warranties and can not be held responsible for any damages or other liabilities.
 \end{description}
 
 Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license can already be an infringement.
-It can also be argued, if code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting \cite{heinemann2012effective}.
+It can also be argued that code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting \cite{heinemann2012effective}.
 \\ \\
 \noindent
 One problem in the context of this work are codebases with files which have a different license, than the codebase itself.
 This is relevant, if e.g. code of a permissive license is copied into the codebase under a restrictive license.
 For the development of the tool, the difficulty here is to classify the file correctly into the right license category defined above.
-In the later of this work, this exceptional case is ignored, since manual inspection of matches between a target's and reference system's file is mandatory for decision making.
+Developing an automated approach for detecting the exact origin and consequentially the license is beyond the scope of this work.
+Therefore, manual inspection of matches between a target's and reference system's file is mandatory for decision making.
 
 \section{Code Cloning}\label{section:preliminaries/code_cloning}
 For this work, code has to be compared and its similarity assessed.
-A lot of work has been done in this area, starting more than 30 years ago\cite{lancaster2004comparison}.
+A lot of work has been done in this area, starting more than 30 years ago \cite{lancaster2004comparison}.
 During that time, terms specifying the similarity of code have been established.
 
 In general, sections of similar code which may have been caused by copying the code are called \textit{clones}.
-Similar is not very precise, since it can be a 1:1 copy or can have small differences like variable renaming up to clones which only have a somewhat similar structure or produce the same output for a given input.
+In this context ``similar'' can be anything between a 1:1 copy over small differences like variable renaming up to clones which only have a somewhat similar structure or produce the same output for a given input.
 The similarity of clones can be categorized into different types, according to \cite{roy2007survey}:
 
 \begin{description}
@@ -87,7 +89,7 @@ The similarity of clones can be categorized into different types, according to \
 \end{description}
 
 However, those clone types are just a reference.
-Clone detection tools often do not concentrate on one specific clone type, but rather on the purpose of the tool and similarity of clones have to be defined in more detail.
+For clone detection tools it makes sense not to concentrate on one specific clone type, but rather on the purpose of the tool and the similarity of clones have to be defined in more detail.
 This also is true for this work.
  
 \subsection*{Which clones are relevant for license infringements?}
@@ -95,8 +97,9 @@ The goal of this work is to find code, which has been copied from source code av
 Code is copied for many reasons, e.g. to save time and effort, because of lack of knowledge, difficulty of understanding and many others \cite{roy2007survey}.
 Instead of implementing the functionality from scratch, code which already is available to the developer is used, which may include code available as open source software on the Internet.
 Because the code may also difficult to understand or time is tight, it is copied rather untouched.
-This would results in a similarity comparable to a type-1 clone.
-However, small modifications may have been done e.g. added lines for logging purposes.
-This would make it a type-2 clone, but without the renaming of variables.
+This would result in a similarity comparable to a type-1 clone.
+
+In copies which should be detected by the tool developed in this work, small modifications may have been done e.g. added lines for logging purposes.
+This would result in a gapped clone, where a single type-1 clone is split up into multiple type-1 clones due to changed, added or removed lines.
 
 For this work, code which has multiple small sections which are similar in the type-1 category is the target clone type.
