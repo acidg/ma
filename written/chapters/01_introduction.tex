@@ -5,11 +5,15 @@ In software development, reuse of code can reduce time, effort and even enhance 
 Repositories published on the Internet are a popular source for code which offers the desired functionality.
 However, when code is copied from open source software systems, licenses may be violated if its license's terms and conditions are not met.
 So called copy-Left licenses like different versions of the GNU General Public License (GPL), which demand copied-to software systems to adopt the same license, can easily cause violations, especially in closed-source systems.
-Software may have to be published as open source afterwards like in the case of Microsoft's \glqq Windows USB/DVD Download Tool\grqq\footnote{\href{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}}.
+Software may have to be published as open source afterwards like in the case of Microsoft's \glqq Windows USB/DVD Download Tool\grqq \ \cite{microsoft2009download}.
 
-There are many tools available for finding copied code in a codebase.
-Most of the tools are used for clone detection, in order to find similar code which can be refactored for reuse to reduce redundancy and enhance software quality.
-Some of them try to find copied code across projects or even provide interfaces for querying code.
+Finding copied code, which potentially cause licensing issues is difficult.
+Simply comparing the hash of files or reading the file's header is not sufficient to find copied code, since it may be modified, or only parts of a file are copied.
+Instead, code has to be compared in more detail.
+The approach presented in this work tries to do so by using techniques known from the area of clone detection.
+
+There are many tools available for finding copied code withing an between codebases.
+Existing clone detection tools try to find similar code, which can be refactored for reuse to reduce redundancy and enhance software quality.
 Often, they are designed for single runs and need a pool of projects which they can use for comparison.
 The possibility to use them for detection of license infringements on a continuous basis is very limited because of several issues.
 % huge dataset
@@ -20,15 +24,15 @@ When code was copied from an older version of an open source project, it may not
 % confidentiality
 Uploading the code to a server offering copied code detection often is not an option for confidentiality reasons.
 
-In this work a tool is developed, which allows to search a codebase for copied code from open source software available on the Internet.
+In this work a tool is developed, which allows searching a codebase for copied code from open source software available on the Internet.
 To decide whether a given fragment of code is part of an open source system, the detection tool indexes huge amounts of open source systems available on the Internet and maintains a data structure, which makes it possible to quickly search for similar code in the indexed open source systems.
 The approach proposed in this work is based on a client server architecture, where the server keeps track of huge amounts of open source projects including their history.
 The server provides an interface for clients, which allows to query for code sequences and find similar matches in open source systems.
 This can be done in a continuous manner, i.e. for every commit to track whether incongruously licensed code has been copied to the codebase.
 One key feature of the tool is the filtering technique used, which significantly reduces the server's load and speeds up the search process.
 Therefor, a file representing a bloom filter can be downloaded from the server.
-It allows clients to decide whether a section of source code is part of an open source system tracked by the server.
-Details can then be fetched from the server.
+It allows clients to decide whether a section of source code may be part of an open source system tracked by the server.
+Details about the found matches can then be fetched from the server.
 
 The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
 The analysis of existing open source code bases is fast and scalable and can be periodically updated.
