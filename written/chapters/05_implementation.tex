@@ -1,52 +1,24 @@
 % !TeX root = ../main.tex
 
 \chapter{Implementation}\label{chapter:implementation}
-This chapter describes details about the prototype implementation of the tool, which is written in Java.
+This chapter describes details about the prototypical implementation of the tool, which is written in Java.
 
 \section{Index Creation}\label{section:implementation/index_creation}
 One goal of this work is the ability to find slightly modified code.
 The idea followed here is to choose the number of statements in a chunk low to react on modified, added and removed statements.
 The number of statements also has to be high enough to find license infringements as defined in \autoref{section:preliminaries/infringement}.
-After several tests, 5 statements per chunk seemed reasonable.
+After several tests, 5 statements per chunk produced promising results.
 
 For tokenization, existing code from the work of \cite{heinemann2014teamscale} is used.
 Normalization is done by iterating over all tokens and removing rather irrelevant tokens like access modifiers, brackets, the java final or the C atomic keywords.
 The stream of tokens is split into statements by language dependent tokens marking the end of a statement like semicolons or curly braces in Java or C/C++.
 Include or import statements are removed.
 In early tests, additionally normalizing identifiers like variable names showed many false positives for variable initializations e.g. in the beginning of methods or classes.
-An example for the normalization of some sample code can be found in figure \ref{fig:normalization}\todo{Finalize figure, Java code instead?}.
+An example for the normalization of some sample code can be found in figure \ref{fig:normalization}.
 
 \begin{figure}[h]
 	\centering
-	\begin{minipage}{1.2\linewidth}
-		\begin{minipage}{0.35\linewidth}
-			\scriptsize
-			\lstinputlisting[language=C++]{data/buffer.c}
-		\end{minipage}
-		\begin{minipage}{0.23\linewidth}
-			\scriptsize
-			\begin{lstlisting}
-			AVBufferRef * create uint8_t * data , ... !\tikzmark{bgnFir}!
-			AVBufferRef * ref = NULL !\tikzmark{bgnSec}!
-			AVBuffer * buf = NULL !\tikzmark{bgnThi}!
-			buf = av_mallocz sizeof * buf
-			if ! buf
-			return NULL !\tikzmark{trmFir}!
-			buf -> data = data !\tikzmark{trmSec}!
-			buf -> size = size !\tikzmark{trmThi}!
-			buf -> opaque = opaque
-			atomic_init & buf -> refcount , 1
-			...
-			\end{lstlisting}
-			
-			%			\begin{tikzpicture}[overlay, remember picture]
-			%			\drawBrace[.6em]{bgnFir}{trmFi}{Example xshifted.};
-			%			\drawBrace{bgnSec}{trmSec}{Example annotation.};
-			%			\drawBrace{bgnThi}{trmThi}{Another example.};
-			%			\end{tikzpicture}
-			
-		\end{minipage}
-	\end{minipage}
+	\includegraphics[width=\linewidth]{figures/normalization.pdf}
 	\caption{Normalization Process}\label{fig:normalization}
 \end{figure}
 
@@ -105,7 +77,7 @@ Indexing large projects like that may take quite long.
 First tests with a commit-based approach on the Linux kernel's master branch showed that a complete indexing would take several days to finish.
 Note here that the Linux kernel code is a special case, since its git repository contains more than 600000 commits at the time of writing.
 Nonetheless, this shows that commit based may be to slow for productive use.
-Furthermore, changes between two commit often are minor and may not be relevant, e.g changing a constant or literal.
+Furthermore, changes between two commit often are minor and may not be relevant.
 
 Instead, the implementation of this work is using a tag based approach.
 First, all tags found in the reference system's repository are extracted and sorted.

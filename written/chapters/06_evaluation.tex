@@ -135,19 +135,20 @@ Instead, sending hashes in batches may be a better solution.
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
 
-To get a better view on the results, each match is manually inspected and grouped into one of the following categories:
+Based on the license definitions in section \ref{section:preliminaries/infringement/relevant_licenses}, each match is manually inspected and grouped into one of the following categories:
 \begin{description}
 	\item [Accidential Clones (AC)]
 		Matches which are similar by \glqq accident\grqq, e.g. generated code, interface implementations, declarations of structs/enums, switch-case blocks, table data especially present in C/C++.
 	\item[Otherwise Licensed Code (OLC)]
-		Code which is actually copied from the reference project or originates from a common source.
-		Attribution is done correcty and therefore, this is not a license infringement.
-		Code can also be copied into the reverse direction in the context of this evaluation, since analyzed target projects are licensed in a way, where they can be copied to GPL licensed code with appropriate attribution.
-	\item[Copied, but not Attributed (CNA)] 
-		Same as otherwise licensed code, but not attributed correctly by the target project.
-		This may also be seen as a violation of the license's terms, depending on the license of the source, the length of the copied segment and its similarity.
+		Code which is actually copied from the reference project or originates from a common source licensed under a permissive license or is public domain.
+		If the copied code is under permissive license, attribution is done correcty and therefore, this is not a license infringement.
+		Note here that code can also be copied into the reverse direction in the context of this evaluation, since analyzed target projects are licensed in a way, where they can be copied to GPL licensed code with attribution.
+	\item[Copied, but not Attributed (CNA)]
+		This marks the use of permissive licenses and therefore is the same as otherwise licensed code, but not attributed correctly by the target project.
+		The severity of the violation is depending on the license of the source, the length of the copied segment and its similarity.
+		Those violations can be fixed by correctly attributing the source of the code.
 	\item[License Infringement (LI)]
-		Code which has been copied and is violating the license of the reference system.
+		Code which has been copied from a reference system licensed under a restrictive license and is violation due to the target's license.
 \end{description}
 
 AC can be seen as a false positive of the approach, whereas OLC detects code, which has been copied, but the license of the code is not violated.

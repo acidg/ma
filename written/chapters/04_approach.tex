@@ -6,7 +6,7 @@ Simply comparing file hashes or reading headers is in most cases not enough, sin
 For this approach, techniques known from the area of clone detection are used.
 
 The work of Koschke makes clear that a index based approach seems appropriate for continuous detection:
-\glqq If the [copy-paste detection] analysis is to be conducted multiple times, creating an index pays off\grqq \cite{koschke2014large}.
+\enquote{If the [copy-paste detection] analysis is to be conducted multiple times, creating an index pays off} \cite{koschke2014large}.
 Because of that, the tool is using an index to look up similar sections of code.
 An index is a data structure which can be used to quickly look up values for a specific key.
 For the index, a key-value store is used, which basically is a database representing a huge key-value map, where a key, e.g. a hash, points to a value.
@@ -39,13 +39,13 @@ This can be done in a continuous manner, i.e. with every change on the client's 
 The index is based on the work of Hummel et al. \cite{hummel2010index}.
 Source code files are considered as a list of statements.
 Sequences of statements of a specific length - so called chunks - are compared by normalizing them, calculating the hash and then comparing the hash values.
-Normalizing in this context means reducing the statements to parts of the code, which describe its structure and increase similarity as described in section \ref{section:approach/creating_index/normalization}.
+Normalizing in this context means reducing the statements to the parts of the code, which describe its structure and increase similarity as described in section \ref{section:approach/creating_index/normalization}.
 
 To add a source code file to the index, it first is parsed and split into tokens.
 A token represents a small part of the code such as a symbol, keyword, identifier, literal or comment.
 The tokens then are normalized as described in section \ref{section:approach/creating_index/normalization}.
 Now the tokens are aggregated into statements.
-The tool then passes over the resulting list of statements using a sliding window to group together a chunk of code, which consists of several consecutive statements. \todo{image with indexing process}
+The tool then passes over the resulting list of statements using a sliding window to group together a chunk of code, which consists of several consecutive statements.
 
 To reduce the space needed to store the information, which is required to identify similar code, chunks are hashed.
 The hashes are then used as the key for the entry in the index.
