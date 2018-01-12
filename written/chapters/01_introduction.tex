@@ -4,9 +4,8 @@
 In software development, reuse of code can reduce time, effort and even enhance quality \cite{krueger1992software}.
 Repositories published on the Internet are a popular source for code which offers the desired functionality.
 However, when code is copied from open source software systems, licenses may be violated if its license's terms and conditions are not met.
-So called Copy-Left licenses like GPL, which demand copied-to software systems to adopt the same license, are critical, especially in closed-source systems.
+So called copy-Left licenses like different versions of the GNU General Public License (GPL), which demand copied-to software systems to adopt the same license, can easily cause violations, especially in closed-source systems.
 Software may have to be published as open source afterwards like in the case of Microsoft's \glqq Windows USB/DVD Download Tool\grqq\footnote{\href{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}{https://blogs.technet.microsoft.com/port25/2009/12/09/windows-7-usbdvd-download-tool-released-under-gplv2/}}.
-\todo{attribution to open source community?}
 
 There are many tools available for finding copied code in a codebase.
 Most of the tools are used for clone detection, in order to find similar code which can be refactored for reuse to reduce redundancy and enhance software quality.
@@ -23,26 +22,25 @@ Uploading the code to a server offering copied code detection often is not an op
 
 In this work a tool is developed, which allows to search a codebase for copied code from open source software available on the Internet.
 To decide whether a given fragment of code is part of an open source system, the detection tool indexes huge amounts of open source systems available on the Internet and maintains a data structure, which makes it possible to quickly search for similar code in the indexed open source systems.
-The approach proposed in this work is based on a client server architecture, where the server keeps track huge amounts of open source projects.
+The approach proposed in this work is based on a client server architecture, where the server keeps track of huge amounts of open source projects including their history.
 The server provides an interface for clients, which allows to query for code sequences and find similar matches in open source systems.
 This can be done in a continuous manner, i.e. for every commit to track whether incongruously licensed code has been copied to the codebase.
 One key feature of the tool is the filtering technique used, which significantly reduces the server's load and speeds up the search process.
-Therefor, a small part of the database can be downloaded from the server.
+Therefor, a file representing a bloom filter can be downloaded from the server.
 It allows clients to decide whether a section of source code is part of an open source system tracked by the server.
-
-\todo{requirements}
+Details can then be fetched from the server.
 
 The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
 The analysis of existing open source code bases is fast and scalable and can be periodically updated.
 To prove that, a prototype of the tool has been implemented and more than 500 million lines of code from approximately 2.000 open source projects where indexed in about 20 hours on a consumer laptop.
 The database is about 37 GB, the filter's size about 200 MB for this amount of code.
 
-\todo{library code which should be linked instead of copied, vulnerabilities in copied code}
-\todo{tracking changes/history}
+The approach not only allows to find licensing issues, but also can be used to monitor the use of open source code in a codebase.
+With that information, used libraries can be linked instead and vulnerabilities caused by outdated software can be discovered.
 
 The work is organized as follows.
 First, definitions used throughout the work as well as requirements are listed in \autoref{chapter:preliminaries}.
 Subsequently, related work is depicted in \autoref{chapter:related_work} and based on that, an overview of the approach used for the tool is presented in \autoref{chapter:approach}.
 Details of the implementation, decisions and its complications are shown in \autoref{chapter:implementation}.
-In \autoref{chapter:evaluation} the prototype is used to analyze several thousand projects, categorize findings and evaluate their validity.
+In \autoref{chapter:evaluation} the prototype is used to analyze several thousand projects, findings are categorized and their validity evaluated.
 This leads to a discussion about the usefulness of the approach and proposals for future work in \autoref{chapter:conclusion}.
