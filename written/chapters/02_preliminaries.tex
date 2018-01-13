@@ -38,7 +38,7 @@ Here, several question arise:
 
 \subsection*{How much copied code can cause a license infringement?}\label{section:preliminaries/infringement/how_much_code}
 Gabel and Su did some analysis regarding the uniqueness of code.
-Their study \enquote{revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code'} \cite{2010-gabel-su-source-code-uniqueness}.
+Their study \enquote{revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code} \cite{2010-gabel-su-source-code-uniqueness}.
 Thus, the smallest size of a clone which can be argued as a license infringement should be set at 8 lines of code.
 
 In a lawsuit case explained by Mertzel \cite{mertzel2008copying}, 54 lines of code (0,03\% of the codebase) where found and judged as copied code.
@@ -64,8 +64,7 @@ In the context of this work, licenses are separated into three different categor
 
 Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license can already be an infringement.
 It can also be argued that code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting \cite{heinemann2012effective}.
-\\ \\
-\noindent
+
 One problem in the context of this work are codebases with files which have a different license, than the codebase itself.
 This is for example relevant, if code of a permissive license is copied into a codebase under a restrictive license.
 For the development of the tool, the difficulty is to classify the file correctly into the right license category defined above.
@@ -78,11 +77,11 @@ A lot of work has been done in this area, starting more than 30 years ago \cite{
 During that time, terms specifying the similarity of code have been established.
 
 In general, sections of similar code which may have been caused by copying the code are called \textit{clones}.
-In this context ``similar'' can be anything between a 1:1 copy over small differences like variable renaming up to clones which only have a somewhat similar structure or produce the same output for a given input.
+In this context ``similar'' can be anything between a 1:1 copy over small differences like variable renaming up to code which only has a somewhat similar structure or produces the same output for a given input.
 The similarity of clones can be categorized into different types, according to \cite{roy2007survey}:
 
 \begin{description}
-	\item[type-1] Identical code fragments except for variations in whitespace (may be also variations in layout) and comments.
+	\item[type-1] Identical code fragments except for variations in whitespace and comments.
 	\item[type-2] type-1 clones and structurally/syntactically identical fragments except for variations in identifiers, literals, types, layout and comments.
 	\item[type-3] type-2 clones and copied fragments with further modifications. Statements can be changed, added or removed in addition to variations in identifiers, literals, types, layout and comments.
 	\item[type-4] type-3 clones and two or more code fragments that perform the same computation but are implemented through different syntactic variants.

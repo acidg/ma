@@ -4,15 +4,14 @@
 In software development, reuse of code can reduce time, effort and even enhance quality \cite{krueger1992software}.
 Repositories published on the Internet are a popular source for code which offers the desired functionality.
 However, when code is copied from open source software systems, licenses may be violated if the terms and conditions are not met.
-So called copy-Left licenses like different versions of the GNU General Public License (GPL), which demand copied-to software systems to adopt the same license, can easily cause violations, especially in closed-source systems.
+So called copy-Left licenses like different versions of the GNU General Public License (GPL), can easily cause violations, especially in closed-source systems, since they demand derivative work to adopt the same license.
 Software may have to be published as open source afterwards like in the case of Microsoft's ``Windows USB/DVD Download Tool'' \ \cite{microsoft2009download}.
 Furthermore, keeping track of reused software is difficult, especially when this is not done from the beginning of a software project.
 
-Finding copied code, which potentially cause licensing issues, is difficult.
+Finding copied code, which potentially causes licensing issues, is difficult.
 Simply comparing the hash of files or reading the file's header is not sufficient to find copied code, since it may be modified, or only parts of a file may be copied.
 Instead, code has to be compared in more detail.
 The approach presented in this work tries to do so by using techniques known from the area of clone detection.
-
 There are many tools available for finding copied code withing and between codebases.
 Existing clone detection tools try to find similar code, which can be refactored for reuse to reduce redundancy and enhance software quality.
 Often, they are designed for single runs and need a pool of projects which they can use for comparison.
@@ -22,22 +21,21 @@ The data structure for comparison has to be built from a huge dataset of open so
 % no history analysis
 Often, the history of the projects is not considered which may prevent detection of copied code from older versions of a system, when it is changed in the meantime.
 % confidentiality
-Uploading the code to a server offering copied code detection often is not an option for confidentiality reasons.
+Uploading the code to a server for analysis often is not an option for confidentiality reasons.
 
-The tool developed in this work, allows searching a codebase for copied code from open source software available on the Internet.
+The solution developed in this work, is a tool which allows searching a codebase for copied code from open source software available on the Internet.
 To decide whether a given fragment of code is part of an open source system, the detection tool indexes thousands of open source systems available on the Internet and maintains a data structure, which makes it possible to quickly search for similar code in the indexed open source systems.
 The proposed approach is based on a client server architecture, where the server keeps track of open source projects including their history.
-The server provides an interface to query for code sequences and find similar matches in open source systems.
+The server provides an interface to query for code sequences in order to find similar matches in open source systems.
 This can be done in a continuous manner ( i.e. for every commit) to track whether incongruously licensed code has been copied to the codebase.
 One key feature of the tool is the filtering technique used, which significantly reduces the server's load and speeds up the search process.
-A file representing a bloom filter can be downloaded from the server, which allows clients to decide whether a section of source code may be part of an open source system tracked by the server.
-Details about the found matches can then be fetched as required.
+A file representing a bloom filter can be downloaded from the server, which allows clients to filter a large part of code sequences which are not tracked by the server.
+The remaining code sequences are then used to query the server which returns the actual matches and further details.
 
 The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
 The analysis of existing open source code bases is fast and scalable and can be updated periodically.
-To verify that, a prototype of the tool has been implemented and more than 500 million lines of code from approximately 2.000 open source projects where indexed in about 15 hours on a consumer laptop.
-The resulting database is about 37 GB and the corresponding filter has a size of about 200 MB for this amount of code.
-
+To verify that, a prototype of the tool has been implemented and more than 500 million lines of code from approximately 2.000 open source projects were indexed in about 15 hours on a consumer laptop.
+The resulting database is about 37 GB and the corresponding bloom filter has a size of about 200 MB for this amount of code.
 The approach not only allows to find licensing issues, but also can be used to monitor the use of open source code in a codebase.
 With that information, used libraries can be linked instead of copied and vulnerabilities caused by outdated software can be prevented.
 
