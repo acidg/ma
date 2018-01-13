@@ -32,12 +32,12 @@ Also, the resulting count of chunks and corresponding amount of hashes indicates
 	\caption{Sizes of the 2.000 indexed projects}\label{table:locs}
 \end{table}
 
-After two weeks, the index was updated for both Java and C/C++ as described in \ref{section:implementation/history_analysis/update}.
+After two weeks, the index was updated for both Java and C/C++ as described in \autoref{section:implementation/history_analysis/update}.
 Approximately one third of the reference projects contained one or more new tags which were indexed.
 The update took a total of one hour including calculation of the bloom filter.
 This shows that incremental updates of the index are worth the effort of implementation compared to re-indexing the reference projects from scratch.
 
-After indexing those projects, several other projects, licensed not compatible with GPL, where analyzed for matches using the approach described in section \ref{section:implementation/finding_matches}.
+After indexing those projects, several other projects, licensed not compatible with GPL, where analyzed for matches using the approach described in \autoref{section:implementation/finding_matches}.
 \autoref{table:target_projects} shows the chosen target projects, their license and the lines of code of files written in the corresponding language.
 To reduce the amount of irrelevant matches, generated code and third party code in libraries were excluded from the target projects during analysis.
 
@@ -77,7 +77,7 @@ To reduce the amount of irrelevant matches, generated code and third party code 
 The bloom filter can return false positives, thus, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
 Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
 
-Table \ref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
+\autoref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
 Columns are defined as follows:
 \begin{description}
 	\item[Target System] The name of the target system
@@ -85,7 +85,7 @@ Columns are defined as follows:
 	\item[Chunks] Resulting amount of chunks extracted from the target system.
 	\item[FPFM] False Positive Filter Matches as described above.
 	\item[True Positives] Amount of actual matches, which could be found in the index and their relative amount in comparison to all chunks extracted from the target system.
-	\item[Requests] Amount of requested match details. Note here that files with less than two matches are ignored as described in section \ref{section:implementation/finding_matches}.
+	\item[Requests] Amount of requested match details. Note here that files with less than two matches are ignored as described in \autoref{section:implementation/finding_matches}.
 \end{description}
 
 \begin{table}[ht]
@@ -135,7 +135,7 @@ Instead, sending hashes in batches may be a better solution.
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
 
-Based on the license definitions in section \ref{section:preliminaries/infringement/relevant_licenses}, each match is manually inspected and grouped into one of the following categories:
+Based on the license definitions in \autoref{section:preliminaries/infringement/relevant_licenses}, each match is manually inspected and grouped into one of the following categories:
 \begin{description}
 	\item [Accidential Clones (AC)]
 		Matches which are similar by \glqq accident\grqq, e.g. generated code, interface implementations, declarations of structs/enums, switch-case blocks, table data especially present in C/C++.
@@ -165,7 +165,7 @@ Therefore, in the following evaluation, matches are counted on the target file a
 A match is a relation between a file of the target system to the best match of a file in a reference system, indicating a high similarity.
 
 If a target file has multiple sections of copied code, which \textit{does not overlap} and is from multiple other files (e.g. common in utils code), each match in the target file is counted once.
-Figure \ref{fig:match_counting} shows an example, where multiple sections of code are copied from \texttt{Reference File 1} to the \texttt{Target File}.
+\autoref{fig:match_counting} shows an example, where multiple sections of code are copied from \texttt{Reference File 1} to the \texttt{Target File}.
 This is counted as one match.
 There is also one coherent block of code copied from \texttt{Reference File 2} to the \texttt{Target File}, which is also counted as a match.
 The resulting total count of matches for the \texttt{Target File} in this example is two.
@@ -178,7 +178,7 @@ The resulting total count of matches for the \texttt{Target File} in this exampl
 
 \newpage
 \subsection{Results and Findings}
-The results in table \ref{table:scan_results} are twofold.
+The results in \autoref{table:scan_results} are twofold.
 On the one hand, it shows that finding license infringements is possible.
 On the other hand, the amount of overall detected matches prevails the amount of relevant matches by far.
 This is due to many accidental clones (AC), which are caused by e.g. interface implementations or tables, as well as otherwise licensed code (OLC) due to the fact that most licenses of target projects allow copying of code into a codebase licensed under GPL.
@@ -243,7 +243,7 @@ Almost all matches of RethinkDB were caused by copied code from RapidJSON\footno
 
 \subsubsection*{Accidential Clones (AC)}
 Mostly, AC findings are caused by interface implementations, structs and enumerations used for communication with APIs or table definitions.
-One example of a common AC is shown in figure \ref{fig:ac}.
+One example of a common AC is shown in \autoref{fig:ac}.
 Here, the Java specific \texttt{hashCode} and \texttt{equals} methods cause a match.
 Method generators supplied by the used IDE may have caused the high similarity.
 \begin{figure}[htpb]
@@ -255,7 +255,7 @@ Method generators supplied by the used IDE may have caused the high similarity.
 \newpage
 \subsubsection*{Copied but not Attributed Code (OLC)}
 OLC had many matches both for Java and C/C++.
-Either code was attributed correctly like the example in figure \ref{fig:olc_attributed} or the code can be copied without attribution like in the case of code under public domain like the example in \ref{fig:olc_public_domain} shows.
+Either code was attributed correctly like the example in \autoref{fig:olc_attributed} or the code can be copied without attribution like in the case of code under public domain like the example in \autoref{fig:olc_public_domain} shows.
 Findings like those are not license infringements.
 However, they may be of interest, since third party code can be monitored and code could be linked instead of copied.
 
@@ -279,7 +279,7 @@ Resolving the actual license of a file can be very hard, since headers often do 
 \newpage
 \subsubsection*{Copied but not Attributed Code (CNA)}
 In many cases, attributing the origin of copied code is not done correctly, as manual inspection showed.
-Figure \ref{fig:cna} shows an example for CNA, where hundreds of lines were copied, but no attribution was made.
+\autoref{fig:cna} shows an example for CNA, where hundreds of lines were copied, but no attribution was made.
 The original file header containing the license information including the terms and conditions was replaced by the target project's file header.
 This causes a violation of the licenses terms, since attribution has to be made according to the reference file's license.
 \begin{figure}[htpb]
@@ -294,7 +294,7 @@ Cases categorized as LI are violations of the GPL, where code is copied from a G
 Almost all cases found are caused by adoption of classes from the Java Development Kit (JDK).
 The license of both, OpenJDK's and Oracle JDK's source code files is not compatible with permissive licenses like Apache or MIT, nor with closed source.
 It seems like many developers are not aware of this.
-On example of such an infringement can be found in figure \ref{fig:li}, where a method of a class in the JDK was modified.
+On example of such an infringement can be found in \autoref{fig:li}, where a method of a class in the JDK was modified.
 The code is then licensed under Apache 2.0 which is not compatible with GPL.
 Instead, the code should be licensed under GPL.
 This example shows that even small amounts of copied code which cause violations can be detected using the tool, although modifications were made.

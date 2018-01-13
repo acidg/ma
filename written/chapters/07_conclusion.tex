@@ -1,7 +1,7 @@
 % !TeX root = ../main.tex
 
 \chapter{Conclusion}\label{chapter:conclusion}
-The tests conducted in chapter \ref{chapter:evaluation} showed that finding infringements is possible and may help preventing licensing issues.
+The tests conducted in \autoref{chapter:evaluation} showed that finding infringements is possible and may help preventing licensing issues.
 Using a Bloom Filter to reduce the amount of required requests can speed up the analysis and reduce the load on the server to a fraction.
 
 The approach is scalable and can be heavily distributed, which may even make it possible to index and track the history of most of the open source code available on the Internet.
@@ -17,11 +17,11 @@ Pairs of servers and filters responsible for a group of reference projects could
 This would result in multiple small hash filters and enables clients to only choose filters of their interest, further reducing the size of the filter a client has to download and keep up to date.
 The requests resulting from matches in the filter on the client side then have to be routed to the server responsible for the corresponding group of reference projects.
 
-Distributing the workload can also speed up the indexing process, when updates are triggered (see section \ref{section:implementation/scalability}).
+Distributing the workload can also speed up the indexing process, when updates are triggered (see \autoref{section:implementation/scalability}).
 
 \paragraph{Branch Based History Analysis}
 The accuracy of the history analysis could be improved significantly.
-As explained in section \ref{section:implementation/history_analysis/sorting_tags}, the problem is sorting the tags of a reference project's repository in the correct order without producing huge amounts of changed files between two revisions and slowing down the indexing process.
+As explained in \autoref{section:implementation/history_analysis/sorting_tags}, the problem is sorting the tags of a reference project's repository in the correct order without producing huge amounts of changed files between two revisions and slowing down the indexing process.
 A better approach would be to start with important branches and find tags on the way back to the root of the commit tree.
 Especially for big codebases with many branches, it may be important to filter branches, which are only used to implement features and are later on merged with a release branch.
 Since this heavily depends on the policy of the individual reference projects, manual inspection would be required or an approach to automate the filtering has to be developed.
@@ -32,11 +32,11 @@ Also, many of the found matches are not relevant, since either they are accident
 Results and insights emerging from the development of the tool presented in this work show that solving those problems is difficult.
 This mostly is caused by the peculiarity and individuality of reference projects and their licensing models.
 
-As mentioned in section \ref{section:evaluation/detecting_infringements} one of the reasons for accidental clones are getters and setters.
+As mentioned in \autoref{section:evaluation/detecting_infringements} one of the reasons for accidental clones are getters and setters.
 Removing those during the normalization process would probably reduce the amount of accidental clones.
 
 Another source of accidental clones are declarations done for API compliance outside of methods.
-Testings done in chapter \ref{chapter:evaluation} showed, that most copied code is located inside the body of methods on both sides, the reference and target system.
+Testings done in \autoref{chapter:evaluation} showed, that most copied code is located inside the body of methods on both sides, the reference and target system.
 Concentrating the comparison of code on code blocks such as methods, structs, enumerations or other language specific constructs, could reduce the amount of such false positives.
 
 Clients could also blacklist matches, which are irrelevant.
@@ -46,7 +46,7 @@ Matches which are blacklisted by many clients could then be sorted out on the se
 The original idea for a Bloom Filter is already more than 40 years old \cite{bloom1970filter}.
 There has been a lot of research to improve the filters performance and reduce its size.
 Tulsiani et al. found out that \glqq making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability and decrease the false positive probability by roughly a factor of 2\grqq \ \cite{tulsiani2013probability}.
-Compared to the example calculation done in section \ref{section:implementation/hash_filter}, a filter containing one billion hashes would be about 2 GB, reducing the size by 17\%.
+Compared to the example calculation done in \autoref{section:implementation/hash_filter}, a filter containing one billion hashes would be about 2 GB, reducing the size by 17\%.
 The work of Fan et al. proposes a filter structure called Cuckoo-Filter, which has a better performance when the filter contains many items. and needs a low false positive probability.
 This would fit the requirements for a filter in this work.\\
 \\

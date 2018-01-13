@@ -77,25 +77,13 @@
 % Settings for tikz
 \usetikzlibrary{positioning,decorations.pathreplacing,fit}
 
-\newcommand{\tikzmark}[2][]{%
-	\tikz[remember picture,overlay,baseline=-.5ex] \node[#1] (#2) {};%
-}
-
-% \drawBrace[xshift]{beginningNode}{endingNode}
-% This command draws a brace between two tikzmarks, to their right,
-% no matter which one is the rightmost, and includes 
-% a node midway the brace, to write the comment.
-% This command also creates a new node
-% whose name is the concat of the names of beginning and ending nodes.
-\newcommand*{\drawBrace}[4][0pt]{%
-	\node[draw=none, fit={(#2) (#3)}, inner sep=0pt] (rectg) {};%
-	\draw [decoration={brace,amplitude=0.3em},decorate,very thick,red]%
-	([xshift=#1]rectg.north east) --%
-	coordinate[right=1em, midway] (#2#3)
-	([xshift=#1]rectg.south east);%
-	\node[right=1.5em of #2#3] (#2#3-comment) {#4};
-	\draw (#2#3-comment.west) edge (#2#3);
-}%
-
 % Definitions
 \newtheorem{defi}{Definition}[chapter]
+
+% Section instead of Subsection with autoref, capitalize
+\addto\extrasamerican{%
+	\def\chapterautorefname{Chapter}%
+	\def\sectionautorefname{Section}%
+	\def\subsectionautorefname{Section}%
+	\def\subsubsectionautorefname{Section}%
+}

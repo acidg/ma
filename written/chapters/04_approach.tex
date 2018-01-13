@@ -24,9 +24,9 @@ The servers purpose is to provide a lookup service for similar code.
 The client has a codebase which should be checked for license infringements.
 It can use the server's service to find code in its codebase which is similar to code in open source systems.
 
-The server has access to a pool of repositories and creates the index by normalizing and hashing files of the repositories as described in section \ref{section:approach/creating_index/normalization}.
-Subsequently, the history of a reference system is analyzed as explained in section \ref{section:approach/creating_index/history_analysis}.
-After that, the server generates a hash filter as described in section \ref{section:approach/creating_index/hash_filter}.
+The server has access to a pool of repositories and creates the index by normalizing and hashing files of the repositories as described in \autoref{section:approach/creating_index/normalization}.
+Subsequently, the history of a reference system is analyzed as explained in \autoref{section:approach/creating_index/history_analysis}.
+After that, the server generates a hash filter as described in \autoref{section:approach/creating_index/hash_filter}.
 
 The client's search is two staged as described in \autoref{section:approach/searching_copied_code}
 First the Scanner on the client normalizes and hashes code files in its codebase the same way the server does.
@@ -39,11 +39,11 @@ This can be done in a continuous manner, i.e. with every change on the client's 
 The index is based on the work of Hummel et al. \cite{hummel2010index}.
 Source code files are considered as a list of statements.
 Sequences of statements of a specific length - so called chunks - are compared by normalizing them, calculating the hash and then comparing the hash values.
-Normalizing in this context means reducing the statements to the parts of the code, which describe its structure and increase similarity as described in section \ref{section:approach/creating_index/normalization}.
+Normalizing in this context means reducing the statements to the parts of the code, which describe its structure and increase similarity as described in \autoref{section:approach/creating_index/normalization}.
 
 To add a source code file to the index, it first is parsed and split into tokens.
 A token represents a small part of the code such as a symbol, keyword, identifier, literal or comment.
-The tokens then are normalized as described in section \ref{section:approach/creating_index/normalization}.
+The tokens then are normalized as described in \autoref{section:approach/creating_index/normalization}.
 Now the tokens are aggregated into statements.
 The tool then passes over the resulting list of statements using a sliding window to group together a chunk of code, which consists of several consecutive statements.
 
@@ -55,7 +55,7 @@ By looking up for the same hash in the index, locations of similar code can be f
 
 The amount of statements in a chunk influences the precision of a match, since longer chunks also require longer matches.
 However, long chunks also reduces the probability to find chunks with modified, added or removed statements.
-Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications as shown in figure \ref{fig:modification}, but long enough, to exclude generic code, which would produce huge amounts of false positives.
+Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications as shown in \autoref{fig:modification}, but long enough, to exclude generic code, which would produce huge amounts of false positives.
 \autoref{fig:normalization} shows the complete processing of an input file.
 
 \begin{figure}[h]

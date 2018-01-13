@@ -14,7 +14,7 @@ Normalization is done by iterating over all tokens and removing rather irrelevan
 The stream of tokens is split into statements by language dependent tokens marking the end of a statement like semicolons or curly braces in Java or C/C++.
 Include or import statements are removed.
 In early tests, additionally normalizing identifiers like variable names showed many false positives for variable initializations e.g. in the beginning of methods or classes.
-An example for the normalization of some sample code can be found in figure \ref{fig:normalization}.
+An example for the normalization of some sample code can be found in \autoref{fig:normalization}.
 
 \begin{figure}[h]
 	\centering
@@ -32,10 +32,10 @@ However, tests showed that even with bulk inserts, the creation of the database 
 In this work RocksDB was used as a key-value store implementation.
 As a hash function, MD5 is used, since it offers both, speed and high collision resistance.
 
-As described in section \ref{section:approach/creating_index}, the key for an entry in the key-value store is the MD5 hash of a normalized chunk of code.
+As described in \autoref{section:approach/creating_index}, the key for an entry in the key-value store is the MD5 hash of a normalized chunk of code.
 Since chunks with the same hash may be found in several locations, the value is a list of locations, where the chunk can be found.
 For the prototypical implementation, the list for a value is serialized in JSON
-Figure \ref{fig:json_serialization} shows a simplified example.
+\autoref{fig:json_serialization} shows a simplified example.
 
 \begin{figure}[h]
 	\centering
@@ -81,9 +81,9 @@ Furthermore, changes between two commit often are minor and may not be relevant.
 
 Instead, the implementation of this work is using a tag based approach.
 First, all tags found in the reference system's repository are extracted and sorted.
-After that, starting at the first tag, all files present at that point in time are indexed as described in section \ref{section:implementation/index_creation}.
+After that, starting at the first tag, all files present at that point in time are indexed as described in \autoref{section:implementation/index_creation}.
 Following up, for each tag in order, the changed files relative to the previous tag are indexed again.
-All changed files since the last tag are re-indexed again and the key-value store is updated as described in section \ref{section:approach/creating_index/history_analysis}.
+All changed files since the last tag are re-indexed again and the key-value store is updated as described in \autoref{section:approach/creating_index/history_analysis}.
 
 \subsection{Quick Scan}\label{section:implementation/history_analysis/quick_scan}
 When a new reference project should be added to the index, no versions of the project have been scanned yet.
@@ -139,7 +139,7 @@ Keeping only references to chunks of the latest version of a file seems also to 
 Those problems could be solved by keeping all chunks in the index, which have the same hash and are pointing to different versions of a file.
 However, this would increase the size of the database drastically.
 The size of the filter would not increase, since not the amount of hashes, but the amount of values a single hash is pointing to is increased.
-In the prototypical implementation of the approach presented in this work, this is ignored, since scattered matches are aggregated as described in \ref{section:implementation/finding_matches}.
+In the prototypical implementation of the approach presented in this work, this is ignored, since scattered matches are aggregated as described in \autoref{section:implementation/finding_matches}.
 
 A better solution to sorting tags would be a branch based approach:
 Every branch is followed and snapshots of the reference system are either made periodically or with the use of tags.
@@ -194,7 +194,7 @@ The probability for a false positive can be calculated as follows \cite{fan2000s
 \end{equation}
 where $n$ is the number of hashes in the set, $m$ the number of bits in the Bloom Filter's bit array and $k$ the number of hash functions used, to store a value in the bit array.
 The optimum number of hash functions to use, is defined as the $k$ which minimizes the probability of the false positive $p$.
-To calculate the optimal $k$, which has to be positive, the approximation from equation \ref{equ:false_positive_bloom} can be used \cite{wiki2018bloom}. %TODO Zusätzliche Quelle finden
+To calculate the optimal $k$, which has to be positive, the approximation from \autoref{equ:false_positive_bloom} can be used \cite{wiki2018bloom}.
 \begin{equation}
 	\begin{split}
 		k&=\frac{m}{n}\ln(2)
@@ -236,10 +236,10 @@ However, during test, the machine already was at its limits using this approach,
 For this prototypical implementation, the networking between client and server is ignored.
 Instead hashes are filtered using the bloom filter and looked up by directly accessing the database containing the index.
 
-Referring to the definitions provided in section \ref{section:preliminaries/infringement/how_much_code}, a clone is considered an infringement, if a minimum of about 8 lines of code or, in the context of this work, statements are copied.
-A chunk consists of 5 statements, therefore at least two chunks have to be copied, when a single statement has been modified like illustrated in figure \ref{fig:required_chunks_modified}.
+Referring to the definitions provided in \autoref{section:preliminaries/infringement/how_much_code}, a clone is considered an infringement, if a minimum of about 8 lines of code or, in the context of this work, statements are copied.
+A chunk consists of 5 statements, therefore at least two chunks have to be copied, when a single statement has been modified like illustrated in \autoref{fig:required_chunks_modified}.
 This would total in 10 copied statements, since there are no overlapping chunks.
-When no statement has been modified, a sequence of statements has to consist of at least 4 chunks to contain a total of 8 statements as illustrated in figure \ref{fig:required_chunks}.
+When no statement has been modified, a sequence of statements has to consist of at least 4 chunks to contain a total of 8 statements as illustrated in \autoref{fig:required_chunks}.
 Here, 4 consecutive chunks are copied resulting in 8 copied statements without gaps.
 
 \begin{figure}[h]
@@ -262,12 +262,12 @@ The server responds with a list of locations for each hash, or an empty list, if
 
 The client groups locations by reference project and path of the file.
 Note here that the revision of the file a chunk is pointing at, is ignored in this step.
-This makes sense, since locations always point to the latest revision of a chunk as described in section \ref{section:approach/creating_index/history_analysis}.
+This makes sense, since locations always point to the latest revision of a chunk as described in \autoref{section:approach/creating_index/history_analysis}.
 
 The client then merges consecutive matches, by iterating over the locations of a group and finding overlaps.
 The amount of locations in a merged match is stored.
-When merging, a small gap is allowed between two locations of the same group, to include modifications of copied code as described in section \ref{section:approach/creating_index}.
-In the case of such a gap, the count of locations for the match is incremented by 4, since a possible modification has been detected and the actual length of the copied segment is equal to about 10 statements as it can be seen in figure \ref{fig:required_chunks_modified}.
+When merging, a small gap is allowed between two locations of the same group, to include modifications of copied code as described in \autoref{section:approach/creating_index}.
+In the case of such a gap, the count of locations for the match is incremented by 4, since a possible modification has been detected and the actual length of the copied segment is equal to about 10 statements as it can be seen in \autoref{fig:required_chunks_modified}.
 
 Now the client can filter all matches which have a location count of less than 4 and remaining matches fulfill the required minimum length for a violation as described above.
 \\

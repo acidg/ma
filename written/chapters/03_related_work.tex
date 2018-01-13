@@ -2,14 +2,14 @@
 
 \chapter{Related Work}\label{chapter:related_work}
 Lots of research has been done in the area of detecting copy-pasted code.
-This mainly results from the huge field of application, where such techniques can be used.
-Most of the research can be differentiated in the types of copied code which they detect.
+This mainly results from the huge number of applications, where such techniques can be used.
+Most of this research can be differentiated by the types of copied code which they detect.
 
 \section{Detecting Similarities in Source Code}\label{section:related_work/detecting_similarities}
-On of the earlies areas of application is detection of copy-pasted code in student submissions of programming lessons, which is researched since more than 30 years \cite{lancaster2004comparison}.
+One of the earliest areas of application detecting copy-pasted code in student submissions of programming lessons, which is researched since more than 30 years \cite{lancaster2004comparison}.
 String and token based approaches like YAP3 \cite{wise1996yap3}, JPLAG \cite{prechelt2002finding} or MOSS \cite{schleimer2003winnowing} use greedy-string-tiling, sometimes in combination with anagrams, to find similarities in files.
-Other approaches like dup \cite{baker1995finding}, SID \cite{chen2004shared} or GPLAG \cite{liu2006gplag} build a data structures which represents the structure of the programs.
-Those structures are then used to compare the programs.
+Other approaches like dup \cite{baker1995finding}, SID \cite{chen2004shared} or GPLAG \cite{liu2006gplag} build data structures which represent the inner structure of the programs.
+Those representations are then used to compare the programs.
 
 Student submissions are usually aiming for a solution to a common given problem.
 When students copy code for such submissions, they often try to trick the plagiarism detection tools by modifying the copied code.
@@ -17,23 +17,21 @@ Because of that, those tools are developed for finding copied code in programs w
 They try to detect clones with heavy modifications like rearranged, added, removed or changed statements, or renamed variables, methods or classes.
 The purpose of the tool developed in this thesis however, is different.
 This work concentrates on finding copied code which causes license infringements.
-Therefore it has to easily be recognized as such, when seen side-by-side.
+Therefore it has to be easily recognized as such, when seen side-by-side.
 
 \section{Clone Detection}\label{section:related_work/clone_detection}
-Another area is the detection of clones in the context of code quality.
-Clones are two or more similar sections in code mainly originating from copy-pasting.
-% Difference compared to \ref{section:related_work/detecting_similar_code}
+Another area of research is the detection of clones in the context of code quality.
 
-One of the tools widely known and used is the one from Kamiya et al. called CCFinder \cite{kamiya2002ccfinder} which features a suffix-tree based approach.
+One of the tools widely known and used is CCFinder developed by Kamiya et al. \cite{kamiya2002ccfinder}, which features a suffix-tree based approach.
 In their work, they first transform the code by modifying language dependent syntax (e.g. remove accessibility keywords in Java).
 Afterwards, code is divided into token sequences.
 Those tokens are further transformed by replacing variable names and literals with placeholder.
 Now the suffix-tree is built over the token sequences. 
 With that, it is possible to easily find similar token sequences by traversing the tree down to a leaf, which points to a location in a file.
 
-Hummel et al.\cite{hummel2010index} developed an approach, where chunks of code are hashed.
+Hummel et al. \cite{hummel2010index} developed an approach, where chunks of code are hashed.
 They first tokenize the code and normalize it by removing e.g. comments and unifying variable names.
-Now the tokens are split into statements, several of them are grouped into chunks and hashed.
+Now, the tokens are split into statements, several of them are grouped into chunks and hashed.
 When the hash value is calculated the same way for another section of code, it can be used to look up similar code sequences.
 
 Koschke \cite{koschke2014large,koschke2012large} tried to find license infringements in code.
@@ -42,18 +40,18 @@ However, ``if the analysis is to be conducted multiple times, creating an index 
 
 Sajnanj et al. \cite{sajnani2016sourcerercc} and Svajlenko and Roy \cite{svajlenko2017fast} developed a workbench for large scale clone detection.
 In their work, they split blocks of code into tokens and sort them by frequency of use.
-Caclulating the overlap coefficient for blocks is used to assess their similarity.
-They could find clones in 250 million lines of code within 4 days, which is significantly faster than other clone detection tools at the time.
+The overlap coefficient for blocks is used to assess their similarity.
+They can find clones in 250 million lines of code within 4 days, which was significantly faster than other clone detection tools at that time.
 
 These approaches are used as the basis for the development of the comparison techniques used in this work.
-Suffix trees seem to be the best deal to find copies among a large codebase, since creating the index is a huge effort.
-However, when the detection has to be done several times and in a continuous manner between a single code base and several other open source codebases, building an index appears to be the best choice.
+Suffix trees seem to be the best deal to find copies among a large codebase, since creating the index is very expensive.
+However, when the detection has to be done several times and in a continuous manner between a single code base and several other open source codebases, building an index appears to be the best choice for the goal of this work.
 
 \section{Code Search}\label{section:related_work/code_search}
-With the growth of the Internet, recent research areas start to aim for search engines for code.
+With the growth of the Internet, recent research focused more search engines for code.
 Search engines like Google are good for string based searches, but bad for searching program structure.
 
-Bajracharya et al. tried to fill the gap and developed a search engine for open source code.
+Bajracharya et al. \cite{bajracharya2006sourcerer} tried to fill the gap and developed a search engine for open source code.
 They extract additional information from the code such as entities (package, interface, class, declarations, ...), relations (dependencies between classes, files, ...), keywords and fingerprints (structures, types, patterns, ...).
 This information is then used to query the database and find code which matches the specified properties.
 
@@ -62,8 +60,8 @@ The system has different parts which enable a user to search for code clones, si
 The most interesting part of the system in the context of this thesis is the clone search called SeClone, which is described in \cite{keivanloo2011internet,keivanloo2011seclone}.
 For preprocessing, they first tokenize the code using ASTs (Abstract Syntax Tree) and a normalization approach similar to CCFinder as described in \cite{kamiya2002ccfinder}.
 For indexing, the tokens of source code files are feed into two different databases, one for code patterns and one to store type usage which is for reducing the amount of false positives.
-In order to detecting clones with added, changed or removed statements, they use a multilevel indexing approach, where lines of code are hashed, the emerging hashes sorted and after that, hashes for multiple lines are hashed again.
-This multilevel approach allows rearranging of statements still resulting in the same hash for the code section and can detect type 3 clones.
+In order to detect clones with added, changed or removed statements, they use a multilevel indexing approach, where lines of code are hashed, the emerging hashes sorted and after that, hashes for multiple lines are hashed again.
+This multilevel approach allows for rearranging of statements while still resulting in the same hash for the code section and can detect type 3 clones.
 Also, their multilevel approach speeds up the search performance significantly.
 
 Although those approaches fit the requirement of collecting huge amounts of code in a database and making it searchable, they aim for finding code by its program structure.
@@ -74,5 +72,5 @@ Commercially available tools, namely Blackduck and Flexnet Code Insight are adve
 This enables the user to be notified of possible vulnerabilities in the used code.
 According to Blackduck's website, their product called \textbf{KnowledgeBase} \glqq is the industry’s most comprehensive database of open source project, license, and security information, covering more than 530 billion lines of [more than 2 million] open source [projects] from over 9000 forges and repositories\grqq \cite{blackduck}.
 
-However, they do not provide information about it's architecture or used techniques, or how code is handled and whether it has to be send to a server.
+However, they do not provide information about it's architecture or used techniques, or how code is handled and whether it has to be sent to a server.
 Also, they are not mentioning whether the history of reference projects is tracked.
