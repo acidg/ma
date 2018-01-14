@@ -1,9 +1,6 @@
 % !TeX root = ../main.tex
 
-\chapter{Conclusion}\label{chapter:conclusion}
-The tests conducted in \autoref{chapter:evaluation} showed that finding infringements is possible and may help preventing licensing issues.
-Using a Bloom Filter to reduce the amount of required requests can speed up the analysis and reduce the load on the server to a fraction.
-
+\chapter{Future Work}\label{chapter:future_work}
 The approach is scalable and can be heavily distributed, which may even make it possible to index and track the history of most of the open source code available on the Internet.
 However, there is a lot of room for improvement:
 
@@ -43,29 +40,9 @@ Clients could also blacklist matches, which are irrelevant.
 Matches which are blacklisted by many clients could then be sorted out on the server side and excluded from results and the filter.
 
 \paragraph{Hash Filter Improvements}
-The original idea for a Bloom Filter is already more than 40 years old \cite{bloom1970filter}.
+The original idea for a Bloom filter is already more than 40 years old \cite{bloom1970filter}.
 There has been a lot of research to improve the filters performance and reduce its size.
 Tulsiani et al. found out that \glqq making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability and decrease the false positive probability by roughly a factor of 2\grqq \ \cite{tulsiani2013probability}.
 Compared to the example calculation done in \autoref{section:implementation/hash_filter}, a filter containing one billion hashes would be about 2 GB, reducing the size by 17\%.
 The work of Fan et al. proposes a filter structure called Cuckoo-Filter, which has a better performance when the filter contains many items. and needs a low false positive probability.
-This would fit the requirements for a filter in this work.\\
-\\
-The approach proposed in this work has the potential to offer a service for the detection of copied open source code in a codebase as shown in the tests.
-Testing done to verify the capability of the approach showed that licensing issues can be found and may help software developers to prevent license violations.
-However, due to the difficulty of finding the correct origin of copied code, discovering the actual license is very hard, if possible at all.
-This restrains the approach from automatically determining the license and deciding whether a violation is present.
-Also, there are many licenses from which open source developers can choose.
-Owners of open source software can even create a new license if existing ones are not suiting their project.
-It is even possible to establish a special agreement between the copyright owners of source code which adds even more confusion to the license jungle.
-
-Beside that, the tool may not only be used to find licensing issues, but also enable developers to monitor used libraries and third party code.
-This information can be used to link libraries instead of copying the code.
-In the long run, this could improve software quality, since maintaining of third party code could be simplified and vulnerabilities fixed.
-
-%TODO origin analysis needed to find actual license of file
-%\begin{itemize}
-%	\item TODO Chunk size: Size of database only influenced slightly, maybe even smaller chunks and more filtering?
-%	\item TODO Assess matches: \textbf{Load file(s) from server}, do more comparison (With a difftool token based on methods/blocks, to prevent reordering of methods not detected)
-%	\item TODO Extension points for future development? Web-Interface for code-add-request, Suggestions for linking libraries (gradle, ...)
-%	\item TODO Authorization? Spam protection? DoS? Restrict requests/min and size of request -> (Monetize? => Blackduck...)
-%\end{itemize}
+This would fit the requirements for a filter in this work.

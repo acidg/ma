@@ -3,11 +3,17 @@
 \chapter{Implementation}\label{chapter:implementation}
 This chapter describes details about the prototypical implementation of the tool, which is written in Java.
 
+First, the creation of the index is explained.
+Following, the history analysis is described, including details about updating the index and problems with determining the correct order of revisions.
+After that, the filter mechanism is explained and scalability of the approach is addressed.
+Last, the process of finding matches is described.
+
+
 \section{Index Creation}\label{section:implementation/index_creation}
 One goal of this work is the ability to find slightly modified code.
 The idea followed here is to choose the number of statements in a chunk low to react on modified, added and removed statements.
 The number of statements also has to be high enough to find license infringements as defined in \autoref{section:preliminaries/infringement}.
-After several tests, 5 statements per chunk produced promising results.
+Several preliminary tests showed that 5 statements is a good value for chunk size and is therefore used throughout the implementation.
 
 For tokenization, existing code from the work of \cite{heinemann2014teamscale} is used.
 Normalization is done by iterating over all tokens and removing rather irrelevant tokens like access modifiers, brackets, the java final or the C atomic keywords.
@@ -25,7 +31,7 @@ An example for the normalization of some sample code can be found in \autoref{fi
 One emerging problem here are \texttt{if}, \texttt{while}, \texttt{for} or other blocks, which can be written with or without curly braces in the case of a single statement in the body.
 Since the end of a statement is recognized by curly braces or semicolons as described above, a block with curly braces and a single statement is seen as multiple statements, one without the braces is seen as a single statement.
 This may prevent copied code from being detected by the tool, when the braces are added or removed in the target system.
-Since normalizing this case is rather complicated, it is ignored in this work.
+Since normalizing this case is rather complicated, adding special handling for these cases was not implemented.
 
 A relational database can reduce the size of the store, because redundancy can be removed.
 However, tests showed that even with bulk inserts, the creation of the database is more than 50 times slower than using a key-value store.
@@ -36,6 +42,14 @@ As described in \autoref{section:approach/creating_index}, the key for an entry 
 Since chunks with the same hash may be found in several locations, the value is a list of locations, where the chunk can be found.
 For the prototypical implementation, the list for a value is serialized in JSON
 \autoref{fig:json_serialization} shows a simplified example.
+Each location has the following properties:
+\begin{description}
+	\item[p] The reference project, to which the chunk belongs
+	\item[l] The path of the file within the project, to which the chunk belongs
+	\item[s] Character, at which the chunk starts
+	\item[e] Character, at which the chunk ends
+	\item[r] Revision of the file (hash value of the commit), to which the chunk belongs
+\end{description}
 
 \begin{figure}[h]
 	\centering
@@ -43,18 +57,18 @@ For the prototypical implementation, the list for a value is serialized in JSON
 		{
 			[
 				{
-					"project": "referenceProjectName",
-					"path": "src/component/ClassA.java",
-					"start": 8262,
-					"end": 8993,
-					"revision": "ac89b33fe7a..."
+					"p": "referenceProjectName",
+					"l": "src/component/ClassA.java",
+					"s": 8262,
+					"e": 8993,
+					"r": "ac89b33fe7a..."
 				},
 				{
-					"project": "otherProjectName",
-					"path": "src/component/SomeOtherClass.java",
-					"start": 2689,
-					"end": 3053,
-					"revision": "893afe7b3ca..."
+					"p": "otherProjectName",
+					"l": "src/component/SomeOtherClass.java",
+					"s": 2689,
+					"e": 3053,
+					"r": "893afe7b3ca..."
 				},
 				...
 			]
@@ -64,50 +78,28 @@ For the prototypical implementation, the list for a value is serialized in JSON
 \end{figure}
 
 \section{History Analysis}\label{section:implementation/history_analysis}
-Copied code of a system may origin from a previous version of a reference system.
-Modern version control systems like git, subversion or mercurial enable user to go back in time and extract any version of a source code file from the system's repository.
+Copied code of a system may have a previous version of a reference system as its origin.
+Modern version control systems like git, subversion or mercurial enable users to go back in time and extract any version of a source code file from the system's repository.
 In this work, this is used to add old versions of source code files to the index in order to find code which has been copied from an older version of the reference system.
 
 Versions of a repository can be seen in different granularity.
 A very fine granularity would be considering every commit as a different version of the system.
-On the one hand, indexing every commit would ensure that the index contains a files' content at any given point in time.
+On the one hand, indexing every commit would ensure that the index contains a file's content at any given point in time.
 On the other hand, the number of versions and therefore the amount of files to index is huge.
 Indexing large projects like that may take quite long.
-
-First tests with a commit-based approach on the Linux kernel's master branch showed that a complete indexing would take several days to finish.
-Note here that the Linux kernel code is a special case, since its git repository contains more than 600000 commits at the time of writing.
-Nonetheless, this shows that commit based may be to slow for productive use.
+First tests with a commit-based approach on the Linux kernel's master branch showed that a complete indexing would take several days to finish, since its git repository contains more than 600000 commits at the time of writing.
+This shows that commit based may be to slow for productive use, when several thousand projects are indexed.
 Furthermore, changes between two commit often are minor and may not be relevant.
 
-Instead, the implementation of this work is using a tag based approach.
-First, all tags found in the reference system's repository are extracted and sorted.
+Instead, the implementation of this work is using an approach based on git version tags.
+First, all tags found in the reference system's git repository are extracted and sorted.
 After that, starting at the first tag, all files present at that point in time are indexed as described in \autoref{section:implementation/index_creation}.
 Following up, for each tag in order, the changed files relative to the previous tag are indexed again.
 All changed files since the last tag are re-indexed again and the key-value store is updated as described in \autoref{section:approach/creating_index/history_analysis}.
 
-\subsection{Quick Scan}\label{section:implementation/history_analysis/quick_scan}
-When a new reference project should be added to the index, no versions of the project have been scanned yet.
-One way of indexing the versions defined by the available tags is to start with the tag with the oldest commit, get all files of that version and index them as described before.
-After that, the next version defined by the next tag in order by date of the commit the tags are pointing to, could be indexed.
-
-Instead of this approach indexing old to new versions of the reference project, a quicker indexing technique can be used.
-The problem here is that a file often is only changed in some lines, but the bigger part of the file stays untouched.
-When indexing is done from old to new, each chunk, which has not been changed, can already be found in the database pointing to the previous indexed version of the file and has to be updated.
-The old entry has to be deleted and the new entry pointing to the new version of the file has to be added.
-Instead, when indexing new to old versions, the entry for the chunk does not have to be changed and simply can be dropped.
-This ensures that each hash in the database is pointing to the latest version of a file.
-
-\subsection{Updating the Database}\label{section:implementation/history_analysis/update}
-As explained before, the index should be updated regularly in order to find the latest copied code.
-Therefore, the latest indexed version of each reference project has to be tracked.
-To update the index on the server, all repositories are updated to include the latest changes.
-After that, for each reference project, tags are extracted and sorted as mentioned before.
-Now, instead of traversing the tags chronologically reversed, i.e from new to old tags based on the date of the commit they are pointing to, tags are scanned chronologically, i.e. from old to new.
-This time, all hashes already in the database and pointing to the same file path are updated instead of dropped.
-
 \subsection{Sorting Tags}\label{section:implementation/history_analysis/sorting_tags}
 For this work, a prototype implementation for git was done.
-Using git tags to get periodic snapshots of a reference system showed some difficulties during testing.
+Using git tags to get periodic snapshots of a reference system showed some difficulties during implementation.
 
 Especially for bigger projects, tags are not always sorted chronologically.
 Using the tagging date may not be always accurate, since tags can be added in hindsight.
@@ -118,7 +110,7 @@ For different versions, different branches exist, e.g. \texttt{v1} and \texttt{v
 Tags are added for every release of a version, e.g. \texttt{v1.6}.
 The indexing progresses from tag to tag in chronological order by the commit date of the commit the tag is pointing to.
 As the example shows, the progress is jumping between the branches causing many changed files and therefore heavily slowing down the indexing.
-To compete with that, different branches of the projects where scanned as different projects.
+To combat this effect, different branches of the projects where scanned as different projects.
 One example is the Openjdk project, where jdk8 and jdk9 are developed on two different branches.
 For each of the major versions, a copy of the project was indexed, only regarding tags, which belong to the specified version.
 This could easily be done using a regular expression matching.
@@ -133,32 +125,48 @@ To deal with this circumstance, all tags not pointing to a commit where ignored 
 	\caption{Tags on different branches causing many changes}\label{fig:tag_sort}
 \end{figure}
 
-Still, several problems persist: 
-Clock skew amongst commiters may result in inaccurate sorting of tags and therefore could result in chunks remaining in the index not pointing to the latest version of a file.
 Keeping only references to chunks of the latest version of a file seems also to be a problem when searching for copied code on a client, since matches may be scattered over multiple versions of a file, because some chunks may point to a newer version of the file instead of the version the section of code actually was copied from.
-Those problems could be solved by keeping all chunks in the index, which have the same hash and are pointing to different versions of a file.
+This problem could be solved by keeping all chunk locations in the index, which have the same hash and are pointing to different versions of a file.
 However, this would increase the size of the database drastically.
-The size of the filter would not increase, since not the amount of hashes, but the amount of values a single hash is pointing to is increased.
+The size of the filter would not increase, since the amount of hashes doesn't increase, but the amount of values a single hash is pointing to does.
 In the prototypical implementation of the approach presented in this work, this is ignored, since scattered matches are aggregated as described in \autoref{section:implementation/finding_matches}.
 
 A better solution to sorting tags would be a branch based approach:
 Every branch is followed and snapshots of the reference system are either made periodically or with the use of tags.
 This may not only increase accuracy, but also indexing speed, since less files change between two versions (see \autoref{fig:tag_sort}).
 
+\subsection{Quick Scan}\label{section:implementation/history_analysis/quick_scan}
+When a reference project is added to the index, no versions of the project have been scanned yet.
+A reference project can be indexed from old tags to new tags, regarding the date of the commit, a tag is pointing to.
+This results in the direction as shown with the yellow arrow in \autoref{fig:tag_sort}.
+The problem here is that a file often is only changed in some lines, but the bigger part of the file stays untouched.
+When indexing is done from old to new, each chunk, which has not been changed, can already be found in the database pointing to the previous indexed version of the file and has to be updated.
+The old entry in the list of locations a hash in the key-value store is mapped to, has to be deleted and the new location pointing to the new version of the file has to be added.
+Instead, when indexing new to old versions, still only a small part of the reference system's files are changed, however, the entry for the chunk does not have to be changed and simply can be dropped.
+This ensures that each hash in the database is pointing to the latest version of a file.
+
+\subsection{Updating the Database}\label{section:implementation/history_analysis/update}
+As explained before, the index should be updated regularly in order to find the latest copied code.
+Therefore, the latest indexed version of each reference project has to be tracked.
+To update the index on the server, all repositories are updated to include the latest changes.
+After that, for each reference project, tags are extracted and sorted as mentioned before.
+Now, instead of traversing the tags chronologically reversed like with Quick Scan, as explained in the previous section, tags are scanned chronologically, i.e. from old to new.
+This time, all hashes already in the database and pointing to the same file path are updated instead of dropped, since a location always should point to the latest revision of a file.
+
 \section{Hash Filter}\label{section:implementation/hash_filter}
-With hash filter, this work refers to an algorithm, which can decide whether a element is part of a set with the help of a data structure which represents parts of the index.
+With \textit{hash filter}, this work refers to an algorithm, which can decide whether an element is part of a set with the help of a data structure which represents parts of the index.
 A simple approach would be to extract the set of all hashes from the index and shorten each one of them to reduce size, e.g. instead of 128bit per hash, only the first $i$ bits are used.
 Hashes which are equal in the first $i$ bits but different in the remaining bits have the same shortened hash.
 One hash may actually be part of the set of hashes and therefor part of the index, whereas the other may not.
 With this approach a decision can not be made with absolute precision.
 
 The probability $p$ of a false positive, which is the probability for the list of shortened hashes containing an entry for the first $i$ bits of a hash, but the hash not being part of the index can be calculated as follows:\\
-First the possibility for a hit $p_h$ is determined:
+First the possibility for a collision of a random shortened hash, with hashes in the list of shortened hashes $p_h$ is determined:
 \begin{equation}
 	p_h=\frac{n}{2^i}
 \end{equation}
 with the number of hashes $n$ and the length of a shortened hash $i$, given that hashes are uniformly distributed.
-The probability $p_c$ for the hash being part of the index can be calculated as follows:
+The probability $p_c$ for a random hash being part of the index can be calculated as follows:
 \begin{equation}
 	p_c=\frac{n}{2^{128}}
 \end{equation}
@@ -171,7 +179,7 @@ The resulting probability $p$ for a false positive can be calculated as follows:
 \end{equation}
 
 The main disadvantage of this approach is that with increasing number of hashes $n$ in the list, the amount of bits per hash has to rise in order to keep the probability low.
-For a probability of 0,01\% for a billion hashes the required length $i$ of a shortened hash would be 44 bit:
+For a maximum probability of 0,01\% for a billion hashes the required length $i$ of a shortened hash would be 44 bit:
 \begin{equation}
 	\begin{split}
 		p&=\frac{n}{2^i}\cdot \left(1- \frac{n}{2^{128}}\right) \\[10pt]
@@ -180,7 +188,7 @@ For a probability of 0,01\% for a billion hashes the required length $i$ of a sh
 		i&\approx 43,19 \rightarrow 44 \text{ bit per hash}
 	\end{split}
 \end{equation}
-This would result in 
+The worst case, where all shortened hashes are different, would result in 
 \begin{equation}
 	44\text{ bit} \cdot 10^9 = 44\cdot10^9 \text{ bits} = 5,5 \text{ GB}
 \end{equation}
@@ -234,7 +242,7 @@ However, during test, the machine already was at its limits using this approach,
 
 \section{Finding Matches}\label{section:implementation/finding_matches}
 For this prototypical implementation, the networking between client and server is ignored.
-Instead hashes are filtered using the bloom filter and looked up by directly accessing the database containing the index.
+Instead hashes are filtered using the Bloom filter and looked up by directly accessing the database containing the index.
 
 Referring to the definitions provided in \autoref{section:preliminaries/infringement/how_much_code}, a clone is considered an infringement, if a minimum of about 8 lines of code or, in the context of this work, statements are copied.
 A chunk consists of 5 statements, therefore at least two chunks have to be copied, when a single statement has been modified like illustrated in \autoref{fig:required_chunks_modified}.
@@ -258,18 +266,16 @@ To compete with these limitations, for each file, chunks are extracted as descri
 The Hash Filter is used to decide whether a chunk is part of the index and therefore a match exists within the file.
 If a file has less than 2 matching chunks, it can be ignored, since the minimum amount is two as explained above.
 Otherwise, details about the matches are requested from the server by sending the list of hashes for chunks, which the filter marked as part of the index.
-The server responds with a list of locations for each hash, or an empty list, if the hash is a false positive of the Hash Filter.
+The server (or in the case of this prototypical implementation: the database) responds with a list of locations for each hash, or an empty list, if the hash is a false positive of the Hash Filter.
 
 The client groups locations by reference project and path of the file.
-Note here that the revision of the file a chunk is pointing at, is ignored in this step.
-This makes sense, since locations always point to the latest revision of a chunk as described in \autoref{section:approach/creating_index/history_analysis}.
-
-The client then merges consecutive matches, by iterating over the locations of a group and finding overlaps.
+Note that locations always point to the latest revision of a chunk as described in \autoref{section:approach/creating_index/history_analysis}.
+Thus, the revision of the file a chunk is pointing to, is ignored in this step.
+The client then merges consecutive matches, by iterating over the locations of a group and tries to find overlaps.
 The amount of locations in a merged match is stored.
-When merging, a small gap is allowed between two locations of the same group, to include modifications of copied code as described in \autoref{section:approach/creating_index}.
+When merging, a small gap of maximal 200 characters is allowed between two locations of the same group, to include modifications of copied code as described in \autoref{section:approach/creating_index}.
 In the case of such a gap, the count of locations for the match is incremented by 4, since a possible modification has been detected and the actual length of the copied segment is equal to about 10 statements as it can be seen in \autoref{fig:required_chunks_modified}.
-
-Now the client can filter all matches which have a location count of less than 4 and remaining matches fulfill the required minimum length for a violation as described above.
+Since both, 4 consecutive and 2 gapped chunks are counted as a match with 4 locations, the client can now filter all matches which have a location count of less than 4 and remaining matches fulfill the required minimum length for a violation as described above.
 \\
 Continuous detection with e.g. every commit on a target system's codebase is possible.
 The same steps as described above can be done for each changed file instead of the whole codebase.

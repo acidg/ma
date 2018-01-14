@@ -31,7 +31,7 @@ With that, it is possible to easily find similar token sequences by traversing t
 
 Hummel et al. \cite{hummel2010index} developed an approach, where chunks of code are hashed.
 They first tokenize the code and normalize it by removing e.g. comments and unifying variable names.
-Now, the tokens are split into statements, several of them are grouped into chunks and hashed.
+Afterwards, the tokens are split into statements, several of them are grouped into chunks and hashed.
 When the hash value is calculated the same way for another section of code, it can be used to look up similar code sequences.
 
 Koschke \cite{koschke2014large,koschke2012large} tried to find license infringements in code.
@@ -45,7 +45,7 @@ They can find clones in 250 million lines of code within 4 days, which was signi
 
 These approaches are used as the basis for the development of the comparison techniques used in this work.
 Suffix trees seem to be the best deal to find copies among a large codebase, since creating the index is very expensive.
-However, when the detection has to be done several times and in a continuous manner between a single code base and several other open source codebases, building an index appears to be the best choice for the goal of this work.
+However, when the detection has to be done several times and in a continuous manner between a single code base and several other open source codebases, building an index is the best choice for the goal of this work.
 
 \section{Code Search}\label{section:related_work/code_search}
 With the growth of the Internet, recent research focused more search engines for code.
@@ -59,18 +59,18 @@ Keivanloo et al. \cite{keivanloo2012leveraging,keivanloo2011internet,keivanloo20
 The system has different parts which enable a user to search for code clones, similar bytecode or program structure.
 The most interesting part of the system in the context of this thesis is the clone search called SeClone, which is described in \cite{keivanloo2011internet,keivanloo2011seclone}.
 For preprocessing, they first tokenize the code using ASTs (Abstract Syntax Tree) and a normalization approach similar to CCFinder as described in \cite{kamiya2002ccfinder}.
-For indexing, the tokens of source code files are feed into two different databases, one for code patterns and one to store type usage which is for reducing the amount of false positives.
-In order to detect clones with added, changed or removed statements, they use a multilevel indexing approach, where lines of code are hashed, the emerging hashes sorted and after that, hashes for multiple lines are hashed again.
-This multilevel approach allows for rearranging of statements while still resulting in the same hash for the code section and can detect type 3 clones.
+For indexing, the tokens of source code files are fed into two different databases, one for code patterns and one to store type usage to reduce the amount of false positives.
+In order to detect clones with added, changed or removed statements, they use a multilevel indexing approach, where lines of code are hashed, the resulting hashes sorted and after that, hashes for multiple lines are hashed again.
+This multilevel approach allows for rearranging of statements while still resulting in the same hash for the code section and can detect type-3 clones.
 Also, their multilevel approach speeds up the search performance significantly.
 
-Although those approaches fit the requirement of collecting huge amounts of code in a database and making it searchable, they aim for finding code by its program structure.
+Although those approaches fit the requirement of collecting huge amounts of code in a database and making it searchable, they aim at finding code by its program structure.
 In this work, the goal is to find code which is copy-pasted and only modified slightly, if at all.
 
 \section{Commercially Available Tools}
-Commercially available tools, namely Blackduck and Flexnet Code Insight are advertised as able to detect code of freely available open source software in a given codebase.
+Some of the commercially available tools, namely Blackduck and Flexnet Code Insight are advertised as able to detect code of freely available open source software in a given codebase.
 This enables the user to be notified of possible vulnerabilities in the used code.
-According to Blackduck's website, their product called \textbf{KnowledgeBase} \glqq is the industry’s most comprehensive database of open source project, license, and security information, covering more than 530 billion lines of [more than 2 million] open source [projects] from over 9000 forges and repositories\grqq \cite{blackduck}.
+According to Blackduck's website, their product called \textit{KnowledgeBase} \enquote{is the industry’s most comprehensive database of open source project, license, and security information, covering more than 530 billion lines of [more than 2 million] open source [projects] from over 9000 forges and repositories} \cite{blackduck}.
 
 However, they do not provide information about it's architecture or used techniques, or how code is handled and whether it has to be sent to a server.
 Also, they are not mentioning whether the history of reference projects is tracked.

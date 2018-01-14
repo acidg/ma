@@ -1,25 +1,21 @@
 % !TeX root = ../main.tex
 
 \chapter{Evaluation}\label{chapter:evaluation}
-To verify the capability of the approach proposed in this work, the prototypical implementation was tested.
+To verify the capability of the approach proposed in this work, the prototypical implementation was evaluated.
 The idea is to find out, whether the approach is capable of detecting copied code in a codebase and, by that, unveil license infringements.
 For that purpose, 2000 GPL licensed projects were indexed using the prototypical implementation of the tool.
-After that, other open source projects, which are licensed not compatible with GPL and therefore should not contain any of the GPL licensed code indexed before, where analyzed and emerging matches categorized.
-
+After that, other open source projects, which are licensed not compatible with GPL and therefore should not contain any of the GPL licensed code indexed before, where analyzed and resulting matches categorized.
 This chapter describes the test setup evaluates timings, database sizes and findings.
 
 \section{Test Setup}\label{section:evaluation/test_setup}
-As a source for the projects to index, GitHub was chosen.
+As a source for most of the target projects, GitHub was chosen, only Teamscale is a closed source project.
 GitHub's REST API was used to generate a list of 1.000 GPL licensed Java and 1.000 GPL licensed C or C++ projects.
 All of the projects were checked out locally resulting in sizes as shown in \autoref{table:locs}.
-
-Indexing those 2.000 projects including their history took 15h on a consumer laptop with 16 GB of RAM and an Intel i7 2.6 GHz CPU with 4 cores and hyper-threading.
+Indexing those 2.000 projects including their history took 15h on a consumer laptop with 16 GB of RAM and an Intel i7 CPU with 4 cores and hyper-threading.
 The indexing was done independently for Java and C/C++ generating two databases.
-The resulting database sizes are 4 GB for Java and 33 GB for C/C++, the bloom filter's sizes are 55 MB and 147 MB for Java and C/C++.
-
+The resulting database sizes are 4 GB for Java and 33 GB for C/C++, the Bloom filter's sizes are 55 MB and 147 MB for Java and C/C++.
 Inspection of several indexed projects showed, the huge difference for the sizes can be justified in the amount of actual code in the repositories.
 It seems like Java projects contain more images, binary files or other resources, compared to the C/C++ projects.
-Also, the resulting count of chunks and corresponding amount of hashes indicates a lot of duplicated chunks and leads to the assumption that the increase of hashes is asymptotic relative to the growth of chunks.
 
 \begin{table}[ht]
 	\centering
@@ -34,12 +30,12 @@ Also, the resulting count of chunks and corresponding amount of hashes indicates
 
 After two weeks, the index was updated for both Java and C/C++ as described in \autoref{section:implementation/history_analysis/update}.
 Approximately one third of the reference projects contained one or more new tags which were indexed.
-The update took a total of one hour including calculation of the bloom filter.
-This shows that incremental updates of the index are worth the effort of implementation compared to re-indexing the reference projects from scratch.
+The update took a total of one hour including calculation of the Bloom filter.
 
 After indexing those projects, several other projects, licensed not compatible with GPL, where analyzed for matches using the approach described in \autoref{section:implementation/finding_matches}.
+The selected projects are mostly large standalone programs or frameworks, which are not library code.
 \autoref{table:target_projects} shows the chosen target projects, their license and the lines of code of files written in the corresponding language.
-To reduce the amount of irrelevant matches, generated code and third party code in libraries were excluded from the target projects during analysis.
+To reduce the amount of irrelevant matches, generated code, third party code and libraries were excluded from the target projects during analysis, by instructing the analysis to exclude corresponding directories of the target projects.
 
 \begin{table}[ht]
 	\centering
@@ -74,8 +70,8 @@ To reduce the amount of irrelevant matches, generated code and third party code 
 \end{table}
 
 \section{Hash Filter Performance}\label{section:evaluation/hash_filter_performance}
-The bloom filter can return false positives, thus, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
-Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the bloom filter is calculated to be 0,01\%. 
+The Bloom filter can return false positives, thus, matches are expected even if no code has been copied from a reference project into the target project for large enough projects.
+Those matches - called false positive filter matches (FPFM) in the remainder of this work - are expected to occur once for roughly every 10.000 statements in the target project, since the probability for a false positive of the Bloom filter is calculated to be 0,01\%. 
 
 \autoref{table:unfiltered_findings} lists results regarding amount of analyzed chunks as well as false and true positive matches.
 Columns are defined as follows:
@@ -99,7 +95,7 @@ Columns are defined as follows:
 		& Elasticsearch & 5.560 & 414.448 & 45 & 1.105 (0,3\%) & 1.004 \\
 		& Eclipse JDT UI & 2.736 & 274.040 & 29 & 482 (0,2\%) & 444 \\
 		& Buck & 5.150 & 261.605 & 21 & 575 (0,2\%) & 548 \\
-		& Teamscale & 5.463 & 185.648 & 21 (0,011\%) & 458 (0,247\%) & 434 \\
+		& Teamscale & 5.463 & 185.648 & 21 & 458 (0,2\%) & 434 \\
 		& Spring Boot & 3.756 & 94.935 & 11 & 1.010 (1,1\%) & 967 \\
 		& Openfire & 1.572 & 121.775 & 15 & 2.106 (1,7\%) & 2.084 \\
 		& Killbill & 1.477 & 79.118 & 13 & 550 (0,7\%) & 539 \\
@@ -122,10 +118,8 @@ Columns are defined as follows:
 
 This result shows that the Hash Filter is reducing the required lookups to a fraction.
 Load on the server can be greatly reduced and analysis of a target system's code therefore is a lot quicker.
-
 The analysis took less than 20 seconds even for the biggest projects not including networking.
 In a real world scenario, this will be slower, since communication with the server will add additional delays.
-
 Requesting the locations for each hash passing the Hash Filter individually, causes a lot of requests with high overhead caused by creating single network packets.
 Additional authentication on the server may be required to control access further slowing down the analysis.
 Instead, sending hashes in batches may be a better solution.
@@ -134,14 +128,13 @@ Instead, sending hashes in batches may be a better solution.
 \section{Detection of License Infringements}\label{section:evaluation/detecting_infringements}
 As the previous section shows, matches have to be filtered, in order to remove false positives and matches, which are not relevant in the context of license infringement.
 Aggregation and filtering is done as described in \autoref{section:implementation/finding_matches}.
-
 Based on the license definitions in \autoref{section:preliminaries/infringement/relevant_licenses}, each match is manually inspected and grouped into one of the following categories:
 \begin{description}
 	\item [Accidential Clones (AC)]
 		Matches which are similar by \glqq accident\grqq, e.g. generated code, interface implementations, declarations of structs/enums, switch-case blocks, table data especially present in C/C++.
 	\item[Otherwise Licensed Code (OLC)]
 		Code which is actually copied from the reference project or originates from a common source licensed under a permissive license or is public domain.
-		If the copied code is under permissive license, attribution is done correcty and therefore, this is not a license infringement.
+		If the copied code is under permissive license (e.g. MIT licensed code copied into the reference project), attribution is done correcty and therefore, this is not a license infringement.
 		Note here that code can also be copied into the reverse direction in the context of this evaluation, since analyzed target projects are licensed in a way, where they can be copied to GPL licensed code with attribution.
 	\item[Copied, but not Attributed (CNA)]
 		This marks the use of permissive licenses and therefore is the same as otherwise licensed code, but not attributed correctly by the target project.
@@ -227,19 +220,15 @@ When both sides have a high similarity in the comments, the probability for the 
 Still, removing comments when normalizing code for comparison is advisable, since comments often are removed or added.
 
 The match supplied by the tool sometimes was not the actual origin of the code.
-However in many times, the suggested matches could give hints on the origin of the code and combined with further searching the Internet, the originating source could be determined.
+However in many cases, the suggested matches could give hints on the origin of the code and combined with further searching the Internet, the originating source could be determined.
 This process is very hard to automate and manual inspection is required nonetheless, since the severity of the infringement has to be assessed.
-For some rare cases, even searching for implementations of the specific problem on the Internet did not help to find the originating source.
+For some rare cases, even searching for implementations of the specific problem on the Internet did not help in finding the originating source.
 For such cases, the code was seen as CNA, since no attribution was made and the code may be a potential infringement.
 This also shows that indexing one reference project often includes several other projects (with different licenses), since sometimes, dependencies are copied into the codebase of a reference project.
 
 Infringements not only could be found in the target system.
-Sometimes, the original file header was replaced by the GPL header of the reference system, which for many licenses is a violation.
+Sometimes, the original file header was replaced by the GPL header of the reference system, which removes the attribution and thus results in a violation for many licenses.
 Those cases are not regarded in this test, but still show that the problem targeted in this work exists.
-
-Some of the selected reference projects are forks of one of the target projects.
-Examples are Eclipse JDT Core and the Overture tool\footnote{\href{https://github.com/overturetool/overture}{https://github.com/overturetool/overture} (09.01.2018)} or Chromium and the OBS Studio project\footnote{\href{https://github.com/jp9000/obs-studio}{https://github.com/jp9000/obs-studio} (09.01.2018)}.
-Almost all matches of RethinkDB were caused by copied code from RapidJSON\footnote{\href{https://github.com/Tencent/rapidjson}{https://github.com/Tencent/rapidjson} (09.01.2018)}.
 
 \subsubsection*{Accidential Clones (AC)}
 Mostly, AC findings are caused by interface implementations, structs and enumerations used for communication with APIs or table definitions.
@@ -249,31 +238,70 @@ Method generators supplied by the used IDE may have caused the high similarity.
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=\linewidth]{figures/ac.png}
-	\caption{Example for AC. Left target, right reference code}\label{fig:ac}
+	\caption{Example for AC. Left target, right reference code}
+	{
+		\begin{flushleft}
+			\tiny Sources:\\
+			\textbf{Left:}
+			\href{https://github.com/elastic/elasticsearch/blob/b1039164a11cd2e9968ac61c7260997eaa9f480a/core/src/test/java/org/elasticsearch/index/fielddata/ordinals/MultiOrdinalsTests.java}{https://github.com/elastic/elasticsearch/blob/b1039164a11cd2e9968ac61c7260997eaa9f480a/core/src/test/java/org/elasticsearch/ index/fielddata/ordinals/MultiOrdinalsTests.java}\\
+			\textbf{Right:}
+			\href{https://github.com/bedatadriven/activityinfo/blob/1b4f3cc73e9186a93178c8354925dcf0ebc68ff5/sigmah/src/main/java/org/sigmah/client/page/entry/place/DataEntryPlace.java}{https://github.com/bedatadriven/activityinfo/blob/1b4f3cc73e9186a93178c8354925dcf0ebc68ff5/sigmah/src/main/java/org/sigmah/client/ page/entry/place/DataEntryPlace.java}
+		\end{flushleft}
+	}
+	\label{fig:ac}
 \end{figure}
 
 \newpage
-\subsubsection*{Copied but not Attributed Code (OLC)}
+\subsubsection*{Otherwise Licensed Code (OLC)}
 OLC had many matches both for Java and C/C++.
 Either code was attributed correctly like the example in \autoref{fig:olc_attributed} or the code can be copied without attribution like in the case of code under public domain like the example in \autoref{fig:olc_public_domain} shows.
 Findings like those are not license infringements.
 However, they may be of interest, since third party code can be monitored and code could be linked instead of copied.
 
+A reference system being licensed under a specific license does not cause all code files of that system are actually licensed as such.
+Resolving the actual license of a file can be very hard, since headers often do not contain any information on the file's license.
+
 Some of the selected reference projects are forks of one of the target projects.
 Examples are Eclipse JDT Core and the Overture tool\footnote{\href{https://github.com/overturetool/overture}{https://github.com/overturetool/overture} (09.01.2018)} or Chromium and the OBS Studio project\footnote{\href{https://github.com/jp9000/obs-studio}{https://github.com/jp9000/obs-studio} (09.01.2018)}.
 Almost all matches of RethinkDB were caused by copied code from RapidJSON\footnote{\href{https://github.com/Tencent/rapidjson}{https://github.com/Tencent/rapidjson} (09.01.2018)}.
 
-A reference system being licensed under a specific license does not cause all code files of that system are actually licensed as such.
-Resolving the actual license of a file can be very hard, since headers often do not contain any information on the file's license.
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\linewidth]{figures/olc_attributed.png}
-	\caption{Example for correctly attributed OLC. Left target, right reference code}\label{fig:olc_attributed}
-\end{figure}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\linewidth]{figures/olc_public_domain.png}
-	\caption{Example for public domain code being categorized as OLC. Left target, right reference code}\label{fig:olc_public_domain}
+	\caption{Example for public domain code being categorized as OLC. Left target, right reference code}
+	{
+		\begin{flushleft}
+			\tiny Sources:\\
+			\textbf{Left:}
+			\href{https://github.com/bitcoin/bitcoin/blob/5d132e8b974652d96466a1b73ec1231614719fe2/src/hash.cpp}
+			{https://github.com/bitcoin/bitcoin/blob/5d132e8b974652d96466a1b73ec1231614719fe2/src/hash.cpp}\\
+			\textbf{Right:}
+			\href{https://github.com/sahib/rmlint/blob/e1a64fefd26f32616fdb75c75c55aa1782c1d8f5/lib/checksums/murmur3.c}
+			{https://github.com/sahib/rmlint/blob/e1a64fefd26f32616fdb75c75c55aa1782c1d8f5/lib/checksums/murmur3.c}
+		\end{flushleft}
+	}
+
+	\label{fig:olc_public_domain}
+\end{figure}
+
+\newpage
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{figures/olc_attributed.png}
+	\caption{
+		Example for correctly attributed OLC. Left target, right reference code
+	}{
+		\begin{flushleft}
+			\tiny Sources:\\
+			\textbf{Left:}
+			\href{https://github.com/spring-projects/spring-boot/blob/ac004eabf35af2a11cbeb19e31717b70df6224f7/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/json/JSON.java}
+			{https://github.com/spring-projects/spring-boot/blob/ac004eabf35af2a11cbeb19e31717b70df6224f7/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/json/JSON.java}\\
+			\textbf{Right:}
+			\href{https://github.com/projectestac/jclic/blob/bb94af09efbe6cf932472f6b285931f1d04291fb/extensions/json/src/org/json/JSON.java}
+			{https://github.com/projectestac/jclic/blob/bb94af09efbe6cf932472f6b285931f1d04291fb/extensions/json/src/org/json/JSON.java}
+		\end{flushleft}
+	}
+	\label{fig:olc_attributed}
 \end{figure}
 
 \newpage
@@ -284,8 +312,18 @@ The original file header containing the license information including the terms 
 This causes a violation of the licenses terms, since attribution has to be made according to the reference file's license.
 \begin{figure}[htpb]
 	\centering
-	\includegraphics[width=\linewidth, trim={1mm 3,8cm 0 0}, clip]{figures/cna.png}
-	\caption{Example for CNA. Left target, right reference code}\label{fig:cna}
+	\includegraphics[width=\linewidth]{figures/cna.png}
+	\caption{Example for CNA. Left target, right reference code}
+	{
+		\begin{flushleft}
+			\tiny Sources:\\
+			\textbf{Left:}
+			\href{https://github.com/elastic/elasticsearch/blob/b1039164a11cd2e9968ac61c7260997eaa9f480a/core/src/main/java/org/elasticsearch/common/Strings.java}{https://github.com/elastic/elasticsearch/blob/b1039164a11cd2e9968ac61c7260997eaa9f480a/core/src/main/java/org/elasticsearch/common/Strings.java}\\
+			\textbf{Right:}
+			\href{https://github.com/HotswapProjects/HotswapAgent/blob/2d55e7c0feb809e33c5cb2f384f8d993fb5562ed/hotswap-agent-core/src/main/java/org/hotswap/agent/util/spring/util/StringUtils.java}{https://github.com/HotswapProjects/HotswapAgent/blob/2d55e7c0feb809e33c5cb2f384f8d993fb5562ed/hotswap-agent-core/src/main/java/org/hotswap/agent/util/spring/util/StringUtils.java}
+		\end{flushleft}
+	}
+	\label{fig:cna}
 \end{figure}
 
 \newpage
@@ -304,13 +342,24 @@ Nonetheless, those findings show that the problem targeted in this work exists a
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=\linewidth]{figures/li.png}
-	\caption{Example for LI. Left target, right reference code}\label{fig:li}
+	\caption{Example for LI. Left target, right reference code}
+	{
+		\begin{flushleft}
+			\tiny Sources:\\
+			\textbf{Left:}
+			Teamscale\\
+			\textbf{Right:}
+			\href{https://github.com/JetBrains/jdk8u_jdk/blob/2283b9d1d8f03fea8fa192c248b58726a66a6eaf/src/share/classes/java/io/DataOutputStream.java}{https://github.com/JetBrains/jdk8u\_jdk/blob/2283b9d1d8f03fea8fa192c248b58726a66a6eaf/src/share/classes/java/io/DataOutputStream.java}
+		\end{flushleft}
+	}
+	\label{fig:li}
 \end{figure}
 
+\newpage
 \subsection{Testing Recall}
 Asserting the recall of clone detection tools is difficult.
 Benchmarks like the work of Svajlenko et al. \cite{svajlenko2014towards} can give insight on the recall performance.
-Analyzing this work with such a benchmark go beyond the scope of this work and may even be not suitable, since the benchmark is testing for similar code constructs, which can be refactored for reuse to reduce redundancy and enhance software quality.
+Analyzing this work with such a benchmark is beyond the scope of this work and may even be unsuitable, since the benchmark is testing for similar code constructs, which can be refactored for reuse to reduce redundancy and enhance software quality.
 In contrast, the tool presented in this work tries to find code which has a high similarity and can be argued for being copied.
 
 \section{Confidentiality}

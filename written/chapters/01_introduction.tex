@@ -29,13 +29,13 @@ The proposed approach is based on a client server architecture, where the server
 The server provides an interface to query for code sequences in order to find similar matches in open source systems.
 This can be done in a continuous manner ( i.e. for every commit) to track whether incongruously licensed code has been copied to the codebase.
 One key feature of the tool is the filtering technique used, which significantly reduces the server's load and speeds up the search process.
-A file representing a bloom filter can be downloaded from the server, which allows clients to filter a large part of code sequences which are not tracked by the server.
+A file representing a Bloom filter can be downloaded from the server, which allows clients to filter a large part of code sequences which are not tracked by the server.
 The remaining code sequences are then used to query the server which returns the actual matches and further details.
 
 The amount of code which can be tracked by the server is in the range of several billion lines of code including history.
 The analysis of existing open source code bases is fast and scalable and can be updated periodically.
 To verify that, a prototype of the tool has been implemented and more than 500 million lines of code from approximately 2.000 open source projects were indexed in about 15 hours on a consumer laptop.
-The resulting database is about 37 GB and the corresponding bloom filter has a size of about 200 MB for this amount of code.
+The resulting database is about 37 GB and the corresponding Bloom filter has a size of about 200 MB for this amount of code.
 The approach not only allows to find licensing issues, but also can be used to monitor the use of open source code in a codebase.
 With that information, used libraries can be linked instead of copied and vulnerabilities caused by outdated software can be prevented.
 
@@ -44,4 +44,4 @@ First, definitions used throughout the thesis as well as requirements are listed
 Subsequently, related work is depicted in \autoref{chapter:related_work} and based on that, an overview of the approach used for the tool is presented in \autoref{chapter:approach}.
 Details of the implementation, decisions and its complications are shown in \autoref{chapter:implementation}.
 In \autoref{chapter:evaluation} the prototype is used to analyze several thousand projects, findings are categorized and their validity evaluated.
-This leads to a discussion about the usefulness of the approach and proposals for future work in \autoref{chapter:conclusion}.
+This leads to a discussion about proposals for future work and the usefulness of the approach in \autoref{chapter:conclusion} and \autoref{chapter:future_work}.
