@@ -8,7 +8,7 @@ The proposed client-server architecture uses techniques known from clone-detecti
 Besides offering a service for querying similar code, the server also generates a Bloom filter, which can be downloaded by clients and is used to increase the speed of the search process and reduce the load on the server.
 To increase the accuracy of the detection, the history of the indexed projects is also taken into account.
 
-The approach is prototypically implemented and evaluated by indexing 2.000 open source projects of different languages and analyzing 20 projects for copied code.
+The approach is prototypically implemented and evaluated by indexing 2.000 open source projects of two different languages and analyzing 10 projects of each language for copied code.
 It results in a total database size of 37 GB and filters of less than 200 MB.
 In 25\% of the analyzed projects, licensing issues could be found by manual inspection.
 However, an automation of the process is hard, because determining the origin and the license of files in open source projects is very difficult.

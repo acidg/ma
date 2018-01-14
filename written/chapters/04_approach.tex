@@ -52,8 +52,8 @@ The value associated with the key of the entry is a list of those locations, whe
 A client can then look for similar code by normalizing and calculating the hashes of chunks in the same way, which is detailed in \autoref{section:approach/searching_copied_code}.
 
 The hash of a chunk changes, as soon as the normalized code of that chunk is not exactly the same anymore. 
-The amount of statements in a chunk influences the success rate of the algorithm, because longer chunks reduce the probability of finding chunks with modified, added or removed statements.
-However, shorter chunks require less statements, which have to be the same to trigger a match.
+The number of statements in a chunk influences the success rate of the algorithm, because longer chunks reduce the probability of finding chunks with modified, added or removed statements.
+However, shorter chunks have a higher probability of triggering a match.
 Therefore, the length of a chunk has to be short enough to find sequences of statements with modifications as shown in \autoref{fig:modification}, but long enough, to exclude generic code, which would produce huge amounts of false positives.
 
 \begin{figure}[h]

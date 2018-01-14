@@ -1,0 +1,16 @@
+\chapter{Zusammenfassung}
+Open Source Software, welche auf Plattformen wie GitHub oder Bitbucket veröffentlicht wird, ist oft so lizenziert, dass er sogar in kommerziellen Systemen wiederverwendet werden kann.
+Freizügigere Lizenzen fordern im Fall einer Wiederverwendung nur eine Quellenangabe, wohingegen strengere Lizenzen wie die GNU Public License (GPL) oder andere Copy-Left Lizenzen verlangen, dass darauf aufbauender Code unter der selben Lizenz veröffentlicht werden muss.
+Wird dennoch so lizenzierter Quellcode in unfreien Softwaresysteme übernommen, wird die Lizenz des Originalcodes verletzt und die Autoren müssen die unfreie Software gegebenenfalls als Open Source veröffentlichen.
+
+In dieser Arbeit wird ein Tool entwickelt, welches aus Open Source Systemen kopierten Quellcode in einer Codebasis erkennen kann.
+Dabei indiziert der Server eine riesige Anzahl an Open Source Systemen und deren Historie.
+Er stellt eine Schnittstelle zur Verfügung, welcher es ermöglicht nach Quelltextpassagen mit sehr hoher Ähnlichkeit zu suchen.
+Der Server berechnet außerdem eine Filterstruktur, welche von Clients heruntergeladen und zum Filtern benutzt werden kann.
+Dies beschleunigt den Suchvorgang und vermindert die Auslastung des Servers enorm.
+
+Der Ansatz wurde prototypisch umgesetzt und bezüglich seiner Umsetzbarkeit und Performanz untersucht.
+Dafür wurden 2.000 Open Source Projekte in zwei verschiedenen Sprachen indiziert und anschließend mithilfe des Index 10 weitere Projekte jeder Sprache auf kopierten Quellcode untersucht.
+Die erzeugte Datenbank ist ca. 37 GB groß, die Größe des Filters beträgt etwa 200 MB.
+Durch manuelle Inspektion wurden in 25\% der analysierten Projekte Lizenzprobleme entdeckt.
+Eine Automatisierung des Prozesses ist jedoch sehr kompliziert, da es sehr schwierig ist die Lizenz einer Datei richtig zu ermitteln.
