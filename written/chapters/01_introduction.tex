@@ -12,19 +12,19 @@ Finding copied code, which potentially causes licensing issues, is difficult.
 Simply comparing the hash of files or reading the file's header is not sufficient to find copied code, since it may be modified, or only parts of a file may be copied.
 Instead, code has to be compared in more detail.
 The approach presented in this work tries to do so by using techniques known from the area of clone detection.
-There are many tools available for finding copied code withing and between codebases.
+There are many tools available for finding copied code within and between codebases.
 Existing clone detection tools try to find similar code, which can be refactored for reuse to reduce redundancy and enhance software quality.
 Often, they are designed for single runs and need a pool of projects which they can use for comparison.
 The possibility to use them for detection of license infringements on a continuous basis is very limited because of several issues.
 % huge dataset
 The data structure for comparison has to be built from a huge dataset of open source projects to find copied code, which is a high effort.
 % no history analysis
-Often, the history of the projects is not considered which may prevent detection of copied code from older versions of a system, when it is changed in the meantime.
+Often, the history of the projects is not considered which may prevent detection of copied code from older versions of a system, when it was changed in the meantime.
 % confidentiality
 Uploading the code to a server for analysis often is not an option for confidentiality reasons.
 
 The solution developed in this work, is a tool which allows searching a codebase for copied code from open source software available on the Internet.
-To decide whether a given fragment of code is part of an open source system, the detection tool indexes thousands of open source systems available on the Internet and maintains a data structure, which makes it possible to quickly search for similar code in the indexed open source systems.
+To decide whether a given fragment of code is part of open source code, the detection tool indexes thousands of open source systems available on the Internet and maintains a data structure, which makes it possible to quickly search for similar code in the indexed systems.
 The proposed approach is based on a client server architecture, where the server keeps track of open source projects including their history.
 The server provides an interface to query for code sequences in order to find similar matches in open source systems.
 This can be done in a continuous manner ( i.e. for every commit) to track whether incongruously licensed code has been copied to the codebase.

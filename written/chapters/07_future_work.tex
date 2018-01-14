@@ -25,7 +25,7 @@ Since this heavily depends on the policy of the individual reference projects, m
 
 \paragraph{Reducing Amount of Accidental Clones (AC)}
 With the current state of the approach, findings have to be inspected manually for violations, which sometimes can be a very time consuming process, since the actual origin of the code may not be part of the reference systems.
-Also, many of the found matches are not relevant, since either they are accidental clones and are not actually copied or the code in question does not cause any licensing issues.
+Also, many of the found matches are not relevant, since they are either accidental clones and are not actually copied, or the code in question does not cause any licensing issues.
 Results and insights emerging from the development of the tool presented in this work show that solving those problems is difficult.
 This mostly is caused by the peculiarity and individuality of reference projects and their licensing models.
 
@@ -44,5 +44,5 @@ The original idea for a Bloom filter is already more than 40 years old \cite{blo
 There has been a lot of research to improve the filters performance and reduce its size.
 Tulsiani et al. found out that \glqq making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability and decrease the false positive probability by roughly a factor of 2\grqq \ \cite{tulsiani2013probability}.
 Compared to the example calculation done in \autoref{section:implementation/hash_filter}, a filter containing one billion hashes would be about 2 GB, reducing the size by 17\%.
-The work of Fan et al. proposes a filter structure called Cuckoo-Filter, which has a better performance when the filter contains many items. and needs a low false positive probability.
+The work of Fan et al. proposes a filter structure called Cuckoo-Filter, which has a better performance when the filter contains many items and needs a low false positive probability.
 This would fit the requirements for a filter in this work.

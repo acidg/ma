@@ -12,7 +12,7 @@ The following list contains terms which are used throughout this work.
 \begin{description}
 	\item[Reference System/Project]
 		A codebase which can be detected by the tool. 
-		Files of the reference system have to be analyzed by the tool and information about the code has to be extracted and stored.
+		Files of the reference system have to be analyzed and information about the code has to be extracted and stored.
 	\item[Target System/Project]
 		A codebase which is analyzed for license infringements by the tool.
 		Code which is copied from a reference system to the target system should be found and its similarity assessed.
@@ -65,8 +65,8 @@ In the context of this work, licenses are separated into three different categor
 Regarding the purpose of the tool developed in this work, all licenses except the last category may be of interest since not listing the use of a source under a permissive license can already be an infringement.
 It can also be argued that code under public domain should be detected as well, since linking external code is enhancing maintainability compared to copy-pasting \cite{heinemann2012effective}.
 
-One problem in the context of this work are codebases with files which have a different license, than the codebase itself.
-This is for example relevant, if code of a permissive license is copied into a codebase under a restrictive license.
+One problem in the context of this work are codebases with files which have a different license than the codebase itself.
+This is, for example, relevant if code of a permissive license is copied into a codebase under a restrictive license.
 For the development of the tool, the difficulty is to classify the file correctly into the right license category defined above.
 Developing an automated approach for detecting the exact origin and consequentially the license is beyond the scope of this work.
 Therefore, manual inspection of matches between a target's and reference system's file is mandatory for decision making.
@@ -99,4 +99,5 @@ Because the code may also be difficult to understand or time might be tight, it 
 This would result in a similarity comparable to a type-1 clone.
 
 In copies which should be detected by the tool developed in this work, small modifications may have been done e.g. added lines for logging purposes.
-This would result in a gapped clone, where a single type-1 clone is split up into multiple type-1 clones due to changed, added or removed lines, which is the clone type targeted in this work.
+This would result in a gapped clone, where a single type-1 clone is split up into multiple type-1 clones due to changed, added or removed lines.
+Therefore, such gapped clones are the clone type targeted in this work.

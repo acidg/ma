@@ -87,15 +87,14 @@ A very fine granularity would be considering every commit as a different version
 On the one hand, indexing every commit would ensure that the index contains a file's content at any given point in time.
 On the other hand, the number of versions and therefore the amount of files to index is huge.
 Indexing large projects like that may take quite long.
-First tests with a commit-based approach on the Linux kernel's master branch showed that a complete indexing would take several days to finish, since its git repository contains more than 600000 commits at the time of writing.
+First tests with a commit-based approach on the Linux kernel's master branch showed that a complete indexing would take several days to finish, since its git repository contains more than 600.000 commits at the time of writing.
 This shows that commit based may be to slow for productive use, when several thousand projects are indexed.
 Furthermore, changes between two commit often are minor and may not be relevant.
 
 Instead, the implementation of this work is using an approach based on git version tags.
 First, all tags found in the reference system's git repository are extracted and sorted.
 After that, starting at the first tag, all files present at that point in time are indexed as described in \autoref{section:implementation/index_creation}.
-Following up, for each tag in order, the changed files relative to the previous tag are indexed again.
-All changed files since the last tag are re-indexed again and the key-value store is updated as described in \autoref{section:approach/creating_index/history_analysis}.
+Following up, for each tag in order, the changed files relative to the previous tag are indexed again and the key-value store is updated as described in \autoref{section:approach/creating_index/history_analysis}.
 
 \subsection{Sorting Tags}\label{section:implementation/history_analysis/sorting_tags}
 For this work, a prototype implementation for git was done.
@@ -113,7 +112,7 @@ As the example shows, the progress is jumping between the branches causing many 
 To combat this effect, different branches of the projects where scanned as different projects.
 One example is the Openjdk project, where jdk8 and jdk9 are developed on two different branches.
 For each of the major versions, a copy of the project was indexed, only regarding tags, which belong to the specified version.
-This could easily be done using a regular expression matching.
+This was done using a regular expression matching on the tag's name.
 
 Another emerging problem is tags not pointing to a commit.
 In git, a tag can point to any git object, such as e.g. a commit, a tree or another tag.
@@ -141,7 +140,7 @@ A reference project can be indexed from old tags to new tags, regarding the date
 This results in the direction as shown with the yellow arrow in \autoref{fig:tag_sort}.
 The problem here is that a file often is only changed in some lines, but the bigger part of the file stays untouched.
 When indexing is done from old to new, each chunk, which has not been changed, can already be found in the database pointing to the previous indexed version of the file and has to be updated.
-The old entry in the list of locations a hash in the key-value store is mapped to, has to be deleted and the new location pointing to the new version of the file has to be added.
+The old entry in the list of locations a hash in the key-value store is pointing to, has to be deleted and the new location, pointing to the new version of the file, has to be added.
 Instead, when indexing new to old versions, still only a small part of the reference system's files are changed, however, the entry for the chunk does not have to be changed and simply can be dropped.
 This ensures that each hash in the database is pointing to the latest version of a file.
 

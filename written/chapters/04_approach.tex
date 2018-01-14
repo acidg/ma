@@ -25,10 +25,10 @@ The client has a codebase which should be checked for license infringements.
 It can use the server's service to find code in its codebase which is similar to code in open source systems.
 
 The server has access to a pool of repositories and creates the index by normalizing and hashing files of the repositories as described in \autoref{section:approach/creating_index/normalization}.
-Subsequently, the history of a reference system is analyzed as explained in \autoref{section:approach/creating_index/history_analysis}.
-After that, the server generates a hash filter as described in \autoref{section:approach/creating_index/hash_filter}.
+\autoref{section:approach/creating_index/history_analysis} explains how the history of a reference system is analyzed.
+Details about the generation of a hash filter are provided in \autoref{section:approach/creating_index/hash_filter}.
 
-The client's search is two staged as described in \autoref{section:approach/searching_copied_code}
+The client's search is two staged as described in \autoref{section:approach/searching_copied_code}.
 First the Scanner on the client normalizes and hashes code files in its codebase the same way the server does.
 In the first stage, the Hash Filter is used to exclude hashes, which are not part of the server's index.
 The Hash Filter can be downloaded from the server.
@@ -103,7 +103,7 @@ It uses the resulting hash values as indexes to set bits of a bit array to 1.
 To find out whether a value is stored in the Bloom filter, the value is hashed with the same hash functions as for storing a value.
 Again, hash values are used as indexes.
 If all values inside the bit array defined by the indexes are set to 1, the value is part of the index on the server with a very high probability.
-If one or more of the bits are not set, the value is definite not in the filter.
+If one or more of the bits are set to 0, the value is definite not in the filter.
 For the tool developed in this work, the values inserted into the Bloom filter are the hashes of the chunks.
 
 The advantage is the small size of the filter.
@@ -122,9 +122,8 @@ After that, the emerging hashes are filtered with the Bloom Filter.
 Remaining hashes are then sent to the server, which responds with a map of hash to location for each hash.
 As explained before, a hash may not be part of the index, but still pass the filter.
 This false positive can be recognized by the server and excluded from the response.
-
 The response is then interpreted by the client.
-By aggregating matches by reference system and file path, the relevance of the match can be assessed.
+By aggregating matches by reference system and file path, the relevance of the match can be assessed, as described in \autoref{section:implementation/finding_matches}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{figures/searching_copied_code.pdf}
