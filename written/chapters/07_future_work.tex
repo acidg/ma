@@ -1,10 +1,12 @@
 % !TeX root = ../main.tex
 
 \chapter{Future Work}\label{chapter:future_work}
-The approach is scalable and can be heavily distributed, which may even make it possible to index and track the history of most of the open source code available on the Internet.
+The approach proofed to be able to find copied code and licensing issues.
+It is scalable and can be heavily distributed, which may even make it possible to index and track the history of most of the open source code available on the Internet.
+Clients can quickly search their codebase for copied code using the Bloom filter, which can be downloaded from the server.
 However, there is a lot of room for improvement:
 
-\paragraph{Distributed Server Architecture}
+\section{Distributed Server Architecture}
 Since this work proposes a client-server architecture, it is important to provide a reliable service to a huge amount of clients.
 Therefor, distributing the index on several machines is desirable for load balancing.
 This could easily be done by distributing the database onto the machines whenever the index is updated.
@@ -16,14 +18,14 @@ The requests resulting from matches in the filter on the client side then have t
 
 Distributing the workload can also speed up the indexing process, when updates are triggered (see \autoref{section:implementation/scalability}).
 
-\paragraph{Branch Based History Analysis}
+\section{Branch Based History Analysis}
 The accuracy of the history analysis could be improved significantly.
 As explained in \autoref{section:implementation/history_analysis/sorting_tags}, the problem is sorting the tags of a reference project's repository in the correct order without producing huge amounts of changed files between two revisions and slowing down the indexing process.
 A better approach would be to start with important branches and find tags on the way back to the root of the commit tree.
 Especially for big codebases with many branches, it may be important to filter branches, which are only used to implement features and are later on merged with a release branch.
 Since this heavily depends on the policy of the individual reference projects, manual inspection would be required or an approach to automate the filtering has to be developed.
 
-\paragraph{Reducing Amount of Accidental Clones (AC)}
+\section{Reducing Amount of Accidental Clones (AC)}
 With the current state of the approach, findings have to be inspected manually for violations, which sometimes can be a very time consuming process, since the actual origin of the code may not be part of the reference systems.
 Also, many of the found matches are not relevant, since they are either accidental clones and are not actually copied, or the code in question does not cause any licensing issues.
 Results and insights emerging from the development of the tool presented in this work show that solving those problems is difficult.
@@ -39,7 +41,7 @@ Concentrating the comparison of code on code blocks such as methods, structs, en
 Clients could also blacklist matches, which are irrelevant.
 Matches which are blacklisted by many clients could then be sorted out on the server side and excluded from results and the filter.
 
-\paragraph{Hash Filter Improvements}
+\section{Hash Filter Improvements}
 The original idea for a Bloom filter is already more than 40 years old \cite{bloom1970filter}.
 There has been a lot of research to improve the filters performance and reduce its size.
 Tulsiani et al. found out that \glqq making a sparse Bloom filter using 48 bits per element but only 3 hash functions, one can compress the result down to less than 16 bits per item with high probability and decrease the false positive probability by roughly a factor of 2\grqq \ \cite{tulsiani2013probability}.
