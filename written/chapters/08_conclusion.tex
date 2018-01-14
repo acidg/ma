@@ -1,16 +1,21 @@
 % !TeX root = ../main.tex
 
 \chapter{Conclusion}\label{chapter:conclusion}
-The tests conducted in \autoref{chapter:evaluation} showed that licensing issues can be found and may help software developers to prevent license violations.
-Using a Bloom filter to reduce the amount of required requests can speed up the analysis and reduce the load on the server to a fraction.
-In 25\% of the analyzed projects, issues with licensing could be found which shows that the problem targeted in this work exists.
+The tests conducted in \autoref{chapter:evaluation} show that the approach is capable of finding code which has been copied from open source systems.
+This may help software developers to prevent license violations.
+The prototypical implementation was able to index more than 500 million lines of open source software including its history.
+This was done on a consumer laptop and took about 16h.
+The approach is scalable and can theoretically even track most of the open source systems available on established code sharing platforms like GitHub or BitBucket.
+Using a Bloom filter to reduce the number of required requests can speed up the analysis and reduce the load on the server to a fraction.
+Evaluation showed that in 25\% of the analyzed projects, issues with licensing could be found, which confirms that the problem targeted in this work exists.
 
+Although this sounds promising, there are some major problems regarding the detection of licensing issues.
 Due to the difficulty of finding the correct origin of copied code, discovering the actual license is very hard, if possible at all.
 This restrains the approach from automatically determining the license and deciding whether a violation is present.
 Also, there are many licenses from which open source developers can choose.
 Owners of open source software can even create a new license if existing ones are not suiting their project.
 It is even possible to establish a special agreement between the copyright owners of source code which adds even more confusion to the license-jungle.
 
-Beside that, the tool may not only be used to find licensing issues, but also enable developers to monitor used libraries and third party code.
+Beside that, the tool can not only be used to find licensing issues, but also enables developers to monitor used libraries and third party code.
 This information can be used to link libraries instead of copying the code.
-In the long run, this could improve software quality, since maintaining of third party code could be simplified and vulnerabilities caused by outdated code can be fixed.
+In the long run, this can improve software quality, since maintaining of third party code can be simplified and vulnerabilities caused by outdated code can be reduced.
