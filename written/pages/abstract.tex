@@ -1,13 +1,14 @@
 \chapter{\abstractname}
 Open source code shared on platforms like GitHub or BitBucket is often licensed for modification and reuse even in commercial systems.
 Permissive licenses usually demand to inform about the origin of the code, whereas more strict ones like the GNU Public License (GPL) or other copy-left licenses require developers to distribute software which relies on the code as open source under the same license or terms.
-When copy-left code is copied into a close-sourced code base, the license scheme is violated and the company owning the codebase may face huge fines, when the violation is revealed.
+When copy-left code is copied into a close-sourced code base, the license scheme is violated and the company owning the codebase may have to publish the code as open source, when the violation is revealed.
 
 In this thesis, a tool for the continuous detection of open source code in a codebase is developed.
-The client-server architecture proposed uses techniques known from clone-detection to create an index, which holds cloning information on huge amounts of freely available open source code on the server-side.
+The proposed client-server architecture uses techniques known from clone-detection to create an index, which holds cloning information on huge amounts of freely available open source code on the server-side.
 Besides offering a service for querying similar code, the server also generates a Bloom filter, which can be downloaded by clients and is used to increase the speed of the search process and reduce the load on the server.
 To increase the accuracy of the detection, the history of the indexed projects is also taken into account.
 
-The approach is prototypically implemented and evaluated by indexing 2.000 open source projects of different languages and analyzing 20 projects for copied code, resulting in a total database size of 37 GB and filters of less than 200 MB.
+The approach is prototypically implemented and evaluated by indexing 2.000 open source projects of different languages and analyzing 20 projects for copied code.
+It results in a total database size of 37 GB and filters of less than 200 MB.
 In 25\% of the analyzed projects, licensing issues could be found by manual inspection.
-However, automation of the process is hard, because determining the origin and license of files in open source projects is very difficult.
+However, an automation of the process is hard, because determining the origin and the license of files in open source projects is very difficult.

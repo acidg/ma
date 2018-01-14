@@ -28,7 +28,7 @@ To decide whether a given fragment of code is part of open source code, the dete
 The proposed approach is based on a client server architecture, where the server keeps track of open source projects including their history.
 The server provides an interface to query for code sequences in order to find similar matches in open source systems.
 This can be done in a continuous manner ( i.e. for every commit) to track whether incongruously licensed code has been copied to the codebase.
-One key feature of the tool is the filtering technique used, which significantly reduces the server's load and speeds up the search process.
+One key feature of the tool is the used filtering technique, which significantly reduces the server's load and speeds up the search process.
 A file representing a Bloom filter can be downloaded from the server, which allows clients to filter a large part of code sequences which are not tracked by the server.
 The remaining code sequences are then used to query the server which returns the actual matches and further details.
 

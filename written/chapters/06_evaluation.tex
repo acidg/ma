@@ -113,14 +113,14 @@ Columns are defined as follows:
 		& Bitcoin & 491 & 57.847 & 5 & 97 (0,2\%) & 97 \\
 		& Electron & 342 & 6.846 & 1 & 0 (0,0\%) & 0 \\
 	\end{tabular}
-	\caption{Amount of files and chunks as well as true and false positives caused by the Hash Filter and the resulting requested chunk details}\label{table:unfiltered_findings}
+	\caption{Amount of files and chunks as well as true and false positives caused by the hash filter and the resulting requested chunk details}\label{table:unfiltered_findings}
 \end{table}
 
-This result shows that the Hash Filter is reducing the required lookups to a fraction.
+This result shows that the hash filter is reducing the required lookups to a fraction.
 Load on the server can be greatly reduced and analysis of a target system's code therefore is a lot quicker.
 The analysis took less than 20 seconds even for the biggest projects not including networking.
 In a real world scenario, this will be slower, since communication with the server will add additional delays.
-Requesting the locations for each hash passing the Hash Filter individually, causes a lot of requests with high overhead caused by creating single network packets.
+Requesting the locations for each hash passing the hash filter individually, causes a lot of requests with high overhead caused by creating single network packets.
 Additional authentication on the server may be required to control access further slowing down the analysis.
 Instead, sending hashes in batches may be a better solution.
 
