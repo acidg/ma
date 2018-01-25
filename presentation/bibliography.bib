@@ -1,0 +1,560 @@
+% Encoding: UTF-8
+
+@InProceedings{baker1995finding,
+  author        = {Baker, Brenda S},
+  title         = {On finding duplication and near-duplication in large software systems},
+  booktitle     = {Reverse Engineering, 1995., Proceedings of 2nd Working Conference on},
+  year          = {1995},
+  pages         = {86--95},
+  organization  = {IEEE},
+  __markedentry = {[bene:1]},
+  file          = {:/home/bene/Uni/ma/related/[01] Baker, Brenda S. On finding duplication and near-duplication in large software systems.pdf:PDF},
+  keywords      = {rank1},
+  review        = {- One of the first code clone detecion papers
+- Tool: dup
+- Index: parametrized suffix tree based
+- Clone-Type: 2
+- Technique (Normalization): x = y + z => P = P + P, x,y,z, with special encoding},
+}
+
+@Article{chen2004shared,
+  author        = {Chen, Xin and Francia, Brent and Li, Ming and Mckinnon, Brian and Seker, Amit},
+  title         = {Shared information and program plagiarism detection},
+  journal       = {IEEE Transactions on Information Theory},
+  year          = {2004},
+  volume        = {50},
+  number        = {7},
+  pages         = {1545--1551},
+  __markedentry = {[bene:1]},
+  file          = {:/home/bene/Uni/ma/related/[02] Chen, Xin, et al. Shared information and program plagiarism detection.pdf:PDF},
+  keywords      = {rank1},
+  publisher     = {IEEE},
+  review        = {- Tool: SID
+- Index: none, compare matrix is calculated
+- Clone-Type: 1?
+- Technique (Normalization): Kolmogorov complexity by compression},
+}
+
+@InProceedings{cordy2011exploring,
+  author       = {Cordy, James R},
+  title        = {Exploring large-scale system similarity using incremental clone detection and live scatterplots},
+  booktitle    = {Program Comprehension (ICPC), 2011 IEEE 19th International Conference on},
+  year         = {2011},
+  pages        = {151--160},
+  organization = {IEEE},
+  file         = {:/home/bene/Uni/ma/related/[03] Cordy, James R. Exploring large-scale system similarity using incremental clone detection and live scatterplots.pdf:PDF},
+  keywords     = {rank3},
+  review       = {- looks at linux and freebsd clones},
+}
+
+@Article{demme2012approximate,
+  author    = {Demme, John and Sethumadhavan, Simha},
+  title     = {Approximate graph clustering for program characterization},
+  journal   = {ACM Transactions on Architecture and Code Optimization (TACO)},
+  year      = {2012},
+  volume    = {8},
+  number    = {4},
+  pages     = {21},
+  file      = {:/home/bene/Uni/ma/related/[04] Demme, John, and Simha Sethumadhavan. Approximate graph clustering for program characterization.pdf:PDF},
+  keywords  = {rank1},
+  publisher = {ACM},
+  review    = {- Tool Centrifuge:
+- Technique: Find dynamic/static features capturing function behaviour, collect and evaluate
+- Clone types: 4
+- index: ?
+Not relevant: similarites, not clones},
+}
+
+@InProceedings{keivanloo2011internet,
+  author        = {Keivanloo, Iman and Rilling, Juergen and Charland, Philippe},
+  title         = {Internet-scale real-time code clone search via multi-level indexing},
+  booktitle     = {Reverse Engineering (WCRE), 2011 18th Working Conference on},
+  year          = {2011},
+  pages         = {23--27},
+  organization  = {IEEE},
+  __markedentry = {[bene:3]},
+  file          = {:/home/bene/Uni/ma/related/[05] Keivanloo, Iman, Juergen Rilling, and Philippe Charland. Internet-scale real-time code clone search via multi-level indexing.pdf:PDF},
+  keywords      = {rank3},
+  review        = {- tool: seclone
+- 18000 Java Projects, ~300MLOC, 70 GB
+- very generic normalization
+- Clone type: 3-4 switching/removing/adding statments},
+}
+
+@Article{lancaster2004comparison,
+  author    = {Lancaster, Thomas and Culwin, Fintan},
+  title     = {A comparison of source code plagiarism detection engines},
+  journal   = {Computer Science Education},
+  year      = {2004},
+  volume    = {14},
+  number    = {2},
+  pages     = {101--112},
+  file      = {:/home/bene/Uni/ma/related/[06] Lancaster, Thomas, and Fintan Culwin. A comparison of source code plagiarism detection engines.pdf:PDF},
+  keywords  = {rank3},
+  publisher = {Taylor \& Francis},
+  review    = {- Comparison of plagiarism detection tools
+-},
+}
+
+@InProceedings{liu2006gplag,
+  author        = {Liu, Chao and Chen, Chen and Han, Jiawei and Yu, Philip S},
+  title         = {GPLAG: detection of software plagiarism by program dependence graph analysis},
+  booktitle     = {Proceedings of the 12th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  year          = {2006},
+  pages         = {872--881},
+  organization  = {ACM},
+  __markedentry = {[bene:1]},
+  file          = {:/home/bene/Uni/ma/related/[07] Liu, Chao, et al. GPLAG\: detection of software plagiarism by program dependence graph analysis.pdf:PDF},
+  keywords      = {rank3},
+  review        = {- Tool: GPLAG
+- Index: none, comparison of program dependence graphs
+- Clone-Type: 4 structural (too high)
+- Technique (Normalization): only dependencies captured, no code},
+}
+
+@Article{livieri2010needle,
+  author        = {Livieri, Simone and German, Daniel M and Inoue, Katsuro},
+  title         = {A needle in the stack: efficient clone detection for huge collections of source code},
+  journal       = {University of Osaka, Technical report},
+  year          = {2010},
+  __markedentry = {[bene:4]},
+  file          = {:/home/bene/Uni/ma/related/[08] Livieri, Simone, Daniel M. German, and Katsuro Inoue. "A needle in the stack\: efficient clone detection for huge collections of source code.pdf:PDF},
+  keywords      = {rank5},
+  review        = {- Searching clones using a huge repository of FOSS
+- Index: posgres database
+- Clone-Type: 2-3 (ccfinder + 16 tokens in sliding window)
+- Technique (Normalization): CCfinder in pre-processing, 16 tokens as n-gram, saved in postgres db.
+
+BAD SINCE MANY COLLISIONS},
+}
+
+@Article{prechelt2002finding,
+  author        = {Prechelt, Lutz and Malpohl, Guido and Philippsen, Michael},
+  title         = {Finding plagiarisms among a set of programs with JPlag},
+  journal       = {J. UCS},
+  year          = {2002},
+  volume        = {8},
+  number        = {11},
+  pages         = {1016},
+  __markedentry = {[bene:1]},
+  file          = {:/home/bene/Uni/ma/related/[09] Prechelt, Lutz, Guido Malpohl, and Michael Philippsen. Finding plagiarisms among a set of programs with JPlag.pdf:PDF},
+  keywords      = {rank3},
+  review        = {- Tool: JPLAG - ONLINE
+- Finds plagiarism in a set of programmes
+- Index: greedy-string-tiling
+- Clone-Type: 2 rename
+- Technique (Normalization): token based, heavy normalization: int count = 0; => VAR_DEF, ASSIGN},
+}
+
+@Article{koschke2014large,
+  author        = {Koschke, Rainer},
+  title         = {Large-scale inter-system clone detection using suffix trees and hashing},
+  journal       = {Journal of Software: Evolution and Process},
+  year          = {2014},
+  volume        = {26},
+  number        = {8},
+  pages         = {747--769},
+  __markedentry = {[bene:4]},
+  file          = {:/home/bene/Uni/ma/related/[13] Koschke, Rainer. Large‐scale inter‐system clone detection using suffix trees and hashing.pdf:PDF},
+  keywords      = {rank3},
+  publisher     = {Wiley Online Library},
+  review        = {"Our evaluation shows that our approach is faster than index-based techniques
+when the analysis is run only once. If the analysis is to be conducted multiple times, creating an index pays
+off."},
+}
+
+@InProceedings{koschke2012large,
+  author        = {Koschke, Rainer},
+  title         = {Large-scale inter-system clone detection using suffix trees},
+  booktitle     = {Software Maintenance and Reengineering (CSMR), 2012 16th European Conference on},
+  year          = {2012},
+  pages         = {309--318},
+  organization  = {IEEE},
+  __markedentry = {[bene:4]},
+  file          = {:/home/bene/Uni/ma/related/[10] R. Koschke. Large-Scale Inter-System Clone Detection Using Suffix Trees.pdf:PDF},
+  keywords      = {rank5},
+  review        = {- index: suffix tree for smaller system
+- technique: traversing suffix tree shows duplicates (normalization?)
+- cole types: 1-2?},
+}
+
+@InProceedings{schleimer2003winnowing,
+  author        = {Schleimer, Saul and Wilkerson, Daniel S and Aiken, Alex},
+  title         = {Winnowing: local algorithms for document fingerprinting},
+  booktitle     = {Proceedings of the 2003 ACM SIGMOD international conference on Management of data},
+  year          = {2003},
+  pages         = {76--85},
+  organization  = {ACM},
+  __markedentry = {[bene:1]},
+  file          = {:/home/bene/Uni/ma/related/[11] S. Schleimer, D. S. Wilkerson, and A. Aiken. Winnowing\: local algorithms for document fingerprinting.pdf:PDF},
+  keywords      = {rank1},
+  review        = {- ONLINE
+- Algorithm for fingerprinting using anagrams
+- Newer MOSS
+- Details are not public},
+}
+
+@InProceedings{steidl2014incremental,
+  author       = {Steidl, Daniela and Hummel, Benjamin and Juergens, Elmar},
+  title        = {Incremental origin analysis of source code files},
+  booktitle    = {Proceedings of the 11th Working Conference on Mining Software Repositories},
+  year         = {2014},
+  pages        = {42--51},
+  organization = {ACM},
+  file         = {:/home/bene/Uni/ma/related/[12] Steidl, Daniela, Benjamin Hummel, and Elmar Juergens. Incremental origin analysis of source code files.pdf:PDF},
+  keywords     = {rank1},
+  review       = {evtl in future work or optimizations: track moved files -> remove hashes for old files from index},
+}
+
+@InProceedings{keivanloo2010semantic,
+  author        = {Keivanloo, Iman and Roostapour, Laleh and Schugerl, Philipp and Rilling, Juergen},
+  title         = {Semantic web-based source code search},
+  booktitle     = {Proc. 6th Intl. Workshop on Semantic Web Enabled Software Engineering},
+  year          = {2010},
+  __markedentry = {[bene:3]},
+  file          = {:/home/bene/Uni/ma/related/[14] Keivanloo, Iman, et al. Semantic web-based source code search..pdf:PDF},
+  keywords      = {rank3},
+  review        = {- searchengine based on absract syntax trees
+- find code with specified proerties, not search similar code},
+}
+
+@InProceedings{keivanloo2012leveraging,
+  author        = {Keivanloo, Iman},
+  title         = {Leveraging clone detection for Internet-scale source code search},
+  booktitle     = {Program Comprehension (ICPC), 2012 IEEE 20th International Conference on},
+  year          = {2012},
+  pages         = {277--280},
+  organization  = {IEEE},
+  __markedentry = {[bene:3]},
+  file          = {:/home/bene/Uni/ma/related/[15] Keivanloo, Iman. "Leveraging clone detection for Internet-scale source code search.pdf:PDF},
+  keywords      = {rank1},
+  review        = {fortsetzung zu 8, nix relevantes},
+}
+
+@InProceedings{keivanloo2011seclone,
+  author        = {Keivanloo, Iman and Rilling, Juergen and Charland, Philippe},
+  title         = {Seclone-a hybrid approach to internet-scale real-time code clone search},
+  booktitle     = {Program Comprehension (ICPC), 2011 IEEE 19th International Conference on},
+  year          = {2011},
+  pages         = {223--224},
+  organization  = {IEEE},
+  __markedentry = {[bene:3]},
+  file          = {:/home/bene/Uni/ma/related/[16] Keivanloo, Iman, Juergen Rilling, and Philippe Charland. Seclone-a hybrid approach to internet-scale real-time code clone search.pdf:PDF},
+  keywords      = {rank3},
+  review        = {- Architecturial overview of secold
+- index: for code pattern and type usage
+- Technique: ast and ccfinder tokenization},
+}
+
+@InProceedings{svajlenko2017fast,
+  author        = {Svajlenko, Jeffrey and Roy, Chanchal K},
+  title         = {Fast and flexible large-scale clone detection with cloneworks},
+  booktitle     = {Proceedings of the 39th International Conference on Software Engineering Companion},
+  year          = {2017},
+  pages         = {27--30},
+  organization  = {IEEE Press},
+  __markedentry = {[bene:4]},
+  file          = {:/home/bene/Uni/ma/related/[17] Svajlenko, Jeffrey, and Chanchal K. Roy. Fast and flexible large-scale clone detection with cloneworks.pdf:PDF},
+  keywords      = {rank5},
+  review        = {Complete Workbench for ScourcererCC},
+}
+
+@Article{wise1996yap3,
+  author        = {Wise, Michael J},
+  title         = {YAP3: Improved detection of similarities in computer program and other texts},
+  journal       = {ACM SIGCSE Bulletin},
+  year          = {1996},
+  volume        = {28},
+  number        = {1},
+  pages         = {130--134},
+  __markedentry = {[bene:1]},
+  file          = {:/home/bene/Uni/ma/related/[18] Wise, Michael J. YAP3\: Improved detection of similarities in computer program and other texts.pdf:PDF},
+  keywords      = {rank3},
+  publisher     = {ACM},
+  review        = {- Used for student assignments
+- Index: Running-Karp-Rabin Greedy-String-Tiling (RKR-GST), hashtable, file based
+- Clone-Type: 3-4 structure
+- Technique (Normalization): first call on function replaced with function content, only leave tokens which are in the target language's lexicon},
+}
+
+@InProceedings{hummel2010index,
+  author        = {Hummel, Benjamin and Juergens, Elmar and Heinemann, Lars and Conradt, Michael},
+  title         = {Index-based code clone detection: incremental, distributed, scalable},
+  booktitle     = {Software Maintenance (ICSM), 2010 IEEE International Conference on},
+  year          = {2010},
+  pages         = {1--9},
+  organization  = {IEEE},
+  __markedentry = {[bene:2]},
+  file          = {:/home/bene/Uni/ma/related/[19] Hummel, Benjamin, et al. Index-based code clone detection\: incremental, distributed, scalable.pdf:PDF},
+  keywords      = {rank5},
+}
+
+@Article{kamiya2002ccfinder,
+  author        = {Kamiya, Toshihiro and Kusumoto, Shinji and Inoue, Katsuro},
+  title         = {CCFinder: a multilinguistic token-based code clone detection system for large scale source code},
+  journal       = {IEEE Transactions on Software Engineering},
+  year          = {2002},
+  volume        = {28},
+  number        = {7},
+  pages         = {654--670},
+  __markedentry = {[bene:2]},
+  file          = {:/home/bene/Uni/ma/related/[20] Kamiya, Toshihiro, Shinji Kusumoto, and Katsuro Inoue. CCFinder\: a multilinguistic token-based code clone detection system for large scale source code.pdf:PDF},
+  keywords      = {rank3},
+  publisher     = {IEEE},
+  review        = {- Index: suffix tree, line based
+- Clone-Type: 2 rename
+- Technique (Normalization): Language dependent normalization, variables, constants},
+}
+
+@InProceedings{german2009code,
+  author       = {German, Daniel M and Di Penta, Massimiliano and Gueheneuc, Yann-Gael and Antoniol, Giuliano},
+  title        = {Code siblings: Technical and legal implications of copying code between applications},
+  booktitle    = {Mining Software Repositories, 2009. MSR'09. 6th IEEE International Working Conference on},
+  year         = {2009},
+  pages        = {81--90},
+  organization = {IEEE},
+  file         = {:/home/bene/Uni/ma/related/[21] German, Daniel M., et al. Code siblings\: Technical and legal implications of copying code between applications.pdf:PDF},
+  keywords     = {rank4},
+  review       = {- Analysing code flow between different programms
+- License problems: NOTE: not all code in linux is GPL!},
+}
+
+@Article{karp1987efficient,
+  author    = {Karp, Richard M and Rabin, Michael O},
+  title     = {Efficient randomized pattern-matching algorithms},
+  journal   = {IBM Journal of Research and Development},
+  year      = {1987},
+  volume    = {31},
+  number    = {2},
+  pages     = {249--260},
+  publisher = {IBM},
+  review    = {- Running-Karp-Rabin Greedy-String-Tiling (RKR-GST) algorithm},
+}
+
+@InProceedings{bajracharya2006sourcerer,
+  author        = {Bajracharya, Sushil and Ngo, Trung and Linstead, Erik and Dou, Yimeng and Rigor, Paul and Baldi, Pierre and Lopes, Cristina},
+  title         = {Sourcerer: a search engine for open source code supporting structure-based search},
+  booktitle     = {Companion to the 21st ACM SIGPLAN symposium on Object-oriented programming systems, languages, and applications},
+  year          = {2006},
+  pages         = {681--682},
+  organization  = {ACM},
+  __markedentry = {[bene:3]},
+  file          = {:/home/bene/Uni/ma/related/[22] Bajracharya, Sushil, et al. Sourcerer\: a search engine for open source code supporting structure-based search.pdf:PDF},
+  keywords      = {rank1},
+  review        = {- Source code searchengine
+- extracts additional information from code which is searchable
+- e.g. Entities (package, interface, class, delclarations), Relations (dependencies), Keywords (text), fingerprints (structures, types, patterns)
+- Ranking comparable to google},
+}
+
+@Article{mertzel2008copying,
+  author    = {Mertzel, Nancy J},
+  title     = {Copying 0.03 percent of software code base not ‘de minimis’},
+  journal   = {Journal of Intellectual Property Law \& Practice},
+  year      = {2008},
+  volume    = {3},
+  number    = {9},
+  pages     = {547--548},
+  file      = {:/home/bene/Uni/ma/related/[23] Mertzel et al. Copying 0.03 percent of software code base is not 'de mimis'.pdf:PDF},
+  keywords  = {rank5},
+  publisher = {Oxford University Press},
+  review    = {0,03% or 54 lines of 160k are enough for license infringement},
+}
+
+@InProceedings{sajnani2016sourcerercc,
+  author        = {Sajnani, Hitesh and Saini, Vaibhav and Svajlenko, Jeffrey and Roy, Chanchal K and Lopes, Cristina V},
+  title         = {SourcererCC: Scaling code clone detection to big-code},
+  booktitle     = {Software Engineering (ICSE), 2016 IEEE/ACM 38th International Conference on},
+  year          = {2016},
+  pages         = {1157--1168},
+  organization  = {IEEE},
+  __markedentry = {[bene:4]},
+  file          = {:/home/bene/Uni/ma/related/[24] Sajnani, Hitesh, et al. "SourcererCC\: Scaling code clone detection to big-code.pdf:PDF},
+  keywords      = {rank5},
+  review        = {- Index: ?
+- Technique: Token in chunks sorted by frequency (GTF), then cut, then indexed
+- Clone types: 2-3, depending on pre-filtering
+
+No feature like bloom filter},
+}
+
+@Online{blackduck,
+  author  = {Black Duck Software, Inc.},
+  title   = {Center for Open Source Research \& Innovation},
+  year    = {2017},
+  review  = {blackduck},
+  url     = {https://www.blackducksoftware.com/technology/knowledgebase},
+  urldate = {2018-01-06},
+}
+
+@InProceedings{2010-gabel-su-source-code-uniqueness,
+  author    = {Gabel, Mark and Su, Zhendong},
+  title     = {A Study of the Uniqueness of Source Code},
+  booktitle = {Proceedings of the Eighteenth ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+  year      = {2010},
+  series    = {FSE '10},
+  pages     = {147--156},
+  address   = {New York, NY, USA},
+  publisher = {ACM},
+  acmid     = {1882315},
+  doi       = {10.1145/1882291.1882315},
+  file      = {:/home/bene/Uni/ma/related/[25] Gabel, Mark, and Zhendong Su. A study of the uniqueness of source code.pdf:PDF},
+  isbn      = {978-1-60558-791-2},
+  keywords  = {large scale study, software uniqueness, source code},
+  location  = {Santa Fe, New Mexico, USA},
+  numpages  = {10},
+  review    = {- "Our experiments, covering 430 million lines of source code and consuming approximately four months of CPU time, revealed a general lack of uniqueness in software at levels of granularity equivalent to approximately one to seven lines of source code."
+- Higher syntactic redundancy in Java Systems.
+- Experiment:
+  --> Single project compared to a varying number of files (1.000, 2.000, 4.000, 8.000, ..., 600.000).
+  --> With increasing number of files the syntactic redundancy at 20 tokens (~ 4 Statements) increases asymptotically towards 70 % at 600.000 files.
+  ==> Therefore we can argue that the huge amount of code fragments leads to even higher redundancy.
+  ==> Hence we have to set the minimum statement length to 8 or 9 in order to achieve a managable number of clones.},
+  url       = {http://doi.acm.org/10.1145/1882291.1882315},
+}
+
+@Article{bloom1970filter,
+  author     = {Bloom, Burton H.},
+  title      = {Space/Time Trade-offs in Hash Coding with Allowable Errors},
+  journal    = {Commun. ACM},
+  year       = {1970},
+  volume     = {13},
+  number     = {7},
+  pages      = {422--426},
+  month      = jul,
+  issn       = {0001-0782},
+  acmid      = {362692},
+  address    = {New York, NY, USA},
+  doi        = {10.1145/362686.362692},
+  file       = {:/home/bene/Uni/ma/related/[26] Bloom, Burton H. Space-time trade-offs in hash coding with allowable errors.pdf:PDF},
+  issue_date = {July 1970},
+  keywords   = {hash addressing, hash coding, retrieval efficiency, retrieval trade-offs, scatter storage, searching, storage efficiency, storage layout},
+  numpages   = {5},
+  publisher  = {ACM},
+  url        = {http://doi.acm.org/10.1145/362686.362692},
+}
+
+@InProceedings{fan2014cuckoo,
+  author       = {Fan, Bin and Andersen, Dave G and Kaminsky, Michael and Mitzenmacher, Michael D},
+  title        = {Cuckoo filter: Practically better than bloom},
+  booktitle    = {Proceedings of the 10th ACM International on Conference on emerging Networking Experiments and Technologies},
+  year         = {2014},
+  pages        = {75--88},
+  organization = {ACM},
+  file         = {:/home/bene/Uni/ma/related/[27] Fan, Bin, et al. Cuckoo filter\: Practically better than bloom.pdf:PDF},
+}
+
+@InProceedings{svajlenko2014towards,
+  author       = {Svajlenko, Jeffrey and Islam, Judith F and Keivanloo, Iman and Roy, Chanchal K and Mia, Mohammad Mamun},
+  title        = {Towards a big data curated benchmark of inter-project code clones},
+  booktitle    = {Software Maintenance and Evolution (ICSME), 2014 IEEE International Conference on},
+  year         = {2014},
+  pages        = {476--480},
+  organization = {IEEE},
+  file         = {:/home/bene/Uni/ma/related/[28] J. Svajlenko, J. F. Islam, I. Keivanloo, C. K. Roy, and M. M. Mia. Towards a big data curated benchmark of inter-project code clones.pdf:PDF},
+}
+
+@InProceedings{kawaguchi2009shinobi,
+  author       = {Kawaguchi, Shinji and Yamashina, Takanobu and Uwano, Hidetake and Fushida, Kyohei and Kamei, Yasutaka and Nagura, Masataka and Iida, Hajimu},
+  title        = {SHINOBI: A tool for automatic code clone detection in the IDE},
+  booktitle    = {Reverse Engineering, 2009. WCRE'09. 16th Working Conference on},
+  year         = {2009},
+  pages        = {313--314},
+  organization = {IEEE},
+  file         = {:/home/bene/Uni/ma/related/[29] Kawaguchi, Shinji, et al. SHINOBI\: A tool for automatic code clone detection in the IDE.pdf:PDF},
+  review       = {Yamashina et al. [31] propose a tool called SHINOBI that
+provides real-time cloning information to developers inside the
+IDE. Instead of performing clone detection on demand (and
+incurring waiting times for developers), SHINOBI maintains a
+suffix-array on a server from which cloning information for a
+file opened by a developer can be retrieved efficiently. Unfor-
+tunately, the authors do not approach suffix-array maintenance
+in their work. Real-time cloning information hence appears to
+be limited to an immutable snapshot of the software. We thus
+have no indication that their approach works incrementally.},
+}
+
+@Article{heinemann2012effective,
+  author    = {Heinemann, Lars and Robillard, Martin},
+  title     = {Effective and efficient reuse with software libraries},
+  year      = {2012},
+  file      = {:/home/bene/Uni/ma/related/[30] Heinemann, Lars, and Martin Robillard. Effective and efficient reuse with software libraries.pdf:PDF},
+  publisher = {Citeseer},
+}
+
+@Online{licenses,
+  author  = {Free Software Foundation's Licensing and Compliance Lab},
+  title   = {Various Licenses and Comments about Them},
+  year    = {2017},
+  url     = {https://www.gnu.org/licenses/license-list.en.html},
+  urldate = {2017-11-22},
+}
+
+@Article{roy2007survey,
+  author  = {Roy, Chanchal Kumar and Cordy, James R},
+  title   = {A survey on software clone detection research},
+  journal = {Queen’s School of Computing TR},
+  year    = {2007},
+  volume  = {541},
+  number  = {115},
+  pages   = {64--68},
+  file    = {:/home/bene/Uni/ma/related/[31] Roy, Chanchal Kumar, and James R. Cordy. A survey on software clone detection research.pdf:PDF},
+  review  = {Clone types, reasons for copying clones},
+}
+
+@Article{krueger1992software,
+  author    = {Krueger, Charles W},
+  title     = {Software reuse},
+  journal   = {ACM Computing Surveys (CSUR)},
+  year      = {1992},
+  volume    = {24},
+  number    = {2},
+  pages     = {131--183},
+  file      = {:/home/bene/Uni/ma/related/[32] Krueger, Charles W. Software reuse.pdf:PDF},
+  publisher = {ACM},
+}
+
+@InProceedings{heinemann2014teamscale,
+  author       = {Heinemann, Lars and Hummel, Benjamin and Steidl, Daniela},
+  title        = {Teamscale: Software quality control in real-time},
+  booktitle    = {Companion Proceedings of the 36th International Conference on Software Engineering},
+  year         = {2014},
+  pages        = {592--595},
+  organization = {ACM},
+}
+
+@Article{fan2000summary,
+  author    = {Fan, Li and Cao, Pei and Almeida, Jussara and Broder, Andrei Z},
+  title     = {Summary cache: a scalable wide-area web cache sharing protocol},
+  journal   = {IEEE/ACM Transactions on Networking (TON)},
+  year      = {2000},
+  volume    = {8},
+  number    = {3},
+  pages     = {281--293},
+  publisher = {IEEE Press},
+}
+
+@Online{wiki2018bloom,
+  author  = {Wikipedia},
+  title   = {Bloom Filter},
+  year    = {2018},
+  url     = {https://en.wikipedia.org/wiki/Bloom_filter#Optimal_number_of_hash_functions},
+  urldate = {2018-01-09},
+}
+
+@Article{tulsiani2013probability,
+  author    = {Tulsiani, Madhur and Kundu, Scribe Kaustav and Mitzenmacher, Michael and Upfal, Eli and Spencer, Joel H},
+  title     = {Probability and Computing: Randomized Algorithms and Probabilistic Analysis},
+  year      = {2013},
+  publisher = {Citeseer},
+}
+
+@Online{microsoft2009download,
+  author  = {Peter Galli},
+  title   = {Update on the Windows 7 USB/DVD Tool},
+  year    = {2009},
+  url     = {https://blogs.technet.microsoft.com/port25/2009/11/13/update-on-the-windows-7-usbdvd-tool/},
+  urldate = {2018-01-12},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

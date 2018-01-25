@@ -1,0 +1,57 @@
+% !TeX root = main.tex
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage[%
+	backend=biber,
+	url=false,
+	style=numeric,
+	maxnames=4,
+	minnames=3,
+	maxbibnames=99,
+	giveninits,
+	uniquename=init]{biblatex} % TODO: adapt citation style
+
+\bibliography{bibliography}
+
+\newcommand{\labelname}[1]{
+	\def\insertenumlabel{#1}%
+	\usebeamertemplate{enumerate item}%
+}
+
+\usefonttheme[onlymath]{serif} % use classic math font
+
+\setcounter{secnumdepth}{1} % only sections for table of contents
+\setcounter{tocdepth}{1}
+
+\beamertemplatetransparentcoveredmedium
+\beamertemplateballitem
+\beamertemplatebookbibitems
+\usenavigationsymbolstemplate{} % hide controls
+\setbeamertemplate{footline}[frame number]
+\usetheme{default} % plain white with blue headings
+
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertsection
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertsubsection
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip0pt%
+}
+
+\usefonttheme{structurebold}
+
+\usecolortheme{rose} % orchid for a more dark version
+\definecolor{orange}{rgb}{1,.549,0}
+\definecolor{pink}{rgb}{1,0.5,0.5}
+\definecolor{green}{rgb}{0,0.5,0}
