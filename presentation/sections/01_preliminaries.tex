@@ -21,28 +21,29 @@
 
 \subsection{Definition of Infringement}
 \begin{frame}{\insertsubsection}
-		\textbf{How much code has to be copied?}
-		\begin{itemize}
-			\item Study on Uniqueness of Code \cite{2010-gabel-su-source-code-uniqueness}:\\
-				\textit{\enquote{general lack of uniqueness in [...] one to seven lines of source code}}
-			\item Veritas Operating Corp. vs Microsoft Corp \cite{mertzel2008copying}:
-				\textit{54 out of 160.000 lines of code copied}
-		\end{itemize}
-		\begin{center}
-			$\rightarrow$ 8 lines minimum, 54 critical
-		\end{center}
+	\textbf{How much code has to be copied?}
+	\begin{itemize}
+		\item Study on Uniqueness of Code \cite{2010-gabel-su-source-code-uniqueness}:\\
+			\textit{\enquote{general lack of uniqueness in [...] one to seven lines of source code}}
+		\item Veritas Operating Corp. vs Microsoft Corp \cite{mertzel2008copying}:
+			\textit{54 out of 160.000 lines of code copied}
+	\end{itemize}
+	\pause
+	\begin{center}
+		\textbf{$\rightarrow$ 8 lines minimum, 54 critical}
+	\end{center}
 \end{frame}
 
-\subsection{Emerging Clone Types}
-	\begin{frame}{\insertsubsection}
-\textbf{How much code has to be copied?}
-\begin{itemize}
-	\item Study on Uniqueness of Code \cite{2010-gabel-su-source-code-uniqueness}:\\
-	\textit{\enquote{general lack of uniqueness in [...] one to seven lines of source code}}
-	\item Veritas Operating Corp. vs Microsoft Corp \cite{mertzel2008copying}:
-	\textit{54 out of 160.000 lines of code copied}
-\end{itemize}
-\begin{center}
-	$\rightarrow$ 8 lines minimum, 54 critical
-\end{center}
+\subsection{Expected Clone Type}
+\begin{frame}{\insertsubsection}
+	\begin{description}
+		\item [type-1] Identical code fragments except for variations in whitespace and comments.
+		\item [type-2] type-1 clones and variations in identifiers, literals, types
+		\item [type-3] type-2 clones and statements can be changed, added or removed
+		\item [type-4] type-3 clones and two or more code fragments that perform the same computation
+	\end{description}
+	\pause
+	\begin{center}
+		$\rightsquigarrow$ \textbf{type-1} with changed, added or removed statements, but identical literals and variable names
+	\end{center}
 \end{frame}

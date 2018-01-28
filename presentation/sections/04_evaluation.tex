@@ -1,3 +1,44 @@
 % !TeX root = main.tex
 
 \section{Evaluation}
+\frame{\frametitle{Outline} 
+	\small
+	\tableofcontents[
+	currentsection,
+	subsectionstyle=hide
+]}
+\subsection{Setup}
+\begin{frame}{\insertsubsection}
+	\textbf{Step 1:}
+	Indexing 1000 Java and 1000 C/C++ GPL licensed projects from GitHub
+	\begin{table}[ht]
+		\centering
+		\scriptsize
+		\begin{tabular}{l|rrrrr}
+			& \textbf{Scanned Files} & \textbf{Lines of Code} & \textbf{Total size} & \textbf{Hashes} & \textbf{Chunks} \\ 
+			\hline 
+			Java & 836.555 & 57.834.764 & 94 GB & 23.773.065 & 35.069.633 \\
+			C/C++ & 1.023.092 & 380.338.327 & 102 GB & 61.349.163 & 221.315.454 \\ 
+		\end{tabular}
+	\end{table}
+
+	\begin{itemize}
+		\small
+		\item Took about 15h including history on consumer laptop
+		\item Database: 4 GB for Java, 33 GB for C/C++
+		\item Bloom filter: 55 MB for Java, 147 MB for C/C++
+		\item Updating index after two weeks: about 1h on same machine
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{\insertsubsection}
+	\textbf{Step 2:}
+	Searching for copied code in 10 Java and 10 C/C++ projects
+	
+	\begin{itemize}
+		\small
+		\item Projects are not allowed to contain GPL code due to their license: Apache~2.0, Eclipse~Public~License, BSD~License~2.0, MIT, Closed~Source
+		\item Mostly large standalone programs or frameworks, which are not library code
+	\end{itemize}
+\end{frame}

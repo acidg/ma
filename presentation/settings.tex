@@ -44,7 +44,7 @@
 		\end{beamercolorbox}%
 		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
 			\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
 	\end{beamercolorbox}}%
 	\vskip0pt%
 }
@@ -55,3 +55,10 @@
 \definecolor{orange}{rgb}{1,.549,0}
 \definecolor{pink}{rgb}{1,0.5,0.5}
 \definecolor{green}{rgb}{0,0.5,0}
+
+% hide steps
+\setbeamercovered{invisible}
+
+% Tiny bib and add labels
+\renewcommand*{\bibfont}{\scriptsize}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
