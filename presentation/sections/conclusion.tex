@@ -1,22 +1,34 @@
 % !TeX root = main.tex
 
 \section{Conclusion}
-\frame{\frametitle{Outline} 
-	\tableofcontents[
-	currentsection,
-	subsectionstyle=hide
-]}
+
 
 \begin{frame}{\insertsection}
 	\begin{itemize}
-		\item Infringements can be found
+		\small
+		\item Automation very difficult due to ``licensing jungle''
+		\item Manual inspection needed to assess relevance of match
+	\end{itemize}
+	but...
+	\begin{itemize}
+		\small
+		\item Possible to find even small copied code causing infringements
 		\item Bloom filter speeds up process and reduces load on server
 		\item Scalable approach
 		\item Can be used for monitoring 3rd party code
 	\end{itemize}
-but...
-	\begin{itemize}
-		\item Using tags can slow down indexing
-		\item Finding actual license of a file is sometimes very difficult
-	\end{itemize}
+
+	\note{
+		\begin{itemize}
+			\item Lizenz Projekt vs Lizenz Dateien $\rightarrow$ verschiedene Bedingungen
+			\item Prozess automatisieren sehr schwierig, manuell überprüfen treffer zeitaufwändig
+			\item nötig, enscheiden ob verlezung (abhängig von wichtigkeit des codes)
+		\end{itemize}
+	
+		\begin{itemize}
+			\item auch kleine kopien auffindbar
+			\item Skalierbar bei indexierung und suche
+			\item Sicherheitslücken
+		\end{itemize}
+	}
 \end{frame}

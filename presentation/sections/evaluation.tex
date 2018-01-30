@@ -1,11 +1,20 @@
 % !TeX root = main.tex
 
 \section{Evaluation}
-\frame{\frametitle{Outline} 
+\begin{frame}
+	\frametitle{Outline} 
 	\tableofcontents[
-	currentsection,
-	subsectionstyle=hide
-]}
+		currentsection,
+		subsectionstyle=hide
+	]
+	
+	\note{
+		\begin{itemize}
+			\item Ziel: Performanz des Ansatzes und Brauchbarkeit der Ergebnisse untersuchen
+		\end{itemize}
+	}
+\end{frame}
+
 \subsection{Step 1}
 \begin{frame}{\insertsubsection}
 	\textbf{Indexing 1000 Java and 1000 C/C++ GPL licensed projects from GitHub}
@@ -28,33 +37,60 @@
 		\item Bloom filter: 55 MB for Java, 147 MB for C/C++
 		\item Updating index after two weeks: about 1h on same machine
 	\end{itemize}
+
+	\note{
+	\begin{itemize}
+		\item GPL projekte von github geladen + indexiert
+		\item Fast halbe Mrd relevante Zeilen (java oder c bzw c++)
+		\item Java mehr bilder, binaries, und andere resourcen $\rightarrow$ weniger locs, auch historie kürzer, jüngere projekte
+		\item 15h, 37GB Indexdaten, 200 MB filter
+		\item Update: nach 2 wochen dauer 1h ca 1/3 der Projekte neue tags
+	\end{itemize}
+	}
 \end{frame}
 
 \subsection{Step 2}
 \begin{frame}{\insertsubsection}
-	\textbf{Searching for copied code in 10 Java and 10 C/C++ projects}
+	\textbf{Searching for copied code in 10 Java and 10 C/C++ projects and categorizing matches}
 	
 	\begin{itemize}
-		\small
 		\item Projects are not allowed to contain GPL code due to their license: Apache~2.0, Eclipse~Public~License, BSD~License~2.0, MIT, Closed~Source
 		\item Mostly large standalone programs or frameworks, which are not library code
-		\item Categorizing aggregated matches in:
-		\begin{description}
-			\footnotesize
-			\item [AC] Accidential Clones
-			\item [OLC] Otherwise licensed code
-			\item [CNA] Copied, but not attributed (e.g. Apache-2.0)
-			\item [LI] License infringement (GPL code)
-		\end{description}
 	\end{itemize}
+
+	\note{
+	\begin{itemize}
+		\item Gegentest: 10 und 10 projekte java, c/c++
+		\item Diesmal Apache, MIT, closed
+		\item Wichtig: GPL nicht drin erlaubt
+		\item Keine libraries, damit weniger richtung gpl kopiert
+	\end{itemize}
+	}
 \end{frame}
 
 \subsection{Results}
 \begin{frame}{\insertsubsection}
 	\begin{itemize}
-		\item Bloom filter could reduce number of requests to less than 1\%
-		\item Code sometimes copied from target to reference project, or reference project is fork
-		\item 25\% of projects contained infringements, most caused by copying parts of JDK
-		\item No CNA nor LI found in C/C++ projects
+		\item Lots of accidental clones caused by interface implementations
+		\item Sometimes not clear, whether a match is license infringement
+		\item Code sometimes copied in opposite direction, some projects are forks
 	\end{itemize}
+
+	\begin{itemize}
+		\item Bloom filter could reduce number of requests to about 1\%
+		\item 25\% of projects contained infringements, most caused by copying parts of JDK or not correctly attributing source
+	\end{itemize}
+
+	\note{
+	\begin{itemize}
+		\item Treffer durch listen impl, equals methoden, usw.
+		\item weil Lizenz rausfinden schwierig (header fehlt, keine kommentare, code verändert)
+		\item apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog fabi?)
+	\end{itemize}
+
+	\begin{itemize}
+	\item reduzierte last auf server
+	\item JDK kopiert/quelle nicht vermerkt
+	\end{itemize}
+	}
 \end{frame}

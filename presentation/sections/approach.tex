@@ -1,4 +1,4 @@
-% !TeX root = main.tex
+% !TeX root = ../main.tex
 
 \section{Approach}
 
@@ -13,15 +13,33 @@
 			$\rightarrow$ \textbf{Server-client architecture}\onslide<7->
 		\item \textit{Confidentiality}\onslide<8->\\
 			$\rightarrow$ \textbf{Sending hashes instead of source code}\onslide<9->
-		\item \textit{High number of lookup-requests}\onslide<10->\\
-			$\rightarrow$ \textbf{Filtering hashes on client}
+%		\item \textit{High number of lookup-requests}\onslide<10->\\
+%			$\rightarrow$ \textbf{Filtering hashes on client}
 	\end{itemize}
+	\note{
+		\textbf{Gedankengang}:
+		\begin{itemize}
+			\item Mehrfache analyse (jeder Commit): Arbeiten clone detection $\rightarrow$ index
+			\item Quellcode aus alter version kopiert
+			\item Auf jeder Maschine neu indexieren
+			\item Vertraulichkeit von Daten
+%			\item große projekte: viele requests
+		\end{itemize}
+	}
 \end{frame}
 
 \subsection{Architecture}
 \begin{frame}{\insertsubsection}
 	\only<1>{\includegraphics[width=\linewidth]{fig/architecture_overview_client_server.pdf}}
 	\only<2>{\includegraphics[width=\linewidth]{fig/architecture_overview_server.pdf}}
+	
+	\note{
+		\begin{itemize}
+			\item Auf server: Pool an repositories von open source projekten
+			\item baut index auf
+			\item überwachen und updaten
+		\end{itemize}
+	}
 \end{frame}
 
 \subsection{Index Creation}
@@ -38,7 +56,7 @@
 
 	\note{
 		\begin{itemize}
-			\item Entfernt Formattierung, comments, access modifiers, brackets, import statements, keywords like final/static
+			\item Entfernt Formattierung, comments, access modifiers, brackets, import statements, keywords wie final/static
 			\item Übriges: "Fingerabdruck" (Struktur, Variablennamen, Literale, ...)
 		\end{itemize}
 	}
@@ -55,9 +73,15 @@
 		\item Location of chunk is stored in index
 		\item Hash is used as key
 	\end{itemize}
+
 	\note{
 		\begin{itemize}
-			\item Index is key value store
+			\item Normalisierter code in statements aufgeteilt
+			\item Sliding windows: in "chunks" gruppiert
+			\item 5 statements = 1 chunk
+			\item Chunks hashen
+			\item Position chunk (projekt, path der datei innerhalb, start und ende) in index speichern
+			\item Index ist key value store, hash = key, 
 		\end{itemize}
 	}
 \end{frame}
@@ -73,42 +97,80 @@
 		\item Using git tags as reference points
 		\item Re-indexing changed files between two versions
 	\end{itemize}
-\end{frame}
 
-\begin{frame}{\insertsubsection}
-\only<3>{\includegraphics[width=\linewidth]{../written/figures/architecture_overview.pdf}
-\begin{description}
-	\small
-	\item[Target System] System on client which should be scanned for copied code
-	\item[Reference System] Open source software system on server
-\end{description}
-}
-\note{
-\begin{itemize}
-	\item TODO
-\end{itemize}
-}
+	\note{
+	\begin{itemize}
+		\item Datei aus alter version von open source projekt kopiert
+		\item Jeder commit sehr hoher Aufwand
+		\item Git Tags als referenzpunkte
+		\item Dateien, die von einer zur nächsten version verändert, neu indexiert
+	\end{itemize}
+	}
 \end{frame}
 
 \subsection{Searching for Copied Code}
 \begin{frame}{\insertsubsection}
-	\includegraphics[width=\linewidth]{../written/figures/searching_copied_code.pdf}
+	\includegraphics[width=\linewidth]{fig/architecture_overview_search.pdf}
+	
+	\note{
+		\begin{itemize}
+			\item Suche auf client ähnlich wie indexierung auf server
+			\item normalisieren, chunks bilden, hashen
+			\item mit Index abgleichen
+		\end{itemize}
+	}
 \end{frame}
 
 \subsubsection{Hash Filter}
 \begin{frame}{\insertsubsection}{\insertsubsubsection}
-\textbf{Problem:} Lots of request have to be sent to server\\
-\pause
-\vspace{2mm}
-\textbf{Solution:} Bloom filter on client side
-\vspace{2mm}
-\begin{itemize}
-	\small
-	\item Data structure, calculated on server, downloaded to client
-	\item Client can decide whether a hash is part of the index with very small false positive probability (0,01\%)
-	\item Fraction in size compared to the index database\\ (37 GB $\rightarrow$ 200 MB)
-	\item Reduces number of requests to a fraction
-\end{itemize}
+	\textbf{Problem:} Lots of request have to be sent to server\\
+	\pause
+	\vspace{2mm}
+	\textbf{Solution:} Bloom filter on client side
+	\vspace{2mm}
+	\begin{itemize}
+		\small
+		\item Data structure, calculated on server, downloaded to client
+		\item Fraction in size compared to the index database\\ (37 GB $\rightarrow$ 200 MB)
+		\item Client can decide whether a hash is part of the index with very small false positive probability (0,01\%)
+		\item Reduces number of requests to a fraction
+	\end{itemize}
+
+	\note{
+		\begin{itemize}
+			\item Viele chunks $\rightarrow$ viele requests $\rightarrow$ Dauert, last auf server hoch
+			\item Datenstruktur mithilfe von index auf server generiert
+			\item Client kann entscheiden ob hash teil von index
+			\item Fehler: hash doch kein teil von index $\rightarrow$ filtern auf server
+			\item Fehler auch sehr klein: in prototyp 0,01\%
+			\item requests reduzieren: nur trefferdetails laden
+		\end{itemize}
+	}
 \end{frame}
 
-%TODO aggregation?
+\begin{frame}{\insertsubsection}{Hash Filter in Use}
+	\includegraphics[width=\linewidth]{../written/figures/architecture_overview.pdf}
+	\note{
+	\begin{itemize}
+		\item gesamte architektur
+		\item Download hash filter
+		\item client filtert hashes, die nicht teil des index sind
+	\end{itemize}
+	}
+\end{frame}
+
+%\begin{frame}{\insertsubsection}
+%	\includegraphics[width=\linewidth]{../written/figures/searching_copied_code.pdf}
+%	
+%	\note{
+%		\begin{itemize}
+%			\item ablauf suche
+%			\item Download datenstruktur für bloom filter
+%			\item normalize, group statements to chunks, hash
+%			\item Filter hashes mit bloom filter
+%			\item Details für übrige hashes anfragen
+%			\item Server gibt für jeden hash locations zurück
+%			\item Treffer auf client aggregiert und ausgewertet
+%		\end{itemize}
+%	}
+%\end{frame}
