@@ -1,0 +1,86 @@
+[font_size]
+25
+[notes]
+### 1
+- Halbes Jahr 
+- Entwicklung Werkzeug open source Lizenzverstößen aufdecken 
+- "Open source" verbindet man Wiederverwendung 
+- Lizenzverletzungen!  
+### 2
+- Viele Open Source Lizenzen, kleiner Ausschnitt der Bekannteren 
+- anpassbar, selbst entwickeln -> Kompliziert 
+- JSON-License: "The Software shall be used for Good, not Evil" 
+- Unwissenheit: darf ich kopieren? Ignoranz 
+- Tool: aufdecken von open source lizenzverletzungen  
+### 3
+ \textbf {Aufbau der Arbeit:}  
+- Andere Arbeiten 
+- Daraus folgernd: Ansatz 
+- Analyse Performanz, kann Lizenzverletzungen aufdecken? 
+- Abschließend geb ich kurzes Fazit  
+### 4
+- Kopie -> Lizenzverletzung? 
+- Zwei Anhaltspunkte 
+- Trotzdem: abhängig inhalt
+### 5
+- (Kontinuierliche) mehrfache analyse, einfache skalierbarkeit -> index 
+- Statt index auf jeder maschine: server-client 
+- Auf server: Pool an repositories von open source projekten 
+- baut index auf 
+- überwachen und updaten  
+### 6
+- Entfernt Formattierung, comments, access modifiers, brackets, import statements, keywords wie final/static 
+- Übriges: "Fingerabdruck" (Struktur, Variablennamen, Literale, ...)  
+### 7
+- Normalisierter code in statements aufgeteilt 
+- Sliding windows: in "chunks" gruppiert 
+- 5 statements = 1 chunk 
+- Chunks hashen 
+- Position chunk (projekt, path der datei innerhalb, start und ende) in index speichern 
+- Index ist key value store, hash = key,  
+### 8
+- Datei aus alter version von open source projekt kopiert 
+- Jeder commit sehr hoher Aufwand 
+- Git Tags als referenzpunkte 
+- Dateien, die von einer zur nächsten version verändert, neu indexiert  
+### 9
+- Suche auf client ähnlich wie indexierung auf server 
+- normalisieren, chunks gruppieren, hashen 
+- mit Index abgleichen  
+### 10
+- Viele chunks -> viele requests -> Dauert, last auf server hoch 
+- Datenstruktur mithilfe von index auf server generiert 
+- Client kann entscheiden ob hash teil von index 
+- Fehler: hash doch kein teil von index -> filtern auf server 
+- Fehler auch sehr klein: in prototyp 0,01\% 
+- requests reduzieren: nur trefferdetails laden  
+### 11
+- gesamte architektur 
+- Download hash filter 
+- client filtert hashes, die nicht teil des index sind  
+### 12
+- Ziel: Performanz des Ansatzes und Brauchbarkeit der Ergebnisse untersuchen  
+### 13
+- GPL projekte von github geladen + indexiert 
+- Fast halbe Mrd relevante Zeilen (java oder c bzw c++) 
+- Java mehr bilder, binaries, und andere resourcen -> weniger locs, auch historie kürzer, jüngere projekte 
+- 15h, 37GB Indexdaten, 200 MB filter 
+- Update: nach 2 wochen dauer 1h ca 1/3 der Projekte neue tags  
+### 14
+- Gegentest: 10 und 10 projekte java, c/c++ 
+- Diesmal Apache, MIT, closed 
+- Wichtig: GPL nicht drin erlaubt 
+- Keine libraries, damit weniger richtung gpl kopiert  
+### 15
+- Treffer durch listen impl, equals methoden, usw. 
+- weil Lizenz rausfinden schwierig (header fehlt, keine kommentare, code verändert) 
+- apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog fabi?)  \par  
+- reduzierte last auf server 
+- JDK kopiert/quelle nicht vermerkt  
+### 16
+- Lizenz Projekt vs Lizenz Dateien -> verschiedene Bedingungen 
+- Prozess automatisieren sehr schwierig, manuell überprüfen treffer zeitaufwändig 
+- nötig, enscheiden ob verlezung (abhängig von wichtigkeit des codes)  \par  
+- auch kleine kopien auffindbar 
+- Skalierbar bei indexierung und suche 
+- Sicherheitslücken

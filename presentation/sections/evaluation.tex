@@ -7,12 +7,6 @@
 		currentsection,
 		subsectionstyle=hide
 	]
-	
-	\note{
-		\begin{itemize}
-			\item Ziel: Performanz des Ansatzes und Brauchbarkeit der Ergebnisse untersuchen
-		\end{itemize}
-	}
 \end{frame}
 
 \subsection{Step 1}
@@ -37,16 +31,6 @@
 		\item Bloom filter: 55 MB for Java, 147 MB for C/C++
 		\item Updating index after two weeks: about 1h on same machine
 	\end{itemize}
-
-	\note{
-	\begin{itemize}
-		\item GPL projekte von github geladen + indexiert
-		\item Fast halbe Mrd relevante Zeilen (java oder c bzw c++)
-		\item Java mehr bilder, binaries, und andere resourcen $\rightarrow$ weniger locs, auch historie kürzer, jüngere projekte
-		\item 15h, 37GB Indexdaten, 200 MB filter
-		\item Update: nach 2 wochen dauer 1h ca 1/3 der Projekte neue tags
-	\end{itemize}
-	}
 \end{frame}
 
 \subsection{Step 2}
@@ -57,15 +41,6 @@
 		\item Projects are not allowed to contain GPL code due to their license: Apache~2.0, Eclipse~Public~License, BSD~License~2.0, MIT, Closed~Source
 		\item Mostly large standalone programs or frameworks, which are not library code
 	\end{itemize}
-
-	\note{
-	\begin{itemize}
-		\item Gegentest: 10 und 10 projekte java, c/c++
-		\item Diesmal Apache, MIT, closed
-		\item Wichtig: GPL nicht drin erlaubt
-		\item Keine libraries, damit weniger richtung gpl kopiert
-	\end{itemize}
-	}
 \end{frame}
 
 \subsection{Results}
@@ -80,17 +55,4 @@
 		\item Bloom filter could reduce number of requests to about 1\%
 		\item 25\% of projects contained infringements, most caused by copying parts of JDK or not correctly attributing source
 	\end{itemize}
-
-	\note{
-	\begin{itemize}
-		\item Treffer durch listen impl, equals methoden, usw.
-		\item weil Lizenz rausfinden schwierig (header fehlt, keine kommentare, code verändert)
-		\item apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog fabi?)
-	\end{itemize}
-
-	\begin{itemize}
-	\item reduzierte last auf server
-	\item JDK kopiert/quelle nicht vermerkt
-	\end{itemize}
-	}
 \end{frame}
