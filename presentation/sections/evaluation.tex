@@ -2,15 +2,14 @@
 
 \section{Evaluation}
 \frame{\frametitle{Outline} 
-	\small
 	\tableofcontents[
 	currentsection,
 	subsectionstyle=hide
 ]}
-\subsection{Setup}
+\subsection{Step 1}
 \begin{frame}{\insertsubsection}
-	\textbf{Step 1:}
-	Indexing 1000 Java and 1000 C/C++ GPL licensed projects from GitHub
+	\textbf{Indexing 1000 Java and 1000 C/C++ GPL licensed projects from GitHub}
+	
 	\begin{table}[ht]
 		\centering
 		\scriptsize
@@ -31,14 +30,31 @@
 	\end{itemize}
 \end{frame}
 
-
+\subsection{Step 2}
 \begin{frame}{\insertsubsection}
-	\textbf{Step 2:}
-	Searching for copied code in 10 Java and 10 C/C++ projects
+	\textbf{Searching for copied code in 10 Java and 10 C/C++ projects}
 	
 	\begin{itemize}
 		\small
 		\item Projects are not allowed to contain GPL code due to their license: Apache~2.0, Eclipse~Public~License, BSD~License~2.0, MIT, Closed~Source
 		\item Mostly large standalone programs or frameworks, which are not library code
+		\item Categorizing aggregated matches in:
+		\begin{description}
+			\footnotesize
+			\item [AC] Accidential Clones
+			\item [OLC] Otherwise licensed code
+			\item [CNA] Copied, but not attributed (e.g. Apache-2.0)
+			\item [LI] License infringement (GPL code)
+		\end{description}
+	\end{itemize}
+\end{frame}
+
+\subsection{Results}
+\begin{frame}{\insertsubsection}
+	\begin{itemize}
+		\item Bloom filter could reduce number of requests to less than 1\%
+		\item Code sometimes copied from target to reference project, or reference project is fork
+		\item 25\% of projects contained infringements, most caused by copying parts of JDK
+		\item No CNA nor LI found in C/C++ projects
 	\end{itemize}
 \end{frame}

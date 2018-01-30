@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="960"
+   height="600"
+   version="1.1"
+   id="svg162"
+   sodipodi:docname="wordcloud.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <metadata
+     id="metadata168">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs166" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1016"
+     id="namedview164"
+     showgrid="false"
+     inkscape:zoom="1.5733333"
+     inkscape:cx="481.04787"
+     inkscape:cy="334.15513"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1223" />
+  <g
+     id="g2" />
+  <g
+     id="g1223"
+     transform="translate(10.809987,6.4480221)">
+    <g
+       id="g975" />
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#843c39;stroke-width:1.11529446"
+       id="text977"
+       x="694.69708"
+       y="164.9174"
+       transform="scale(0.94588936,1.0572061)">BSD-2-Clause-Patent</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#637939;stroke-width:1.11529446"
+       id="text979"
+       x="781.87701"
+       y="367.18088"
+       transform="scale(0.94588936,1.0572061)">Microsoft Reciprocal License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8ca252;stroke-width:1.11529446"
+       id="text981"
+       x="382.02509"
+       y="29.244923"
+       transform="scale(0.94588936,1.0572061)">Apache License 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#b5cf6b;stroke-width:1.11529446"
+       id="text983"
+       x="710.44263"
+       y="190.12582"
+       transform="scale(0.94588936,1.0572061)">Apple Public Source License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#cedb9c;stroke-width:1.11529446"
+       id="text985"
+       x="421.58139"
+       y="223.58466"
+       transform="scale(0.94588936,1.0572061)">Artistic License 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8c6d31;stroke-width:1.11529446"
+       id="text987"
+       x="247.59541"
+       y="241.42937"
+       transform="scale(0.94588936,1.0572061)">Attribution Assurance License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#bd9e39;stroke-width:1.11529446"
+       id="text989"
+       x="322.32019"
+       y="192.35643"
+       transform="scale(0.94588936,1.0572061)">Boost Software License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ad494a;stroke-width:1.11529446"
+       id="text991"
+       x="297.62006"
+       y="225.58014"
+       transform="scale(0.94588936,1.0572061)">3-clause BSD License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7ba52;stroke-width:1.11529446"
+       id="text993"
+       x="748.70758"
+       y="68.668037"
+       transform="scale(0.94588936,1.0572061)">CeCILL License 2.1</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#a55194;stroke-width:1.11529446"
+       id="text995"
+       x="736.09436"
+       y="147.74464"
+       transform="scale(0.94588936,1.0572061)">CAT Open Source License 1.1</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#a55194;stroke-width:1.11529446"
+       id="text997"
+       x="254.74355"
+       y="138.62144"
+       transform="scale(0.94588936,1.0572061)">Common Development and Distribution License 1.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ce6dbd;stroke-width:1.11529446"
+       id="text999"
+       x="655.41931"
+       y="238.32599"
+       transform="scale(0.94588936,1.0572061)">Common Public Attribution License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#de9ed6;stroke-width:1.11529446"
+       id="text1001"
+       x="200.75307"
+       y="273.77292"
+       transform="scale(0.94588936,1.0572061)">CUA Office Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7cb94;stroke-width:1.11529446"
+       id="text1003"
+       x="542.0332"
+       y="262.61996"
+       transform="scale(0.94588936,1.0572061)">EU DataGrid Software License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#843c39;stroke-width:1.11529446"
+       id="text1005"
+       x="681.44495"
+       y="306.11646"
+       transform="scale(0.94588936,1.0572061)">Eclipse Public License 1.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ad494a;stroke-width:1.11529446"
+       id="text1007"
+       x="788.37878"
+       y="175.50206"
+       transform="scale(0.94588936,1.0572061)">Eclipse Public License 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#9c9ede;stroke-width:1.11529446"
+       id="text1009"
+       x="511.92023"
+       y="117.6317"
+       transform="scale(0.94588936,1.0572061)">eCos License version 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#637939;stroke-width:1.11529446"
+       id="text1011"
+       x="651.33197"
+       y="273.77292"
+       transform="scale(0.94588936,1.0572061)">Educational Community License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#d6616b;stroke-width:1.11529446"
+       id="text1013"
+       x="546.49438"
+       y="323.96115"
+       transform="scale(0.94588936,1.0572061)">Eiffel Forum License V2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7969c;stroke-width:1.11529446"
+       id="text1015"
+       x="560.32129"
+       y="153.58243"
+       transform="scale(0.94588936,1.0572061)">Entessa Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#cedb9c;stroke-width:1.11529446"
+       id="text1017"
+       x="362.47079"
+       y="301.65527"
+       transform="scale(0.94588936,1.0572061)">European Union Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#7b4173;stroke-width:1.11529446"
+       id="text1019"
+       x="296.66843"
+       y="340.69055"
+       transform="scale(0.94588936,1.0572061)">Fair License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#a55194;stroke-width:1.11529446"
+       id="text1021"
+       x="712.67328"
+       y="254.81291"
+       transform="scale(0.94588936,1.0572061)">Frameworx License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ce6dbd;stroke-width:1.11529446"
+       id="text1023"
+       x="396.72562"
+       y="379.67139"
+       transform="scale(0.94588936,1.0572061)">Free Public License 1.0.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7cb94;stroke-width:1.11529446"
+       id="text1025"
+       x="188.48483"
+       y="327.30704"
+       transform="scale(0.94588936,1.0572061)">GNU Affero General Public Licence</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#de9ed6;stroke-width:1.11529446"
+       id="text1027"
+       x="758.44196"
+       y="224.48523"
+       transform="scale(0.94588936,1.0572061)">2-clause BSD License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#393b79;stroke-width:1.11529446"
+       id="text1029"
+       x="427.15784"
+       y="347.38232"
+       transform="scale(0.94588936,1.0572061)">Academic Free License 3.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#d6616b;stroke-width:1.11529446"
+       id="text1031"
+       x="324.55078"
+       y="364.11176"
+       transform="scale(0.94588936,1.0572061)">Historical Permission Notice a</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#5254a3;stroke-width:1.11529446"
+       id="text1033"
+       x="405.96725"
+       y="323.96115"
+       transform="scale(0.94588936,1.0572061)">IBM Public License 1.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#6b6ecf;stroke-width:1.11529446"
+       id="text1035"
+       x="656.90845"
+       y="357.41998"
+       transform="scale(0.94588936,1.0572061)">IPA Font License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#9c9ede;stroke-width:1.11529446"
+       id="text1037"
+       x="713.78851"
+       y="383.07175"
+       transform="scale(0.94588936,1.0572061)">ISC License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ce6dbd;stroke-width:1.11529446"
+       id="text1039"
+       x="207.44484"
+       y="173.39642"
+       transform="scale(0.94588936,1.0572061)">LaTeX Project Public License 1.3c</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#de9ed6;stroke-width:1.11529446"
+       id="text1041"
+       x="566.05646"
+       y="402.03177"
+       transform="scale(0.94588936,1.0572061)">Licence Libre du Québec –Permissive version 1.1</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#637939;stroke-width:1.11529446"
+       id="text1043"
+       x="518.612"
+       y="362.99646"
+       transform="scale(0.94588936,1.0572061)">Adaptive Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#5254a3;stroke-width:1.11529446"
+       id="text1045"
+       x="800.65656"
+       y="288.92981"
+       transform="scale(0.94588936,1.0572061)">Lucent Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8ca252;stroke-width:1.11529446"
+       id="text1047"
+       x="731.63318"
+       y="418.76117"
+       transform="scale(0.94588936,1.0572061)">MirOS Licence</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#b5cf6b;stroke-width:1.11529446"
+       id="text1049"
+       x="719.36499"
+       y="209.08583"
+       transform="scale(0.94588936,1.0572061)">Microsoft Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#cedb9c;stroke-width:1.11529446"
+       id="text1051"
+       x="375.85431"
+       y="173.39642"
+       transform="scale(0.94588936,1.0572061)">Zlib/Libpng License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8c6d31;stroke-width:1.11529446"
+       id="text1053"
+       x="409.76385"
+       y="281.37305"
+       transform="scale(0.94588936,1.0572061)">MIT License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#bd9e39;stroke-width:1.11529446"
+       id="text1055"
+       x="626.79559"
+       y="342.92114"
+       transform="scale(0.94588936,1.0572061)">Motosoto License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7ba52;stroke-width:1.11529446"
+       id="text1057"
+       x="245.8082"
+       y="259.26019"
+       transform="scale(0.94588936,1.0572061)">Mozilla Public License 1.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7cb94;stroke-width:1.11529446"
+       id="text1059"
+       x="537.57202"
+       y="296.0788"
+       transform="scale(0.94588936,1.0572061)">Mozilla Public License 1.1</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#843c39;stroke-width:1.11529446"
+       id="text1061"
+       x="730.53094"
+       y="86.236008"
+       transform="scale(0.94588936,1.0572061)">Mozilla Public License 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ad494a;stroke-width:1.11529446"
+       id="text1063"
+       x="566.76489"
+       y="38.906868"
+       transform="scale(0.94588936,1.0572061)">Multics License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7cb94;stroke-width:1.11529446"
+       id="text1065"
+       x="693.71326"
+       y="99.786987"
+       transform="scale(0.94588936,1.0572061)">NASA Open Source Agreement 1.3</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#d6616b;stroke-width:1.11529446"
+       id="text1067"
+       x="173.19946"
+       y="378.20151"
+       transform="scale(0.94588936,1.0572061)">NTP License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7969c;stroke-width:1.11529446"
+       id="text1069"
+       x="283.59592"
+       y="391.74133"
+       transform="scale(0.94588936,1.0572061)">Naumen Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#d6616b;stroke-width:1.11529446"
+       id="text1071"
+       x="366.85165"
+       y="72.699753"
+       transform="scale(0.94588936,1.0572061)">Nethack General Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#7b4173;stroke-width:1.11529446"
+       id="text1073"
+       x="679.21442"
+       y="123.20817"
+       transform="scale(0.94588936,1.0572061)">Nokia Open Source License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#7b4173;stroke-width:1.11529446"
+       id="text1075"
+       x="421.81912"
+       y="52.561531"
+       transform="scale(0.94588936,1.0572061)">Non-Profit Open Software Licence</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#a55194;stroke-width:1.11529446"
+       id="text1077"
+       x="167.29723"
+       y="26.686777"
+       transform="scale(0.94588936,1.0572061)">OCLC Research Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#a55194;stroke-width:1.11529446"
+       id="text1079"
+       x="766.55347"
+       y="331.81653"
+       transform="scale(0.94588936,1.0572061)">Open Group Test Suite License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ce6dbd;stroke-width:1.11529446"
+       id="text1081"
+       x="556.53204"
+       y="388.64822"
+       transform="scale(0.94588936,1.0572061)">Open Software License 3.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#393b79;stroke-width:1.11529446"
+       id="text1083"
+       x="600.02844"
+       y="220.23878"
+       transform="scale(0.94588936,1.0572061)">OSET Public License version 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#de9ed6;stroke-width:1.11529446"
+       id="text1085"
+       x="286.63077"
+       y="158.89758"
+       transform="scale(0.94588936,1.0572061)">PHP License 3.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#393b79;stroke-width:1.11529446"
+       id="text1087"
+       x="556.53204"
+       y="85.288155"
+       transform="scale(0.94588936,1.0572061)">The PostgreSQL License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#5254a3;stroke-width:1.11529446"
+       id="text1089"
+       x="438.31082"
+       y="158.89758"
+       transform="scale(0.94588936,1.0572061)">Python License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#6b6ecf;stroke-width:1.11529446"
+       id="text1091"
+       x="158.71805"
+       y="221.99826"
+       transform="scale(0.94588936,1.0572061)">CNRI Python License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#9c9ede;stroke-width:1.11529446"
+       id="text1093"
+       x="226.40482"
+       y="122.09286"
+       transform="scale(0.94588936,1.0572061)">Q Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#b5cf6b;stroke-width:1.11529446"
+       id="text1095"
+       x="272.13193"
+       y="409.83884"
+       transform="scale(0.94588936,1.0572061)">RealNetworks Public Source License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#637939;stroke-width:1.11529446"
+       id="text1097"
+       x="536.45667"
+       y="193.47173"
+       transform="scale(0.94588936,1.0572061)">Reciprocal Public License 1.5</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8c6d31;stroke-width:1.11529446"
+       id="text1099"
+       x="242.5125"
+       y="90.391739"
+       transform="scale(0.94588936,1.0572061)">Ricoh Source Code Public Licence</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8ca252;stroke-width:1.11529446"
+       id="text1101"
+       x="552.07086"
+       y="69.674034"
+       transform="scale(0.94588936,1.0572061)">SIL Open Font License 1.1</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#b5cf6b;stroke-width:1.11529446"
+       id="text1103"
+       x="786.65045"
+       y="399.45276"
+       transform="scale(0.94588936,1.0572061)">Simple Public License 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#cedb9c;stroke-width:1.11529446"
+       id="text1105"
+       x="545.37903"
+       y="422.10709"
+       transform="scale(0.94588936,1.0572061)">Sleepycat License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#8c6d31;stroke-width:1.11529446"
+       id="text1107"
+       x="803.61816"
+       y="434.86856"
+       transform="scale(0.94588936,1.0572061)">Sun Public License 1.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ad494a;stroke-width:1.11529446"
+       id="text1109"
+       x="216.7346"
+       y="53.627819"
+       transform="scale(0.94588936,1.0572061)">Sybase Open Watcom Public License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#bd9e39;stroke-width:1.11529446"
+       id="text1111"
+       x="432.73434"
+       y="243.65996"
+       transform="scale(0.94588936,1.0572061)">NCSA Open Source License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7ba52;stroke-width:1.11529446"
+       id="text1113"
+       x="543.16235"
+       y="172.02473"
+       transform="scale(0.94588936,1.0572061)">Universal Permissive License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#7b4173;stroke-width:1.11529446"
+       id="text1115"
+       x="334.58844"
+       y="106.47875"
+       transform="scale(0.94588936,1.0572061)">Upstream Compatibility License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#a55194;stroke-width:1.11529446"
+       id="text1117"
+       x="688.21173"
+       y="52.457878"
+       transform="scale(0.94588936,1.0572061)">Vovida Software License v. 1.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7cb94;stroke-width:1.11529446"
+       id="text1119"
+       x="326.78134"
+       y="272.65762"
+       transform="scale(0.94588936,1.0572061)">W3C License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#843c39;stroke-width:1.11529446"
+       id="text1121"
+       x="779.20569"
+       y="37.036343"
+       transform="scale(0.94588936,1.0572061)">wxWindows Library License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#ad494a;stroke-width:1.11529446"
+       id="text1123"
+       x="149.39787"
+       y="424.72073"
+       transform="scale(0.94588936,1.0572061)">X.Net License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#d6616b;stroke-width:1.11529446"
+       id="text1125"
+       x="562.10852"
+       y="136.59171"
+       transform="scale(0.94588936,1.0572061)">Zero Clause BSD License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#e7969c;stroke-width:1.11529446"
+       id="text1127"
+       x="421.58139"
+       y="89.749321"
+       transform="scale(0.94588936,1.0572061)">Zope Public License 2.0</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#7b4173;stroke-width:1.11529446"
+       id="text1129"
+       x="368.40082"
+       y="123.6654"
+       transform="scale(0.94588936,1.0572061)">3-clause BSD License</text>
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#de9ed6;stroke-width:1.11529446"
+       id="text1131"
+       x="214.88919"
+       y="288.9437"
+       transform="scale(0.94588936,1.0572061)">Do What The Fuck You Want To Public Licence</text>
+  </g>
+</svg>

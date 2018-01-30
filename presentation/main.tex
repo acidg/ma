@@ -1,8 +1,8 @@
-\documentclass[handout,utf8,14pt]{beamer} % TODO remove handout for steps
+\documentclass[utf8,14pt]{beamer} % TODO remove handout for steps
 
 \input{settings}
 
-\title{Werkzeugarchitektur zur kontinuierlichen	Erkennung von Verstößen gegen Open-Source-Lizenzen durch Clone Detection}
+\title{A Tool Architecture for the Continuous Detection of Open-Source License Infringements using Clone Detection}
 \subtitle{{\small Masterarbeit}}
 \author{Benedikt Schlagberger}
 \institute[TUM]{{\small Technische Universität München}}
@@ -13,29 +13,59 @@
 		\setbeamertemplate{footline}{} 
 		\begin{frame}
 			\titlepage
+			\note{
+				\begin{itemize}
+					\item Halbes Jahr
+					\item Entwicklung Werkzeug Lizenzverstößen aufdecken
+					\item "Open source" $\rightarrow$ Wiederverwendung
+					\item Lizenzverletzungen!
+				\end{itemize}
+			}
 		\end{frame}
 }
 
 \begin{frame}
-TODO Motivation
+	\centering
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[at=(current page.center)] {
+			\includegraphics[width=0.9\paperwidth]{fig/wordcloud.pdf}
+		};
+	\end{tikzpicture}
+	\note{
+		\begin{itemize}
+			\item Viele Open Source Lizenzen, kleiner Ausschnitt der Bekannteren
+			\item anpassbar, selbst entwickeln
+			\item Kompliziert, darf ich kopieren?
+			\item JSON-License: "The Software shall be used for Good, not Evil"
+			\item Tool: Kopieren erlaubt
+		\end{itemize}
+	}
+	%TODO Oracle Binary Code License: I. SOURCE CODE. Software may contain source code that, unless expressly licensed for other purposes, is provided solely for reference purposes pursuant to the terms of this Agreement. Source code may not be redistributed unless expressly provided for in this Agreement.
 \end{frame}
 
 \frame{\frametitle{Outline} 
 	\small
 	\tableofcontents
+	\note{
+		\begin{itemize}
+			\item Andere Arbeiten
+			\item Ansatz
+			\item Analyse Performanz, kann aufdecken?
+			\item Schluss, meine Meinung
+		\end{itemize}
+	}
 }
 
-\input{sections/01_preliminaries}
-\input{sections/02_related}
-\input{sections/03_approach}
-\input{sections/04_evaluation}
-\input{sections/05_conclusion}
+\input{sections/related}
+\input{sections/approach}
+\input{sections/evaluation}
+\input{sections/conclusion}
 
 \section*{Literature}
-\begin{frame}[t,allowframebreaks]{Literature}
-\begin{tiny}
+\begin{frame}{Literature}
 	\printbibliography{}
-\end{tiny}
 \end{frame}
+
+%\input{sections/backup}
 
 \end{document}
