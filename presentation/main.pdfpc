@@ -21,9 +21,11 @@
 - Analyse Performanz, kann Lizenzverletzungen aufdecken? 
 - Abschließend geb ich kurzes Fazit  
 ### 4
-- Kopie -> Lizenzverletzung? 
-- Zwei Anhaltspunkte 
-- Trotzdem: abhängig inhalt
+- Ältestes relevantes forschungsgebiet: Plagiatsoftware Abgaben von Studenten Programmierkurse\\
+-> kaum skalierbar, anderer kontext: Programm vorgegeben
+- Clone detection: index vs abstract syntax tree
+- Search engines: Verwalten rießige Mengen Quellcode, Struktursuche, multilevel index
+- Kommerziele Programme: Kaum Details, Vertraulichkeit des Sourcecodes
 ### 5
 - (Kontinuierliche) mehrfache analyse, einfache skalierbarkeit -> index 
 - Statt index auf jeder maschine: server-client 
