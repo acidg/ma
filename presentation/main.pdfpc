@@ -25,17 +25,16 @@
 -> kaum skalierbar, anderer kontext: Programm vorgegeben
 - Clone detection, software qualität, zwei ansätze: abstract syntax tree vs index
 - Search engines: Verwalten rießige Mengen Quellcode, Struktursuche, multilevel index
-- Kommerziele Programme: Kaum Details, Vertraulichkeit des Sourcecodes
-### 5
-- (Kontinuierliche) mehrfache analyse, einfache skalierbarkeit -> index
-- Key-value store
-- Statt index auf jeder maschine: server-client 
+- Kommerziele Programme, lizenzprobleme aufdecken: Kaum Details, Vertraulichkeit des Sourcecodes
+- (Kontinuierliche) mehrfache analyse, einfache skalierbarkeit -> index = Key-value store### 5
+- Statt index auf jeder maschine: client-server
+
 - Auf server: Pool an repositories von open source projekten 
 - baut index auf 
 - überwacht Änderungen und updatet entsprechend### 6
 - Entfernt Formattierung, comments, access modifiers, brackets, import statements, keywords wie final/static 
 - Übriges: "Fingerabdruck" (Struktur, Variablennamen, Literale, ...)  
-### 7
+- code leichter vergleichbar### 7
 - Normalisierter code in statements aufgeteilt 
 - Sliding windows: in "chunks" gruppiert 
 - 5 statements = 1 chunk 
@@ -49,24 +48,24 @@
 - Dateien, die von einer zur nächsten version verändert, neu indexiert  
 ### 9
 - Suche auf client ähnlich wie indexierung auf server 
-- normalisieren, chunks gruppieren, hashen 
+- normalisiert code, chunks gruppieren, hashen 
 - mit Index abgleichen  
 ### 10
 - Viele chunks -> viele requests -> Dauert, last auf server hoch 
+
 - Datenstruktur, auf server mithilfe von index generiert
 - Größe nur Bruchteil von index
 - Client kann entscheiden ob hash teil von index 
 - Fehlerbehaftet: hash doch kein teil von index -> filtern auf server 
 - Fehler auch sehr klein: in prototyp 0,01\% 
-- requests reduzieren: nur trefferdetails laden  
-### 11
+- requests reduzieren: weil nur details für treffer laden  ### 11
 - gesamte architektur 
 - Download hash filter 
 - client filtert hashes, rest am server abgefragt
 - server antwortet: positionen von treffern  
 - treffer aggregieren und filtern
 - anzahl treffer in datei lässt wahrscheinlichkeit für verletzung abschätzen### 12
-- Ziel: Performanz des Ansatzes und Brauchbarkeit der Ergebnisse untersuchen  
+- Ziel: Performanz des Ansatzes testen und Brauchbarkeit der Ergebnisse untersuchen  
 ### 13
 - GPL projekte von github geladen + indexiert 
 - Fast halbe Mrd relevante Zeilen (java oder c bzw c++) 
@@ -84,11 +83,11 @@
 -> apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog), forks
 
 - bloom (~1%): reduzierte last auf server 
-- 25%: JDK kopiert/quelle nicht vermerkt  
+- in 25%: JDK kopiert/quelle nicht vermerkt  
 ### 16
 - Lizenz Projekt vs Lizenz Dateien -> verschiedene Bedingungen für kopie
 - Prozess automatisieren sehr schwierig, manuell zeitaufwändig 
-- nötig, enscheiden ob verletzung gravierend (abhängig von wichtigkeit des codes)
+- nötig, enscheiden wie gravierend verletzung (abhängig von wichtigkeit des codes)
 
 - Möglich kleine kopien finden, bloom beschleunigt suche, reduziert Last 
 - Skalierbar bei indexierung und suche 
