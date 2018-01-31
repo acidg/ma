@@ -10,24 +10,25 @@
 - Lizenzverletzungen!  
 ### 2
 - Viele Open Source Lizenzen, kleiner Ausschnitt der Bekannteren 
-- anpassbar, selbst entwickeln -> Kompliziert 
+- anpassbar, selbst entwickeln -> Kompliziert , darf ich kopieren?
 - JSON-License: "The Software shall be used for Good, not Evil" 
 - Unwissenheit: darf ich kopieren? Ignoranz 
 - Tool: aufdecken von open source lizenzverletzungen  
 ### 3
- \textbf {Aufbau der Arbeit:}  
+ AUFBAU PRÄSENTATION: 
 - Andere Arbeiten 
 - Daraus folgernd: Ansatz 
-- Analyse Performanz, kann Lizenzverletzungen aufdecken? 
+- Analyse Performanz, test: kann Lizenzverletzungen aufdecken? 
 - Abschließend geb ich kurzes Fazit  
 ### 4
 - Ältestes relevantes forschungsgebiet: Plagiatsoftware Abgaben von Studenten Programmierkurse\\
 -> kaum skalierbar, anderer kontext: Programm vorgegeben
-- Clone detection: index vs abstract syntax tree
+- Clone detection, software qualität, zwei ansätze: abstract syntax tree vs index
 - Search engines: Verwalten rießige Mengen Quellcode, Struktursuche, multilevel index
 - Kommerziele Programme: Kaum Details, Vertraulichkeit des Sourcecodes
 ### 5
-- (Kontinuierliche) mehrfache analyse, einfache skalierbarkeit -> index 
+- (Kontinuierliche) mehrfache analyse, einfache skalierbarkeit -> index
+- Key-value store
 - Statt index auf jeder maschine: server-client 
 - Auf server: Pool an repositories von open source projekten 
 - baut index auf 
@@ -55,14 +56,16 @@
 - Datenstruktur, auf server mithilfe von index generiert
 - Größe nur Bruchteil von index
 - Client kann entscheiden ob hash teil von index 
-- Fehler: hash doch kein teil von index -> filtern auf server 
+- Fehlerbehaftet: hash doch kein teil von index -> filtern auf server 
 - Fehler auch sehr klein: in prototyp 0,01\% 
 - requests reduzieren: nur trefferdetails laden  
 ### 11
 - gesamte architektur 
 - Download hash filter 
-- client filtert hashes, die nicht teil des index sind  
-### 12
+- client filtert hashes, rest am server abgefragt
+- server antwortet: positionen von treffern  
+- treffer aggregieren und filtern
+- anzahl treffer in datei lässt wahrscheinlichkeit für verletzung abschätzen### 12
 - Ziel: Performanz des Ansatzes und Brauchbarkeit der Ergebnisse untersuchen  
 ### 13
 - GPL projekte von github geladen + indexiert 
@@ -71,22 +74,22 @@
 - 15h, 37GB Indexdaten, 200 MB filter 
 - Update: nach 2 wochen dauer 1h ca 1/3 der Projekte neue tags  
 ### 14
-- Gegentest: 10 und 10 projekte java, c/c++, treffer kategorisiert
+- Gegentest: 10 und 10 projekte java, c/c++ rausgesucht, treffer kategorisiert
 - Diesmal Apache, MIT, closed
 - Wichtig: GPL nicht drin erlaubt
 - Keine libraries, damit weniger richtung gpl kopiert
 ### 15
-- Treffer durch listen impl, equals methoden, usw. 
-- weil Lizenz rausfinden schwierig, unklar ob verletzung (header fehlt, keine anmerkungen in kommentaren)
--> apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog)
+- Treffer durch interf. impl (listen, equals methoden, api structs...) 
+- kategorisieren: Lizenz rausfinden schwierig, unklar ob verletzung (header fehlt, keine anmerkungen in kommentaren)
+-> apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog), forks
 
-- reduzierte last auf server 
-- JDK kopiert/quelle nicht vermerkt  
+- bloom (~1%): reduzierte last auf server 
+- 25%: JDK kopiert/quelle nicht vermerkt  
 ### 16
-- Lizenz Projekt vs Lizenz Dateien -> verschiedene Bedingungen 
-- Prozess automatisieren sehr schwierig, manuell überprüfen treffer zeitaufwändig 
-- nötig, enscheiden ob verlezung (abhängig von wichtigkeit des codes)
+- Lizenz Projekt vs Lizenz Dateien -> verschiedene Bedingungen für kopie
+- Prozess automatisieren sehr schwierig, manuell zeitaufwändig 
+- nötig, enscheiden ob verletzung gravierend (abhängig von wichtigkeit des codes)
 
-- auch kleine kopien auffindbar, bloom beschleunigt suche, reduziert Last 
+- Möglich kleine kopien finden, bloom beschleunigt suche, reduziert Last 
 - Skalierbar bei indexierung und suche 
 - Verwalten von externem code, Sicherheitslücken aufdecken
