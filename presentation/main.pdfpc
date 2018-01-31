@@ -1,7 +1,7 @@
 [duration]
 20
 [font_size]
-25
+21
 [notes]
 ### 1
 - Halbes Jahr 
@@ -29,8 +29,7 @@
 - Statt index auf jeder maschine: server-client 
 - Auf server: Pool an repositories von open source projekten 
 - baut index auf 
-- überwachen und updaten  
-### 6
+- überwacht Änderungen und updatet entsprechend### 6
 - Entfernt Formattierung, comments, access modifiers, brackets, import statements, keywords wie final/static 
 - Übriges: "Fingerabdruck" (Struktur, Variablennamen, Literale, ...)  
 ### 7
@@ -41,8 +40,8 @@
 - Position chunk (projekt, path der datei innerhalb, start und ende) in index speichern 
 - Index ist key value store, hash = key,  
 ### 8
-- Datei aus alter version von open source projekt kopiert 
-- Jeder commit sehr hoher Aufwand 
+- Code aus alter version finden, alte version indexieren 
+- Jeder commit sehr hoher Aufwand
 - Git Tags als referenzpunkte 
 - Dateien, die von einer zur nächsten version verändert, neu indexiert  
 ### 9
@@ -51,7 +50,8 @@
 - mit Index abgleichen  
 ### 10
 - Viele chunks -> viele requests -> Dauert, last auf server hoch 
-- Datenstruktur mithilfe von index auf server generiert 
+- Datenstruktur, auf server mithilfe von index generiert
+- Größe nur Bruchteil von index
 - Client kann entscheiden ob hash teil von index 
 - Fehler: hash doch kein teil von index -> filtern auf server 
 - Fehler auch sehr klein: in prototyp 0,01\% 
@@ -69,20 +69,22 @@
 - 15h, 37GB Indexdaten, 200 MB filter 
 - Update: nach 2 wochen dauer 1h ca 1/3 der Projekte neue tags  
 ### 14
-- Gegentest: 10 und 10 projekte java, c/c++ 
-- Diesmal Apache, MIT, closed 
-- Wichtig: GPL nicht drin erlaubt 
-- Keine libraries, damit weniger richtung gpl kopiert  
+- Gegentest: 10 und 10 projekte java, c/c++, treffer kategorisiert
+- Diesmal Apache, MIT, closed
+- Wichtig: GPL nicht drin erlaubt
+- Keine libraries, damit weniger richtung gpl kopiert
 ### 15
 - Treffer durch listen impl, equals methoden, usw. 
-- weil Lizenz rausfinden schwierig (header fehlt, keine kommentare, code verändert) 
-- apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog fabi?)  \par  
+- weil Lizenz rausfinden schwierig, unklar ob verletzung (header fehlt, keine anmerkungen in kommentaren)
+-> apache/MIT zu GPL, oft auch nicht richtig vermerkt (teamscale blog)
+
 - reduzierte last auf server 
 - JDK kopiert/quelle nicht vermerkt  
 ### 16
 - Lizenz Projekt vs Lizenz Dateien -> verschiedene Bedingungen 
 - Prozess automatisieren sehr schwierig, manuell überprüfen treffer zeitaufwändig 
-- nötig, enscheiden ob verlezung (abhängig von wichtigkeit des codes)  \par  
-- auch kleine kopien auffindbar 
+- nötig, enscheiden ob verlezung (abhängig von wichtigkeit des codes)
+
+- auch kleine kopien auffindbar, bloom beschleunigt suche, reduziert Last 
 - Skalierbar bei indexierung und suche 
-- Sicherheitslücken
+- Verwalten von externem code, Sicherheitslücken aufdecken
